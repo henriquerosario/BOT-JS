@@ -1,22 +1,125 @@
 const express = require('express'); 
 const app = express();
+const enmap = require("enmap");
+const fs = require("fs")
+const ms = require("ms")
+const AntiSpam = require('discord-anti-spam');
+const antiSpam = new AntiSpam({
+    warnThreshold: 3, // Amount of messages sent in a row that will cause a warning.
+    kickThreshold: 7, // Amount of messages sent in a row that will cause a ban.
+    banThreshold: 7, // Amount of messages sent in a row that will cause a ban.
+    maxInterval: 5000, // Amount of time (in milliseconds) in which messages are considered spam.
+    warnMessage: '{@user}, Por Favor Pare De Spamar Fora do Canal Spam ou Flood.', // Message that will be sent in chat upon warning a user.
+    kickMessage: '**{user_tag}** Foi Kicado do Server Fora do Canal Spam ou Flood.', // Message that will be sent in chat upon kicking a user.
+    banMessage: '**{user_tag}** Foi BANIDO Por Spamar Fora do Canal Spam ou Flood.', // Message that will be sent in chat upon banning a user.
+    maxDuplicatesWarning: 7, // Amount of duplicate messages that trigger a warning.
+    maxDuplicatesKick: 10, // Amount of duplicate messages that trigger a warning.
+    maxDuplicatesBan: 12, // Amount of duplicate messages that trigger a warning.
+    exemptPermissions: ['ADMINISTRATOR'], // Bypass users with any of these permissions.
+    ignoreBots: true, // Ignore bot messages.
+    verbose: true, // Extended Logs from module.
+    ignoredUsers: [], // Array of User IDs that get ignored.
+    // And many more options... See the documentation.
+});
+const config = require("./config.json")
+const Discord = require("discord.js"); //Conexão com a livraria Discord.js
+const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] }), //Criação de um novo Client
+dir = "./commands/",
+prefix = config.prefix
+var commands = [];
 app.get("/", (request, response) => {
   const ping = new Date();
   ping.setHours(ping.getHours() - 3);
   console.log(`Ping recebido às ${ping.getUTCHours()}:${ping.getUTCMinutes()}:${ping.getUTCSeconds()}`);
-  response.sendStatus(200);
+  response.sendStatus(200); 
 });
 app.listen(process.env.PORT); // Recebe solicitações que o deixa online
 
-const Discord = require("discord.js"); //Conexão com a livraria Discord.js
-const client = new Discord.Client(); //Criação de um novo Client
-const config = require("./config.json"); //Pegando o prefixo do bot para respostas de comandos
 
+
+const eco = new enmap({
+    name: "economy",
+    cloneLevel: "deep",
+    fetchAll: false,
+    autoFetch: true
+});
+
+const settings = new enmap({
+    name: "settings",
+    autoFetch: true,
+    cloneLevel: "deep",
+    fetchAll: true
+});
+
+const cooldowns = new enmap({
+    name: "cooldowns",
+    cloneLevel: "deep",
+    fetchAll: false,
+    autoFetch: true
+})
+
+client.on('messageReactionAdd', async (reaction, user) => {
+  if (reaction.message.id == "805864246814179359"){
+    if (!user.bot) {
+    if (reaction.emoji.name == "✅") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(!guildMember.roles.cache.get(config.cargopermissao)){
+           guildMember.roles.add(config.cargopermissao);
+            }
+          }
+       }
+    }
+
+    if (reaction.message.id == "806255114381033503"){
+    if (!user.bot) {
+    if (reaction.emoji.name == "🎫") {
+    reaction.users.remove(user);
+
+        reaction.message.guild.channels.create(`ticket-${user.username}`, {
+            permissionOverwrites: [
+                {
+                    id: user.id,
+                    allow: ["SEND_MESSAGES", "VIEW_CHANNEL"]
+                },
+                {
+                    id: reaction.message.guild.roles.everyone,
+                    deny: ["VIEW_CHANNEL"]
+                }
+            ],
+            type: 'text'
+        }).then(async channel => {
+            const mensagim = await channel.send(`<@${user.id}>`, new Discord.MessageEmbed().setTitle("Bem Vindo Ao Seu ticket!").setDescription("Poupe Nosso Tempo e Seja Especifico Para Fechar Reaja Novamente").setColor("00ff00"))
+
+            mensagim.react("🎫")
+
+            client.on('messageReactionAdd', async (reaction, user) => {
+              if (reaction.message.id == mensagim.id){
+              if (!user.bot) {
+              if (reaction.emoji.name == "🎫") {
+                reaction.message.channel.delete();  
+            }
+            }
+            }
+            })
+        })
+    }
+    }
+    }
+});
+
+
+client.once("reconnecting", () => {
+  console.log("Reconnecting!");
+});
+
+client.once("disconnect", () => {
+  console.log("Disconnect!");
+});
 
 client.on("guildMemberAdd", async (member) => { 
-  await member.roles.add("804234677844967454")
-  let guild = await client.guilds.cache.get("794167456897564682");
-  let channel = await client.channels.cache.get("804224614846693386");
+  await member.roles.add(config.autorole)
+  let guild = await client.guilds.cache.get(config.sevid);
+  let channel = await client.channels.cache.get(config.canalboasvindas);
   let emoji = await member.guild.emojis.cache.find(emoji => emoji.name === "bemvindo");
   if (guild != member.guild) {
     return console.log("Sem boas-vindas pra você! Sai daqui saco pela.");
@@ -36,8 +139,8 @@ client.on("guildMemberAdd", async (member) => {
 });
 client.on("guildMemberRemove", async (member) => { 
 
-  let guild = await client.guilds.cache.get("794167456897564682");
-  let channel = await client.channels.cache.get("804222959509962803");
+  let guild = await client.guilds.cache.get(config.sevid);
+  let channel = await client.channels.cache.get(config.canalthauthau);
   let emoji = await member.guild.emojis.cache.find(emoji => emoji.name === "bye");
   if (guild != member.guild) {
     return console.log("Algum saco pela saiu do servidor. Mas não é nesse, então tá tudo bem :)");
@@ -55,30 +158,236 @@ client.on("guildMemberRemove", async (member) => {
     channel.send(embed);
   }
 });
-client.on("ready", () => {
+client.on("ready", async () => {
+  let guild = client.guilds.cache.get(config.sevid);
+  var canalkk = guild.channels.cache.find(ch => ch.id === config.cargosnpago);
+  canalkk.bulkDelete(50, true)
+
+  const msge = await canalkk.send(
+    new Discord.MessageEmbed()
+      .setColor('#9400D3')
+      .setTitle('**OQ É**')
+      .setDescription("reja com: \n'🚹' para ser homem, \n'🚺' para ser mulher, \n'🔞' para ser maior de 18 anos, \n'🧒' para ser menor de 18 anos")
+  )
+
+  const msg = await canalkk.send(
+    new Discord.MessageEmbed()
+      .setColor('#9400D3')
+      .setTitle('**OQ PROGRAMA**')
+      .setDescription("reja com: \n'🟨' para javascript, \n'🟦' para python, \n'💎' para php, \n'🍁' para HTML e CSS, \n'☀' para C, \n'🎇' para C++, \n'⛏' para C#")
+  )
+
+  let emojis = ["🟨", "🟦", "💎", "🍁", "🖥️", "🎇", "👾"];
+
+  for (const i in emojis) {
+    await msg.react(emojis[i])
+  }
+
+  emojis = ["🚹", "🚺", "🔞", "🧒"];
+
+  for (const i in emojis) {
+    await msge.react(emojis[i])
+  }
+
+
+
+
+  client.on('messageReactionAdd', async (reaction, user) => {
+  
+    if (reaction.message.id == msge.id){
+    if (!user.bot) {
+    if (reaction.emoji.name == "🚹") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(!guildMember.roles.cache.get(config.cargohomem)){
+           guildMember.roles.add(config.cargohomem);
+          }
+          }
+    if (reaction.emoji.name == "🚺") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(!guildMember.roles.cache.get(config.cargomulher)){
+           guildMember.roles.add(config.cargomulher);
+          }
+          }
+    if (reaction.emoji.name == "🔞") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(!guildMember.roles.cache.get(config.cargo18mais)){
+           guildMember.roles.add(config.cargo18mais);
+          }
+          }
+    if (reaction.emoji.name == "🧒") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(!guildMember.roles.cache.get(config.cargo18menos)){
+           guildMember.roles.add(config.cargo18menos);
+          }
+          }
+    }
+    }
+
+    if (reaction.message.id == msg.id){
+    if (!user.bot) {
+    if (reaction.emoji.name == "🟨") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(!guildMember.roles.cache.get(config.cargojs)){
+           guildMember.roles.add(config.cargojs);
+          }
+          }
+    if (reaction.emoji.name == "🟦") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(!guildMember.roles.cache.get(config.cargopy)){
+           guildMember.roles.add(config.cargopy);
+          }
+          }
+    if (reaction.emoji.name == "💎") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(!guildMember.roles.cache.get(config.cargophp)){
+           guildMember.roles.add(config.cargophp);
+          }
+          }
+    if (reaction.emoji.name == "🍁") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(!guildMember.roles.cache.get(config.cargohtmlcss)){
+           guildMember.roles.add(config.cargohtmlcss);
+          }
+          }
+    if (reaction.emoji.name == "🖥️") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(!guildMember.roles.cache.get(config.cargoc)){
+           guildMember.roles.add(config.cargoc);
+          }
+          }
+    if (reaction.emoji.name ==  "🎇") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(!guildMember.roles.cache.get(config.cargocpp)){
+           guildMember.roles.add(config.cargocpp);
+          }
+          }
+    if (reaction.emoji.name == "👾") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(!guildMember.roles.cache.get(config.cargocs)){
+           guildMember.roles.add(config.cargocs);
+          }
+          }
+    }
+    }
+});
+client.on('messageReactionRemove', async (reaction, user) => {
+
+    if (reaction.message.id == msge.id){
+    if (!user.bot) {
+    if (reaction.emoji.name == "🚹") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(guildMember.roles.cache.get(config.cargohomem)){
+           guildMember.roles.remove(config.cargohomem);
+          }
+          }
+    if (reaction.emoji.name == "🚺") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(guildMember.roles.cache.get(config.cargomulher)){
+           guildMember.roles.remove(config.cargomulher);
+          }
+          }
+    if (reaction.emoji.name == "🔞") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(guildMember.roles.cache.get(config.cargo18mais)){
+           guildMember.roles.remove(config.cargo18mais);
+          }
+          }
+    if (reaction.emoji.name == "🧒") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(guildMember.roles.cache.get(config.cargo18menos)){
+           guildMember.roles.remove(config.cargo18menos);
+          }
+          }
+    }
+    }
+
+    if (reaction.message.id == msg.id){
+    if (!user.bot) {
+    if (reaction.emoji.name == "🟨") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(guildMember.roles.cache.get(config.cargojs)){
+           guildMember.roles.remove(config.cargojs);
+          }
+          }
+    if (reaction.emoji.name == "🟦") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(guildMember.roles.cache.get(config.cargopy)){
+           guildMember.roles.remove(config.cargopy);
+          }
+          }
+    if (reaction.emoji.name == "💎") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(guildMember.roles.cache.get(config.cargophp)){
+           guildMember.roles.remove(config.cargophp);
+          }
+          }
+    if (reaction.emoji.name == "🍁") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(guildMember.roles.cache.get(config.cargohtmlcss)){
+           guildMember.roles.remove(config.cargohtmlcss);
+          }
+          }
+    if (reaction.emoji.name == "🖥️") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(guildMember.roles.cache.get(config.cargoc)){
+           guildMember.roles.remove(config.cargoc);
+          }
+          }
+    if (reaction.emoji.name ==  "🎇") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(guildMember.roles.cache.get(config.cargocpp)){
+           guildMember.roles.revove(config.cargocpp);
+          }
+          }
+    if (reaction.emoji.name == "👾") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(guildMember.roles.cache.get(config.cargocs)){
+           guildMember.roles.remove(config.cargocs);
+          }
+          }
+    }
+    }
+});
+
+
+let canalp = client.channels.cache.get(config.canalnummembros)
 console.log("Estou Online!")
+const scripts = fs.readdirSync(dir);
+    scripts.forEach(script=>{
+        props = require(`./commands/${script}`)
+
+        //console.log(`comando: !`+script.split(".js")[0]+` carregado com sucesso! \n**Descriçao:** ${props.help.description ? props.help.description : 'Não tem descrição'}, \n**usagem:** ${props.help.usage ? props.help.usage : "Não especificado"}, \n**Permissoes necesarias:** ${props.help.permisoes ? props.help.permisoes : "Não especificado"}.\n\n`)
+        commands.push(script.split(".js")[0])
+    });
+
+
 var i = 0;
-client.user.setActivity("estou online")
-var atividades = ["Pedra na Sua Mae","O Jogo da Cobrinha",`Estou em ${client.guilds} Servidores.`,"Nada","Estou Online","minha vida fora"]
-  setInterval(function () {client.user.setActivity(atividades[i]); i++; if (i == 6) {i = 0}}, 10000)
+client.user.setActivity("merda pela janela")
+var atividades = ["Pedra na Sua Mae","O Jogo da Cobrinha", `estou no ${guild.name} com ${guild.memberCount} membros :)`,"Nada","Estou Online","minha vida fora"]
+  setInterval(function () {client.user.setActivity(atividades[i]); i++; if (i == 6) {i = 0}; canalp.setName(`num de pessoas no sev: ${guild.memberCount}`);}, 10000)
 });
 
 client.on("raw", (dados) => {
   //console.log(dados)
-  //console.log(dados.d.username)
-  //if( == "<h1>henrique</h1>") console.log("foi")
 }) 
-client.on('message', message => {
+client.on('message', async message => {
+  if (message.channel.id != config.canalspam) {
+    antiSpam.message(message)
+  }
   
+
+
+  
+  await eco.ensure(`${message.author.id}-${message.guild.id}`, currentBalance = 0);
       if (message.content.split(" ")[0].toLowerCase() == "!kiss"){ 
-       if (message.channel != "804116608364576790") {
+       if (message.channel != config.areadobeijo) {
         message.delete()
         return message.reply("a BOBINHO você não pode beijar fora da area do beijo!")
 
       }
      }
      if (message.content.split(" ")[0].toLowerCase() == "!hug"){ 
-       if (message.channel != "804159975781040158") {
+       if (message.channel != config.areadoabraco) {
         message.delete()
         return message.reply("a BOBINHO você não pode abraçar fora da area do abraço!")
 
@@ -86,7 +395,7 @@ client.on('message', message => {
      }
       
 
-     if(message.content.toLowerCase() == "gay") {
+     if(message.content.includes("gay")) {
        if(!message.member.hasPermission('MANAGE_MESSAGES')) {
           message.channel.send(`é quem fala gaysão(a)`)
        } else {
@@ -94,9 +403,9 @@ client.on('message', message => {
        }
      } 
      
-      if (message.channel.id == "804014823847100496") {
+      if (message.channel.id == config.canalconfirmacao) {
         if (message.author.bot) return
-      if (message != "!eu-aceito-os-termos") {message.delete()} else {
+      if (message != `${prefix}eu-aceito-os-termos`) {message.delete()} else {
         if(message.author.roles.has("804006571171643424")) message.delete()
       }
     }
@@ -117,12 +426,35 @@ client.on('message', message => {
 
     try {
         const commandFile = require(`./commands/${command}.js`)
-        commandFile.run(client, message, args);
+        if (command != "help") {
+        commandFile.run(client, message, args, eco, cooldowns, ms, prefix, config);
+        } else {
+          commandFile.run(client, message, commands, prefix, config);
+        }
     } catch (err) {
     console.error('Erro:' + err);
-    message.reply(`Desculpe Mas O Comando '!${command}' \nNão Existe Digite !help Para Ver os Existentes!!!`);
+    message.reply(`Desculpe Mas O Comando '${prefix}${command}' \nNão Existe Digite ${prefix}help Para Ver os Existentes!!!`);
   }
-  
+
+
+
+
+    console.log(`o ${message.author.username} mandou !${command} ${args[0] ? `com ${message.content.split(`${prefix}${command} `)[1]}`: `sem`}  argumentos, no canal ${message.channel.name}`)
+
+    if(command == "daily") {
+        const cooldowndata = await cooldowns.get(`${message.author.id}-${message.guild.id}-daily`);
+        /*if(parseInt(cooldowndata) > Date.now()) return message.reply(`Please wait ${ms(parseInt(cooldowndata) - Date.now(), {long: true})}`)*/
+
+        await eco.ensure(`${message.author.id}-${message.guild.id}`, 0);
+        const currentBalance = await eco.get(`${message.author.id}-${message.guild.id}`);
+
+        /*message.channel.send(new Discord.MessageEmbed()
+            .setTitle("💵 Daily Reward!")
+            .setDescription(`You have claimed your daily reward! Your new balance is now ${currentBalance + 5}!`).setColor("00ff00")
+        )*/
+
+        /*cooldowns.set(`${message.author.id}-${message.guild.id}-daily`, Date.now() + ms("1d"))*/
+    }
 });
 
 

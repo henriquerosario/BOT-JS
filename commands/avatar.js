@@ -1,4 +1,5 @@
-const Discord = require("discord.js"); 
+const Discord = require("discord.js");
+ 
 
 exports.run = async (client, message, args) => {
 
@@ -13,4 +14,11 @@ exports.run = async (client, message, args) => {
     .setFooter(`• Autor: ${message.author.tag}`, message.author.displayAvatarURL({format: "png"}));
  await message.channel.send(embed); 
 
+
 };
+
+exports.help = {
+  permisoes: "Nenhuma",
+  description: "Mostra o Avatar de Alguem",
+  usage: "avatar @nome_pessoa"
+}

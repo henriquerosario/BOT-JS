@@ -29,3 +29,8 @@ let avatar = message.author.displayAvatarURL({format: 'png'});
         .setAuthor(message.author.tag, avatar);
   await message.channel.send(embed);
 }
+exports.help = {
+  permisoes: "Nenhuma",
+  description: "Da um Beijo na Pessoa q Quer Beijar",
+  usage: "kiss @nome_pessoa"
+}

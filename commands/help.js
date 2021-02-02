@@ -1,19 +1,65 @@
-const Discord = require('discord.js');
+const discord = require('discord.js')
+const config = require("../config.json"),
+prefix = config.prefix
 
-exports.run = (client, message, args) => {
-    console.log(`o ${message.author} enviou ${message} com ${args[0]} argumentos`)
-    const exampleEmbed = new Discord.MessageEmbed()
-	.setColor('#9400D3')
-    .setTitle('OS COMANDOS DO BOT:')
-	.setAuthor('Henrique Franchesco', `https://cdn.discordapp.com/icons/${message.guild.id}/${message.guild.icon}.png`, "http://henriques-site.great-site.net")
-	.setDescription('Aqui Ficam Os Comandos Do Bot')
-	.addFields(
-		{ name: 'COMANDOS:', value: 'os comandos para uma lista completa !comhelp' },
-        { name: '\u200B', value: '\u200B' },
-		{ name: '!help', value: 'retorna: A Lista De Comandos', inline: true },
-		{ name: '!clear <valor>', value: 'limpa as msgs \n * só funciona se você tiver o \n privilegio de mexer nas msgs', inline: true },
-	)
-    .setTimestamp()
-    
-message.channel.send(exampleEmbed);
+
+exports.run = (bot, message, commands) => {
+  var des = ""
+  var des2 = ""
+  var desn = 0
+  var des3 = ""
+  var des4 = ""
+  var des5 = ""
+    commands.forEach(script=>{
+      props = require(`./${script}`)
+      des += `\n **${prefix}${script}**: \n**Descriçao:** ${props.help.description ? props.help.description : 'Não tem descrição'}, \n**usagem:** !${props.help.usage ? props.help.usage : "Não especificado"}, \n**Permissoes necesarias:** ${props.help.permisoes ? props.help.permisoes : "Não especificado"}.\n\n`
+      desn++
+      if (desn >= 10) {
+        des5 = des4
+        des4 = des3
+        des3 = des2
+        des2 = des
+        des = ""
+        desn = 0
+      }
+    }); 
+    const comEmbed = new discord.MessageEmbed()
+      .setColor('#9400D3')
+      .setTitle('OS COMANDOS DO BOT:')
+      .setDescription(des5)
+
+      message.reply(comEmbed)
+    if (des4 != '') {
+      const comEmbed4 = new discord.MessageEmbed()
+      .setColor('#9400D3')
+      .setDescription(des4)
+
+      message.reply(comEmbed4)
+    }
+    if (des3 != '') {
+      const comEmbed3 = new discord.MessageEmbed()
+      .setColor('#9400D3')
+      .setDescription(des3)
+
+      message.reply(comEmbed3)
+    }
+    if (des2 != '') {
+      const comEmbed2 = new discord.MessageEmbed()
+      .setColor('#9400D3')
+      .setDescription(des2)
+
+      message.reply(comEmbed2)
+    }
+    if (des != '') {
+      const comEmbed1 = new discord.MessageEmbed()
+      .setColor('#9400D3')
+      .setDescription(des)
+
+      message.reply(comEmbed1)
+    }
+}
+exports.help = {
+  permisoes: "Nenhuma",
+  description: "Mostra **TODOS** os comandos",
+  usage: "!help"
 }

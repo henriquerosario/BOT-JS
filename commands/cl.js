@@ -1,6 +1,5 @@
 const discord = require('discord.js');
 exports.run = (client, message, args) => {
-    console.log(`o ${message.author} enviou ${message} com ${args[0]} argumentos`)
     if (!message.member.hasPermission('MANAGE_MESSAGES')){
         message.channel.send(`ei ${message.author} você não tem permissão para fazer isso peça para algem q tem! >:(`) 
         return};
@@ -19,4 +18,9 @@ exports.run = (client, message, args) => {
         message.delete()
         message.channel.bulkDelete(args[0], true)
     }
+}
+exports.help = {
+  permisoes: "Manejar Mensagens",
+  description: "limpa mensagens",
+  usage: "cl numero_de_mensagens"
 }
