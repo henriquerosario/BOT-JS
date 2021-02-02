@@ -1,8 +1,8 @@
 {
-  "prefix": "!",
+  "prefix": "!", 
   "areadobeijo": "804116608364576790",
   "areadoabraco": "804159975781040158",
-  "canalconfirmacao": "804014823847100496",
+  "canalconfirmacao": "805853852536406107",
   "cargopermissao": "804006571171643424",
   "canaldobanco": "804817774312423444",
   "canalboton": "805590467164504074",
@@ -27,5 +27,6 @@
   "cargocs": "806215528246411305",
   "cargosnpago": "805894342740410508",
   "cargo18mais": "806243414815408158",
-  "cargo18menos": "806243560587919370"
+  "cargo18menos": "806243560587919370",
+  "canaltiket": "805861958455787530"
 }

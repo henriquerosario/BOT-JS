@@ -58,63 +58,10 @@ const cooldowns = new enmap({
     autoFetch: true
 })
 
-client.on('messageReactionAdd', async (reaction, user) => {
-  if (reaction.message.id == "805864246814179359"){
-    if (!user.bot) {
-    if (reaction.emoji.name == "✅") {
-    const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(config.cargopermissao)){
-           guildMember.roles.add(config.cargopermissao);
-            }
-          }
-       }
-    }
-
-    if (reaction.message.id == "806255114381033503"){
-    if (!user.bot) {
-    if (reaction.emoji.name == "🎫") {
-    reaction.users.remove(user);
-
-        reaction.message.guild.channels.create(`ticket-${user.username}`, {
-            permissionOverwrites: [
-                {
-                    id: user.id,
-                    allow: ["SEND_MESSAGES", "VIEW_CHANNEL"]
-                },
-                {
-                    id: reaction.message.guild.roles.everyone,
-                    deny: ["VIEW_CHANNEL"]
-                }
-            ],
-            type: 'text'
-        }).then(async channel => {
-            const mensagim = await channel.send(`<@${user.id}>`, new Discord.MessageEmbed().setTitle("Bem Vindo Ao Seu ticket!").setDescription("Poupe Nosso Tempo e Seja Especifico Para Fechar Reaja Novamente").setColor("00ff00"))
-
-            mensagim.react("🎫")
-
-            client.on('messageReactionAdd', async (reaction, user) => {
-              if (reaction.message.id == mensagim.id){
-              if (!user.bot) {
-              if (reaction.emoji.name == "🎫") {
-                reaction.message.channel.delete();  
-            }
-            }
-            }
-            })
-        })
-    }
-    }
-    }
-});
 
 
-client.once("reconnecting", () => {
-  console.log("Reconnecting!");
-});
 
-client.once("disconnect", () => {
-  console.log("Disconnect!");
-});
+
 
 client.on("guildMemberAdd", async (member) => { 
   await member.roles.add(config.autorole)
@@ -160,8 +107,12 @@ client.on("guildMemberRemove", async (member) => {
 });
 client.on("ready", async () => {
   let guild = client.guilds.cache.get(config.sevid);
+  var canalconfirmacao = guild.channels.cache.find(ch => ch.id === config.canalconfirmacao);
+  var canaltiket = guild.channels.cache.find(ch => ch.id === config.canaltiket);
   var canalkk = guild.channels.cache.find(ch => ch.id === config.cargosnpago);
   canalkk.bulkDelete(50, true)
+  canaltiket.bulkDelete(50, true)
+  canalconfirmacao.bulkDelete(50, true)
 
   const msge = await canalkk.send(
     new Discord.MessageEmbed()
@@ -177,6 +128,18 @@ client.on("ready", async () => {
       .setDescription("reja com: \n'🟨' para javascript, \n'🟦' para python, \n'💎' para php, \n'🍁' para HTML e CSS, \n'☀' para C, \n'🎇' para C++, \n'⛏' para C#")
   )
 
+  const msgei = await canalconfirmacao.send(
+    new Discord.MessageEmbed()
+      .setColor('#9400D3')
+      .setDescription("reja com '✅' para desbloquear o servidor!!")
+  )
+
+  const msgeei = await canaltiket.send(
+    new Discord.MessageEmbed()
+      .setColor('#9400D3')
+      .setDescription("MAQUINA DE TICKETS REAJA PARA ABRIR UM")
+  )
+
   let emojis = ["🟨", "🟦", "💎", "🍁", "🖥️", "🎇", "👾"];
 
   for (const i in emojis) {
@@ -189,11 +152,70 @@ client.on("ready", async () => {
     await msge.react(emojis[i])
   }
 
+  emojis = ["✅"];
 
+  for (const i in emojis) {
+    await msgei.react(emojis[i])
+  }
+
+  emojis = ["🎫"];
+
+  for (const i in emojis) {
+    await msgeei.react(emojis[i])
+  }
+
+
+
+  
 
 
   client.on('messageReactionAdd', async (reaction, user) => {
-  
+    if (reaction.message.id == msgei.id){
+    if (!user.bot) {
+    if (reaction.emoji.name == "✅") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(!guildMember.roles.cache.get(config.cargopermissao)){
+           await guildMember.roles.add(config.cargopermissao);
+            }
+          }
+       }
+    }
+
+    if (reaction.message.id == msgeei.id){
+    if (!user.bot) {
+    if (reaction.emoji.name == "🎫") {
+    reaction.users.remove(user);
+
+        reaction.message.guild.channels.create(`ticket-${user.username}`, {
+            permissionOverwrites: [
+                {
+                    id: user.id,
+                    allow: ["SEND_MESSAGES", "VIEW_CHANNEL"]
+                },
+                {
+                    id: reaction.message.guild.roles.everyone,
+                    deny: ["VIEW_CHANNEL"]
+                }
+            ],
+            type: 'text'
+        }).then(async channel => {
+            const mensagim = await channel.send(`<@${user.id}>`, new Discord.MessageEmbed().setTitle("Bem Vindo Ao Seu ticket!").setDescription("Poupe Nosso Tempo e Seja Especifico Para Fechar Reaja Novamente").setColor("00ff00"))
+
+            mensagim.react("🎫")
+
+            client.on('messageReactionAdd', async (reaction, user) => {
+              if (reaction.message.id == mensagim.id){
+              if (!user.bot) {
+              if (reaction.emoji.name == "🎫") {
+                await reaction.message.channel.delete();  
+            }
+            }
+            }
+            })
+        })
+    }
+    }
+    }
     if (reaction.message.id == msge.id){
     if (!user.bot) {
     if (reaction.emoji.name == "🚹") {
