@@ -56,3 +56,7 @@ https://www.youtube.com/watch?v=wez-McwS7mo
 passo 6: adicione o seu bot ao seu discord https://www.youtube.com/watch?v=KYnXhtyqQRQ // link do video q encina
 
 passo 7: aprecie o seu bot :)
+
+# caso buge
+
+entre no server https://discord.gg/aeMEjsF2Fj (discord) e relate o bug COMO TICKET
