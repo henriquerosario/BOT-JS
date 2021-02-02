@@ -292,6 +292,7 @@ client.on("ready", async () => {
           }
     }
     }
+    reaction.users.remove(user);
 });
 client.on('messageReactionRemove', async (reaction, user) => {
 
@@ -370,7 +371,7 @@ client.on('messageReactionRemove', async (reaction, user) => {
           }
     }
     }
-    reaction.users.remove(user);
+    
 });
 
 
