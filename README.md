@@ -1,4 +1,4 @@
-# BOT-JS
+# BOT-JS leia para saber como uzar
 para utilizar o meu bot:
 passo 1: crie uma conta na replit neste link: https://repl.it
 
