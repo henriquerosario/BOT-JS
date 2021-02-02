@@ -38,10 +38,11 @@ informaçoes em config.json:
   "cargosnpago": "805894342740410508", // canal onde ganhará os gargos ex: homem, mulher etc... 
   "cargo18mais": "806243414815408158", // cargo de +18 anos 
   "cargo18menos": "806243560587919370", // cargo de -18 anos
-  "canaltiket": "805861958455787530" // canal q pode ser aberto um ticket
+  "canaltiket": "805861958455787530", // canal q pode ser aberto um ticket
+  "categoriatickets": "806305101550714891" // categoria onde o canal criado pelo ticket ficara
 ```
 
-passo 4: mude o arquivo .env 
+passo 4: crie o arquivo .env 
 
 coisas contidas no arquivo .env:
 ```env

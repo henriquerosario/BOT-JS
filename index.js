@@ -198,7 +198,8 @@ client.on("ready", async () => {
                     deny: ["VIEW_CHANNEL"]
                 }
             ],
-            type: 'text'
+            type: 'text',
+            parent: config.categoriatickets
         }).then(async channel => {
             const mensagim = await channel.send(`<@${user.id}>`, new Discord.MessageEmbed().setTitle("Bem Vindo Ao Seu ticket!").setDescription("Poupe Nosso Tempo e Seja Especifico Para Fechar Reaja Novamente").setColor("00ff00"))
 
