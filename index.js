@@ -170,6 +170,7 @@ client.on("ready", async () => {
 
 
   client.on('messageReactionAdd', async (reaction, user) => {
+
     if (reaction.message.id == msgei.id){
     if (!user.bot) {
     if (reaction.emoji.name == "✅") {
@@ -184,7 +185,7 @@ client.on("ready", async () => {
     if (reaction.message.id == msgeei.id){
     if (!user.bot) {
     if (reaction.emoji.name == "🎫") {
-    reaction.users.remove(user);
+
 
         reaction.message.guild.channels.create(`ticket-${user.username}`, {
             permissionOverwrites: [
@@ -369,6 +370,7 @@ client.on('messageReactionRemove', async (reaction, user) => {
           }
     }
     }
+    reaction.users.remove(user);
 });
 
 
