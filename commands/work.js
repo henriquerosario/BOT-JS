@@ -22,7 +22,7 @@ const currentBalance = await eco.get(`${message.author.id}-${message.guild.id}`)
   
   let answer;
   try {
-    answer = random[randomresult] * (workresult + 1);
+    answer = random[randomresult] * (workresult + 2);
   } catch (err) {
     return message.reply(`**Quantia inválida** ${err}`);
   }
