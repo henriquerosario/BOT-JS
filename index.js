@@ -396,6 +396,12 @@ client.on("raw", (dados) => {
   //console.log(dados)
 }) 
 client.on('message', async message => {
+  const cooldowndatamute = cooldowns.get(`${message.author.id}-${message.guild.id}-mute`);
+  if(parseInt(cooldowndatamute) > Date.now()) {
+    message.reply(`ainda faltão ${parseInt(cooldowndatamute) - Date.now()} milesegundos para poder falar novamente`)
+    message.delete()
+    return
+    }
   if (message.channel.id != config.canalspam) {
     antiSpam.message(message)
   }
