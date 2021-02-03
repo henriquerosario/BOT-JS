@@ -19,6 +19,7 @@ if(parseInt(cooldowndata) > Date.now()) {
     client.on('messageReactionAdd', async (reaction, user) => {
     if (reaction.message.id == msg.id){
     if (!user.bot) {
+    if (user.id != message.author.id) return reaction.users.remove(user);
     if (reaction.emoji.name == "🔴") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
        if(!guildMember.roles.cache.get("804519118026833942")){
@@ -79,6 +80,7 @@ if(parseInt(cooldowndata) > Date.now()) {
   client.on('messageReactionAdd', async (reaction, user) => {
     if (reaction.message.id == msg.id){
     if (!user.bot) {
+    if (user.id != message.author.id) return reaction.users.remove(user);
     if (reaction.emoji.name == "🔴") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
        if(!guildMember.roles.cache.get("804519118026833942")){
