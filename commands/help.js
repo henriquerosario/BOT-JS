@@ -79,6 +79,6 @@ exports.run = (bot, message, commands) => {
 }
 exports.help = {
   permisoes: "Nenhuma",
-  description: "Mostra **TODOS** os comandos",
+  description: "Mostra **TODOS** os comandos ou o comando desejado",
   usage: "help || !help comando"
 }
