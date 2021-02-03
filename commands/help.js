@@ -3,7 +3,7 @@ const config = require("../config.json"),
 prefix = config.prefix
 
 
-exports.run = (bot, message, commands) => {
+exports.run = (bot, message, commands, args) => {
   var des = ""
   var des2 = ""
   var desn = 0
@@ -23,6 +23,7 @@ exports.run = (bot, message, commands) => {
         desn = 0
       }
     }); 
+
     const comEmbed = new discord.MessageEmbed()
       .setColor('#9400D3')
       .setTitle('OS COMANDOS DO BOT:')

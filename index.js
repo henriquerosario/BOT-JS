@@ -460,7 +460,7 @@ client.on('message', async message => {
         if (command != "help") {
         commandFile.run(client, message, args, eco, cooldowns, ms, prefix, config);
         } else {
-          commandFile.run(client, message, commands, prefix, config);
+          commandFile.run(client, message, commands, prefix, config, args);
         }
     } catch (err) {
     console.error('Erro:' + err);
