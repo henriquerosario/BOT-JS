@@ -39,7 +39,8 @@ informaçoes em config.json:
   "cargo18mais": "806243414815408158", // cargo de +18 anos 
   "cargo18menos": "806243560587919370", // cargo de -18 anos
   "canaltiket": "805861958455787530", // canal q pode ser aberto um ticket
-  "categoriatickets": "806305101550714891" // categoria onde o canal criado pelo ticket ficara
+  "categoriatickets": "806305101550714891", // categoria onde o canal criado pelo ticket ficara
+  "canalban": "804161181652353045" // canal q notificara se alguem foi espulso ou banido de seu servidor
 ```
 
 passo 4: crie o arquivo .env 
