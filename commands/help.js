@@ -32,7 +32,7 @@ exports.run = (bot, message, commands) => {
     }); 
 
     if (args[0]) {
-      if (des == "") {des = `o comando ${args[0]} não existe digite !help para ver os existentes`}
+      if (des == "") {des = `não existe digite !help para ver os existentes`}
       const comEmbed = new discord.MessageEmbed()
       .setColor('#9400D3')
       .setTitle(`O COMANDO ${args[0]}:`)
