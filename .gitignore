@@ -1,5 +1,5 @@
-.sqlite-wal
 .replit
+data/
+.sqlite-wal
 .sqlite
 .sqlite-shm
-data/
