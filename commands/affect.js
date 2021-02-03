@@ -12,5 +12,5 @@ exports.run = async (client, message, args) => {
 exports.help = {
   permisoes: "Nenhuma",
   description: "Gera o meme Affect",
-  usage: "affect"
+  usage: "affect @nome_pessoa"
 }
