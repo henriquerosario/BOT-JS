@@ -80,5 +80,5 @@ exports.run = (bot, message, commands) => {
 exports.help = {
   permisoes: "Nenhuma",
   description: "Mostra **TODOS** os comandos",
-  usage: "!help"
+  usage: "help || !help comando"
 }
