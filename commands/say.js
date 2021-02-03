@@ -1,7 +1,7 @@
 const discord = require('discord.js');
 const config = require("../config.json")
 
-exports.run = (bot, message, args, eco, cooldowns, ms) => {
+exports.run = async (bot, message, args, eco, cooldowns, ms) => {
   
 
   let avatar = message.author.displayAvatarURL({format: 'png'});
@@ -22,6 +22,7 @@ if(parseInt(cooldowndatavip) > Date.now()) {
   message.channel.send(exampleEmbed);
 } else {
   message.channel.send(exampleEmbed);
+  const currentBalance = await eco.get(`${message.author.id}-${message.guild.id}`);
   eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 50);
   message.reply("isso te custou R$50 pois não é vip")
 }

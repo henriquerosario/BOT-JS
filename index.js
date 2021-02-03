@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const enmap = require("enmap");
 const fs = require("fs")
+const filtro = require('./filtro.json')
 const ms = require("ms")
 const AntiSpam = require('discord-anti-spam');
 const antiSpam = new AntiSpam({
@@ -126,9 +127,11 @@ client.on("ready", async () => {
   var atividades = ["Pedra na Sua Mae","O Jogo da Cobrinha", `estou no ${guild.name} com ${guild.memberCount} membros :)`,"Nada","Estou Online","minha vida fora"]
     setInterval(function () {client.user.setActivity(atividades[i]); i++; if (i == 6) {i = 0}; canalp.setName(`num de pessoas no sev: ${guild.memberCount}`);}, 10000)
 
+
   canalkk.bulkDelete(50, true)
   canaltiket.bulkDelete(50, true)
   canalconfirmacao.bulkDelete(50, true)
+  
 
   const msge = await canalkk.send(
     new Discord.MessageEmbed()
@@ -136,13 +139,16 @@ client.on("ready", async () => {
       .setTitle('**OQ É**')
       .setDescription("reja com: \n'🚹' para ser homem, \n'🚺' para ser mulher, \n'🔞' para ser maior de 18 anos, \n'🧒' para ser menor de 18 anos")
   )
+  
 
+  /*aki ta dando erro*/ 
   const msg = await canalkk.send(
     new Discord.MessageEmbed()
       .setColor('#9400D3')
       .setTitle('**OQ PROGRAMA**')
       .setDescription("reja com: \n'🟨' para javascript, \n'🟦' para python, \n'💎' para php, \n'🍁' para HTML e CSS, \n'☀' para C, \n'🎇' para C++, \n'👾' para C#")
   )
+  /* aki n mais*/
 
   const msgei = await canalconfirmacao.send(
     new Discord.MessageEmbed()
@@ -163,7 +169,7 @@ client.on("ready", async () => {
       .setDescription("reja com: \n'🐶' para DOG, \n'🐱' para CAT, \n'🐀' para OUTRO")
   )
 
-
+  
   let emojis = ["🟨", "🟦", "💎", "🍁", "🖥️", "🎇", "👾"];
 
   for (const i in emojis) {
@@ -195,7 +201,7 @@ client.on("ready", async () => {
   }
 
 
-
+  
   
 
 
@@ -473,6 +479,13 @@ client.on('message', async message => {
     antiSpam.message(message)
   }
   
+  if (message.channel.id != config.canalmais18) {
+    Object.keys(filtro.palavras).forEach(chave => {
+          if (message.content.toLowerCase().includes(filtro.palavras[chave])) {
+              message.delete()
+          }
+    })
+  }
 
   if (message.channel.id != config.canaldivulgacao) {
   const regex = /(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li|club)|discordapp\.com\/invite|discord\.com\/invite)\/.+[a-z]/gi;
