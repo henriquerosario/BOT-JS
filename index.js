@@ -112,6 +112,20 @@ client.on("ready", async () => {
   var canalconfirmacao = guild.channels.cache.find(ch => ch.id === config.canalconfirmacao);
   var canaltiket = guild.channels.cache.find(ch => ch.id === config.canaltiket);
   var canalkk = guild.channels.cache.find(ch => ch.id === config.cargosnpago);
+  let canalp = client.channels.cache.get(config.canalnummembros)
+  console.log("Estou Online!")
+  const scripts = fs.readdirSync(dir);
+  scripts.forEach(script=>{
+    props = require(`./commands/${script}`)
+      commands.push(script.split(".js")[0])
+  });
+
+
+  var i = 0;
+  client.user.setActivity("merda pela janela")
+  var atividades = ["Pedra na Sua Mae","O Jogo da Cobrinha", `estou no ${guild.name} com ${guild.memberCount} membros :)`,"Nada","Estou Online","minha vida fora"]
+    setInterval(function () {client.user.setActivity(atividades[i]); i++; if (i == 6) {i = 0}; canalp.setName(`num de pessoas no sev: ${guild.memberCount}`);}, 10000)
+
   canalkk.bulkDelete(50, true)
   canaltiket.bulkDelete(50, true)
   canalconfirmacao.bulkDelete(50, true)
@@ -437,21 +451,6 @@ client.on('messageReactionRemove', async (reaction, user) => {
 });
 
 
-let canalp = client.channels.cache.get(config.canalnummembros)
-console.log("Estou Online!")
-const scripts = fs.readdirSync(dir);
-    scripts.forEach(script=>{
-        props = require(`./commands/${script}`)
-
-        //console.log(`comando: !`+script.split(".js")[0]+` carregado com sucesso! \n**Descriçao:** ${props.help.description ? props.help.description : 'Não tem descrição'}, \n**usagem:** ${props.help.usage ? props.help.usage : "Não especificado"}, \n**Permissoes necesarias:** ${props.help.permisoes ? props.help.permisoes : "Não especificado"}.\n\n`)
-        commands.push(script.split(".js")[0])
-    });
-
-
-var i = 0;
-client.user.setActivity("merda pela janela")
-var atividades = ["Pedra na Sua Mae","O Jogo da Cobrinha", `estou no ${guild.name} com ${guild.memberCount} membros :)`,"Nada","Estou Online","minha vida fora"]
-  setInterval(function () {client.user.setActivity(atividades[i]); i++; if (i == 6) {i = 0}; canalp.setName(`num de pessoas no sev: ${guild.memberCount}`);}, 10000)
 });
 
 client.on("raw", (dados) => {
