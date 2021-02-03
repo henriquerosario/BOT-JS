@@ -31,8 +31,10 @@ app.get("/", (request, response) => {
   const ping = new Date();
   ping.setHours(ping.getHours() - 3);
   console.log(`Ping recebido às ${ping.getUTCHours()}:${ping.getUTCMinutes()}:${ping.getUTCSeconds()}`);
+
+  
   response.sendStatus(200); 
-});
+})
 app.listen(process.env.PORT); // Recebe solicitações que o deixa online
 
 
@@ -397,11 +399,17 @@ client.on("raw", (dados) => {
 }) 
 client.on('message', async message => {
   const cooldowndatamute = cooldowns.get(`${message.author.id}-${message.guild.id}-mute`);
+  const currentMute = await eco.get(`${message.author.id}-${message.guild.id}-mute`);
   if(parseInt(cooldowndatamute) > Date.now()) {
     message.reply(`ainda faltão ${ms(parseInt(cooldowndatamute) - Date.now(), {long: true})} para poder falar novamente`)
     message.delete()
     return
     }
+  if (currentMute > 0) {
+    message.reply(`voce esta mutado(a)`)
+    message.delete()
+    return
+  }
   if (message.channel.id != config.canalspam) {
     antiSpam.message(message)
   }

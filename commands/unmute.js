@@ -13,11 +13,13 @@ if (message.mentions.users.first() || client.users.cache.get(args[0])) {
     return message.reply("mensione alguem");
 }
 
-if(!args[0]) {
-  return message.reply("quanto tempo? use !mute tempo(atributo) @pessoa, atributos: D = dia, H = hora, M = minutos e m = milesegundos")
+if(!user) {
+  return message.reply("Quem?")
 }
 
 cooldowns.set(`${user.id}-${message.guild.id}-mute`, 0)
+await eco.ensure(`${user.id}-${message.guild.id}`, 0);
+eco.set(`${user.id}-${message.guild.id}-mute`, 0);
 const cooldowndata = cooldowns.get(`${user.id}-${message.guild.id}-mute`);
 message.reply(`${message.author} o(a) ${user} foi desmutado(a) com sucesso`)
 message.delete()

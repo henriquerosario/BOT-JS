@@ -18,7 +18,7 @@ informaçoes em config.json:
   "canalconfirmacao": "804014823847100496", // canal confirmaçao onde sera permitido confirmar
   "cargopermissao": "804006571171643424", // o cargo q sera dado quando a pessoa clicar para desbloquear o server
   "canaldobanco": "804817774312423444", // canal do banco onde a pessoa pode consultar seu dinheiro
-  "canalboton": "805590467164504074", // não me lembro para q serve kkkkk
+  "canalboton": "805590467164504074", // canal onde sera avisado q o bot está on
   "areadocargo": "804525195876237363", // canal q é possivel comprar cargos
   "canalsugestao": "805832424146862141", // canal q sera recebida a sugestão do membro para todos voterem y/n
   "cargohomem": "805895989826813964", // cargo q recebera se for homem
