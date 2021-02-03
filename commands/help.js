@@ -3,7 +3,11 @@ const config = require("../config.json"),
 prefix = config.prefix
 
 
-exports.run = (bot, message, commands, args) => {
+exports.run = (bot, message, commands) => {
+  const args = message.content
+        .trim().slice(config.prefix.length)
+        .split(/ +/g);
+  const command = args.shift().toLowerCase();
   var des = ""
   var des2 = ""
   var desn = 0
@@ -11,6 +15,9 @@ exports.run = (bot, message, commands, args) => {
   var des4 = ""
   var des5 = ""
     commands.forEach(script=>{
+      if (args[0]) {
+        if (script != args[0]) return
+      }
       props = require(`./${script}`)
       des += `\n **${prefix}${script}**: \n**Descriçao:** ${props.help.description ? props.help.description : 'Não tem descrição'}, \n**usagem:** !${props.help.usage ? props.help.usage : "Não especificado"}, \n**Permissoes necesarias:** ${props.help.permisoes ? props.help.permisoes : "Não especificado"}.\n\n`
       desn++
@@ -23,6 +30,17 @@ exports.run = (bot, message, commands, args) => {
         desn = 0
       }
     }); 
+
+    if (args[0]) {
+      if (des == "") {des = `o comando ${args[0]} não existe digite !help para ver os existentes`}
+      const comEmbed = new discord.MessageEmbed()
+      .setColor('#9400D3')
+      .setTitle(`O COMANDO ${args[0]}:`)
+      .setDescription(des)
+
+      message.reply(comEmbed)
+      return
+    }
 
     const comEmbed = new discord.MessageEmbed()
       .setColor('#9400D3')
