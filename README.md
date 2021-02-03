@@ -1,5 +1,8 @@
 # BOT-JS leia para saber como uzar
 para utilizar o meu bot:
+
+IGNORE A PASTA DATA POIS SÓ DEIXARA PESADO SEU BOT COM OS DADOS DE OUTRAS PESSOAS EX: QUANTO DINHEIRO FALSO ELAS TEM!!!
+
 passo 1: crie uma conta na replit neste link: https://repl.it
 
 passo 2: crie um repl e importe meu bot do GitHub com o link: https://github.com/henriquerosario/BOT-JS
