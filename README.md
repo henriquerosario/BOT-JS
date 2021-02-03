@@ -44,7 +44,10 @@ informaçoes em config.json:
   "canaltiket": "805861958455787530", // canal q pode ser aberto um ticket
   "categoriatickets": "806305101550714891", // categoria onde o canal criado pelo ticket ficara
   "canalban": "804161181652353045", // canal q notificara se alguem foi espulso ou banido de seu servidor
-  "canaldivulgacao": "806239614230462474" // canal q é permitido divulgar outras coisas ex: servers
+  "canaldivulgacao": "806239614230462474", // canal q é permitido divulgar outras coisas ex: servers
+  "cargodog": "806585835192451102", // cargo q sera dado se o usuario tiver um dog
+  "cargocat": "806585915949973504", // cargo q sera dado se o usuario tiver um gato
+  "cargooutro": "806586022577176617" // cargo q sera dado se o usuario tiver outro animal
 ```
 
 passo 4: crie o arquivo .env 

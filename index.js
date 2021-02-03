@@ -127,7 +127,7 @@ client.on("ready", async () => {
     new Discord.MessageEmbed()
       .setColor('#9400D3')
       .setTitle('**OQ PROGRAMA**')
-      .setDescription("reja com: \n'🟨' para javascript, \n'🟦' para python, \n'💎' para php, \n'🍁' para HTML e CSS, \n'☀' para C, \n'🎇' para C++, \n'⛏' para C#")
+      .setDescription("reja com: \n'🟨' para javascript, \n'🟦' para python, \n'💎' para php, \n'🍁' para HTML e CSS, \n'☀' para C, \n'🎇' para C++, \n'👾' para C#")
   )
 
   const msgei = await canalconfirmacao.send(
@@ -142,10 +142,24 @@ client.on("ready", async () => {
       .setDescription("MAQUINA DE TICKETS REAJA PARA ABRIR UM")
   )
 
+  const msgcu = await canalkk.send(
+    new Discord.MessageEmbed()
+      .setColor('#9400D3')
+      .setTitle('**QUAIS ANIMAIS TEM?**')
+      .setDescription("reja com: \n'🐶' para DOG, \n'🐱' para CAT, \n'🐀' para OUTRO")
+  )
+
+
   let emojis = ["🟨", "🟦", "💎", "🍁", "🖥️", "🎇", "👾"];
 
   for (const i in emojis) {
     await msg.react(emojis[i])
+  }
+
+  emojis = ["🐶", "🐱", "🐀"];
+
+  for (const i in emojis) {
+    await msgcu.react(emojis[i])
   }
 
   emojis = ["🚹", "🚺", "🔞", "🧒"];
@@ -179,6 +193,29 @@ client.on("ready", async () => {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
        if(!guildMember.roles.cache.get(config.cargopermissao)){
            await guildMember.roles.add(config.cargopermissao);
+            }
+          }
+       }
+    }
+
+    if (reaction.message.id == msgcu.id){
+    if (!user.bot) {
+    if (reaction.emoji.name == "🐶") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(!guildMember.roles.cache.get(config.cargodog)){
+           await guildMember.roles.add(config.cargodog);
+            }
+          }
+    if (reaction.emoji.name == "🐱") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(!guildMember.roles.cache.get(config.cargocat)){
+           await guildMember.roles.add(config.cargocat);
+            }
+          }
+    if (reaction.emoji.name == "🐀") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(!guildMember.roles.cache.get(config.cargooutro)){
+           await guildMember.roles.add(config.cargooutro);
             }
           }
        }
@@ -297,6 +334,29 @@ client.on("ready", async () => {
     }
 });
 client.on('messageReactionRemove', async (reaction, user) => {
+
+  if (reaction.message.id == msgcu.id){
+    if (!user.bot) {
+    if (reaction.emoji.name == "🐶") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(guildMember.roles.cache.get(config.cargodog)){
+           await guildMember.roles.remove(config.cargodog);
+            }
+          }
+    if (reaction.emoji.name == "🐱") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(guildMember.roles.cache.get(config.cargocat)){
+           await guildMember.roles.remove(config.cargocat);
+            }
+          }
+    if (reaction.emoji.name == "🐀") {
+    const guildMember = reaction.message.guild.members.cache.get(user.id)
+       if(guildMember.roles.cache.get(config.cargooutro)){
+           await guildMember.roles.remove(config.cargooutro);
+            }
+          }
+       }
+    }
 
     if (reaction.message.id == msge.id){
     if (!user.bot) {
