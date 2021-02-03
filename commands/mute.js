@@ -24,5 +24,5 @@ message.delete()
 exports.help = {
   permisoes: "Manejar msgs",
   description: "muta alguem",
-  usage: "desmute @nome_pessoa"
+  usage: "mute @nome_pessoa"
 }

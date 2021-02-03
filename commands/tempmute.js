@@ -25,5 +25,5 @@ message.delete()
 exports.help = {
   permisoes: "Manejar msgs",
   description: "muta alguem por um tempo",
-  usage: "!mute tempo(atributo) @nome_pessoa"
+  usage: "tempmute tempo(atributo) @nome_pessoa"
 }
