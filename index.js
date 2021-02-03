@@ -407,6 +407,15 @@ client.on('message', async message => {
   }
   
 
+  if (message.channel.id != config.canaldivulgacao) {
+  const regex = /(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li|club)|discordapp\.com\/invite|discord\.com\/invite)\/.+[a-z]/gi;
+  if (regex.exec(message.content)) {
+    await message.delete({timeout: 1000});
+      await message.channel.send(
+        `${message.author} **você não pode postar link de outros servidores aqui! use o canal divulgaçao dos membros para isso**`
+      );
+  }
+  }
 
   
   await eco.ensure(`${message.author.id}-${message.guild.id}`, currentBalance = 0);
