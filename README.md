@@ -55,7 +55,7 @@ TOKEN=... // mude para o token de seu bot caso n o tenha olhe esse video:
 ``` 
 https://www.youtube.com/watch?v=KYnXhtyqQRQ
 
-passo 5: va no site https://uptimerobot.com e clique em adicionar novo monitor clique em http ou link web e digite o link q aparecera no terminal quando rodar seu bot  ou siga este video:
+passo 5: va no site https://uptimerobot.com e clique em adicionar novo monitor clique em http ou link web e digite o link q aparecera no terminal quando rodar seu bot ou siga este video:
 
 https://www.youtube.com/watch?v=wez-McwS7mo
 
