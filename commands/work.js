@@ -41,7 +41,7 @@ const currentBalance = await eco.get(`${message.author.id}-${message.guild.id}`)
 
   const comEmbed = new discord.MessageEmbed()
       .setColor('#9400D3')
-      .setTitle('OS COMANDOS DO BOT:')
+      .setTitle('TRABALHOU:')
       .setDescription(`Você Trabalhou ${random[randomresult]} dias de ${trab} e ganhou R$${answer} \npara trabalhar novamente espere ${tempo} agora, Você tem R$\`${currentBalance + answer}\` na sua conta seu estado: ${vip}`)
   message.reply(comEmbed)
 
