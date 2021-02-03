@@ -1,7 +1,7 @@
 const Discord = require('discord.js'); 
 const config = require("../config.json")
 
-module.exports = async(bot, message, args) => {
+exports.run = async(bot, message, args) => {
         if (!message.member.hasPermission("KICK_MEMBERS")) return message.reply('você precisa de permissão para isso!');
         if (!message.guild.me.hasPermission("KICK_MEMBERS")) return message.reply('eu preciso de permissão para isso!');
 
