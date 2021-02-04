@@ -12,7 +12,7 @@ exports.run = async (client, message, args, eco, cooldowns, ms) => {
       message.reply("use ex: !setrole @vermelho vermelho")
   }
 
-  eco.set(`${message.guild.id}-${args[1]}`, user.id);
+  eco.set(`${message.guild.id}-role-${args[1]}`, user.id);
 }
 exports.help = {
   permisoes: "Manejar msgs",

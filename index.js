@@ -123,7 +123,44 @@ client.on("message", async (message) => {
   eco.ensure(`${message.guild.id}-confirmacao`, 0);
   eco.ensure(`${message.guild.id}-ticket`, 0);
   eco.ensure(`${message.guild.id}-cargospadrao`, 0);
+  eco.ensure(`${message.guild.id}-role-vermelho`, 0);
+  eco.ensure(`${message.guild.id}-role-verde`, 0);
+  eco.ensure(`${message.guild.id}-role-azul`, 0);
+  eco.ensure(`${message.guild.id}-role-amarelo`, 0);
+  eco.ensure(`${message.guild.id}-role-roxo`, 0);
+  eco.ensure(`${message.guild.id}-role-permissao`, 0);
+  eco.ensure(`${message.guild.id}-role-cat`, 0);
+  eco.ensure(`${message.guild.id}-role-dog`, 0);
+  eco.ensure(`${message.guild.id}-role-outro`, 0);
+  eco.ensure(`${message.guild.id}-role-passaro`, 0);
+  eco.ensure(`${message.guild.id}-role-passaro`, 0);
+  eco.ensure(`${message.guild.id}-role-homem`, 0);
+  eco.ensure(`${message.guild.id}-role-mulher`, 0);
+  eco.ensure(`${message.guild.id}-role-mais18`, 0);
+  eco.ensure(`${message.guild.id}-role-menos18`, 0);
+  eco.ensure(`${message.guild.id}-role-javascript`, 0);
+  eco.ensure(`${message.guild.id}-role-python`, 0);
+  eco.ensure(`${message.guild.id}-role-php`, 0);
+  eco.ensure(`${message.guild.id}-role-html`, 0);
+  eco.ensure(`${message.guild.id}-role-c`, 0);
+  eco.ensure(`${message.guild.id}-role-cpp`, 0);
+  eco.ensure(`${message.guild.id}-role-cs`, 0);
 
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  console.log(eco.get(`${message.guild.id}-role-vermelho`))
 
   if (fiztd) {
     fiztd = false
@@ -232,8 +269,8 @@ client.on("message", async (message) => {
     if (!user.bot) {
     if (reaction.emoji.name == "✅") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(config.cargopermissao)){
-           await guildMember.roles.add(config.cargopermissao);
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-permissao`))){
+           await guildMember.roles.add(eco.get(`${message.guild.id}-role-permissao`));
             }
           }
        }
@@ -243,26 +280,26 @@ client.on("message", async (message) => {
     if (!user.bot) {
     if (reaction.emoji.name == "🐶") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(config.cargodog)){
-           await guildMember.roles.add(config.cargodog);
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-dog`))){
+           await guildMember.roles.add(eco.get(`${message.guild.id}-role-dog`));
             }
           }
     if (reaction.emoji.name == "🐱") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(config.cargocat)){
-           await guildMember.roles.add(config.cargocat);
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-cat`))){
+           await guildMember.roles.add(eco.get(`${message.guild.id}-role-cat`));
             }
           }
     if (reaction.emoji.name == "🐀") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(config.cargooutro)){
-           await guildMember.roles.add(config.cargooutro);
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-outro`))){
+           await guildMember.roles.add(eco.get(`${message.guild.id}-role-outro`));
             }
           }
     if (reaction.emoji.name == "🐦") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(config.cargopassaro)){
-           await guildMember.roles.add(config.cargopassaro);
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-passaro`))){
+           await guildMember.roles.add(eco.get(`${message.guild.id}-role-passaro`));
             }
           }
        }
@@ -308,26 +345,26 @@ client.on("message", async (message) => {
     if (!user.bot) {
     if (reaction.emoji.name == "🚹") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(config.cargohomem)){
-           guildMember.roles.add(config.cargohomem);
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-homem`))){
+           guildMember.roles.add(eco.get(`${message.guild.id}-role-homem`));
           }
           }
     if (reaction.emoji.name == "🚺") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(config.cargomulher)){
-           guildMember.roles.add(config.cargomulher);
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-mulher`))){
+           guildMember.roles.add(eco.get(`${message.guild.id}-role-mulher`));
           }
           }
     if (reaction.emoji.name == "🔞") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(config.cargo18mais)){
-           guildMember.roles.add(config.cargo18mais);
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-18mais`))){
+           guildMember.roles.add(eco.get(`${message.guild.id}-role-18mais`));
           }
           }
     if (reaction.emoji.name == "🧒") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(config.cargo18menos)){
-           guildMember.roles.add(config.cargo18menos);
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-18menos`))){
+           guildMember.roles.add(eco.get(`${message.guild.id}-role-18menos`));
           }
           }
     }
@@ -337,44 +374,44 @@ client.on("message", async (message) => {
     if (!user.bot) {
     if (reaction.emoji.name == "🟨") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(config.cargojs)){
-           guildMember.roles.add(config.cargojs);
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-javascript`))){
+           guildMember.roles.add(eco.get(`${message.guild.id}-role-javascript`));
           }
           }
     if (reaction.emoji.name == "🟦") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(config.cargopy)){
-           guildMember.roles.add(config.cargopy);
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-python`))){
+           guildMember.roles.add(eco.get(`${message.guild.id}-role-python`));
           }
           }
     if (reaction.emoji.name == "💎") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(config.cargophp)){
-           guildMember.roles.add(config.cargophp);
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-php`))){
+           guildMember.roles.add(eco.get(`${message.guild.id}-role-php`));
           }
           }
     if (reaction.emoji.name == "🍁") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(config.cargohtmlcss)){
-           guildMember.roles.add(config.cargohtmlcss);
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-html`))){
+           guildMember.roles.add(eco.get(`${message.guild.id}-role-html`));
           }
           }
     if (reaction.emoji.name == "🖥️") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(config.cargoc)){
-           guildMember.roles.add(config.cargoc);
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-c`))){
+           guildMember.roles.add(eco.get(`${message.guild.id}-role-c`));
           }
           }
     if (reaction.emoji.name ==  "🎇") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(config.cargocpp)){
-           guildMember.roles.add(config.cargocpp);
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-cpp`))){
+           guildMember.roles.add(eco.get(`${message.guild.id}-role-cpp`));
           }
           }
     if (reaction.emoji.name == "👾") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(config.cargocs)){
-           guildMember.roles.add(config.cargocs);
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-cs`))){
+           guildMember.roles.add(eco.get(`${message.guild.id}-role-cs`));
           }
           }
     }
@@ -386,26 +423,26 @@ client.on('messageReactionRemove', async (reaction, user) => {
     if (!user.bot) {
     if (reaction.emoji.name == "🐶") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(guildMember.roles.cache.get(config.cargodog)){
-           await guildMember.roles.remove(config.cargodog);
+       if(guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-dog`))){
+           await guildMember.roles.remove(eco.get(`${message.guild.id}-role-dog`));
             }
           }
     if (reaction.emoji.name == "🐱") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(guildMember.roles.cache.get(config.cargocat)){
-           await guildMember.roles.remove(config.cargocat);
+       if(guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-cat`))){
+           await guildMember.roles.remove(eco.get(`${message.guild.id}-role-cat`));
             }
           }
     if (reaction.emoji.name == "🐀") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(guildMember.roles.cache.get(config.cargooutro)){
-           await guildMember.roles.remove(config.cargooutro);
+       if(guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-outro`))){
+           await guildMember.roles.remove(eco.get(`${message.guild.id}-role-outro`));
             }
           }
     if (reaction.emoji.name == "🐦") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(guildMember.roles.cache.get(config.cargopassaro)){
-           await guildMember.roles.remove(config.cargopassaro);
+       if(guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-passaro`))){
+           await guildMember.roles.remove(eco.get(`${message.guild.id}-role-passaro`));
             }
           }
        }
@@ -415,26 +452,26 @@ client.on('messageReactionRemove', async (reaction, user) => {
     if (!user.bot) {
     if (reaction.emoji.name == "🚹") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(guildMember.roles.cache.get(config.cargohomem)){
-           guildMember.roles.remove(config.cargohomem);
+       if(guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-homem`))){
+           guildMember.roles.remove(eco.get(`${message.guild.id}-role-homem`));
           }
           }
     if (reaction.emoji.name == "🚺") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(guildMember.roles.cache.get(config.cargomulher)){
-           guildMember.roles.remove(config.cargomulher);
+       if(guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-mulher`))){
+           guildMember.roles.remove(eco.get(`${message.guild.id}-role-mulher`));
           }
           }
     if (reaction.emoji.name == "🔞") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(guildMember.roles.cache.get(config.cargo18mais)){
-           guildMember.roles.remove(config.cargo18mais);
+       if(guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-18mais`))){
+           guildMember.roles.remove(eco.get(`${message.guild.id}-role-18mais`));
           }
           }
     if (reaction.emoji.name == "🧒") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(guildMember.roles.cache.get(config.cargo18menos)){
-           guildMember.roles.remove(config.cargo18menos);
+       if(guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-18menos`))){
+           guildMember.roles.remove(eco.get(`${message.guild.id}-role-18menos`));
           }
           }
     }
@@ -444,44 +481,44 @@ client.on('messageReactionRemove', async (reaction, user) => {
     if (!user.bot) {
     if (reaction.emoji.name == "🟨") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(guildMember.roles.cache.get(config.cargojs)){
-           guildMember.roles.remove(config.cargojs);
+       if(guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-javascript`))){
+           guildMember.roles.remove(eco.get(`${message.guild.id}-role-javascript`));
           }
           }
     if (reaction.emoji.name == "🟦") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(guildMember.roles.cache.get(config.cargopy)){
-           guildMember.roles.remove(config.cargopy);
+       if(guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-python`))){
+           guildMember.roles.remove(eco.get(`${message.guild.id}-role-python`));
           }
           }
     if (reaction.emoji.name == "💎") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(guildMember.roles.cache.get(config.cargophp)){
-           guildMember.roles.remove(config.cargophp);
+       if(guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-php`))){
+           guildMember.roles.remove(eco.get(`${message.guild.id}-role-php`));
           }
           }
     if (reaction.emoji.name == "🍁") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(guildMember.roles.cache.get(config.cargohtmlcss)){
-           guildMember.roles.remove(config.cargohtmlcss);
+       if(guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-html`))){
+           guildMember.roles.remove(eco.get(`${message.guild.id}-role-html`));
           }
           }
     if (reaction.emoji.name == "🖥️") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(guildMember.roles.cache.get(config.cargoc)){
-           guildMember.roles.remove(config.cargoc);
+       if(guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-c`))){
+           guildMember.roles.remove(eco.get(`${message.guild.id}-role-c`));
           }
           }
     if (reaction.emoji.name ==  "🎇") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(guildMember.roles.cache.get(config.cargocpp)){
-           guildMember.roles.revove(config.cargocpp);
+       if(guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-cpp`))){
+           guildMember.roles.revove(eco.get(`${message.guild.id}-role-cpp`));
           }
           }
     if (reaction.emoji.name == "👾") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(guildMember.roles.cache.get(config.cargocs)){
-           guildMember.roles.remove(config.cargocs);
+       if(guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-cs`))){
+           guildMember.roles.remove(eco.get(`${message.guild.id}-role-cs`));
           }
           }
     }

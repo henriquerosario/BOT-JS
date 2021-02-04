@@ -22,45 +22,45 @@ if(parseInt(cooldowndata) > Date.now()) {
     if (user.id != message.author.id) return reaction.users.remove(user);
     if (reaction.emoji.name == "🔴") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get("804519118026833942")){
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-vermelho`))){
          if (currentBalance >= 15) {
-            guildMember.roles.add("804519118026833942");
+            guildMember.roles.add(eco.get(`${message.guild.id}-role-vermelho`));
             eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 15);
           }
           }
           }
     if (reaction.emoji.name == "🔵") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get("804519229515628545")){
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-azul`))) {
          if (currentBalance >= 15) {
-           guildMember.roles.add("804519229515628545");
+           guildMember.roles.add(eco.get(`${message.guild.id}-role-azul`));
            eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 15);
           }
           }
           }
     if (reaction.emoji.name == "🟣") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get("804519327549620244")){
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-roxo`))){
          if (currentBalance >= 10) {
-           guildMember.roles.add("804519327549620244");
+           guildMember.roles.add(eco.get(`${message.guild.id}-role-roxo`));
            eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 10);
           }
           }
           }
     if (reaction.emoji.name == "🟢") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get("804519472706093116")){
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-verde`))){
          if (currentBalance >= 10) {
-           guildMember.roles.add("804519472706093116");
+           guildMember.roles.add(eco.get(`${message.guild.id}-role-verde`));
            eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 10);
           }
           }
           }
     if (reaction.emoji.name == "🟡") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get("804703558061522985")){
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-amarelo`))){
          if (currentBalance >= 5) {
-           guildMember.roles.add("804703558061522985");
+           guildMember.roles.add(eco.get(`${message.guild.id}-role-amarelo`));
            eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 5);
           }
           }
@@ -83,45 +83,45 @@ if(parseInt(cooldowndata) > Date.now()) {
     if (user.id != message.author.id) return reaction.users.remove(user);
     if (reaction.emoji.name == "🔴") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get("804519118026833942")){
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-vermelho`))){
          if (currentBalance >= 150) {
-            guildMember.roles.add("804519118026833942");
+            guildMember.roles.add(eco.get(`${message.guild.id}-role-vermelho`));
             eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 150);
           }
           }
           }
     if (reaction.emoji.name == "🔵") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get("804519229515628545")){
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-azul`))){
          if (currentBalance >= 150) {
-           guildMember.roles.add("804519229515628545");
+           guildMember.roles.add(eco.get(`${message.guild.id}-role-azul`));
            eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 150);
           }
           }
           }
     if (reaction.emoji.name == "🟣") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get("804519327549620244")){
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-roxo`))){
          if (currentBalance >= 100) {
-           guildMember.roles.add("804519327549620244");
+           guildMember.roles.add(eco.get(`${message.guild.id}-role-roxo`));
            eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 100);
           }
           }
           }
     if (reaction.emoji.name == "🟢") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get("804519472706093116")){
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-verde`))){
          if (currentBalance >= 100) {
-           guildMember.roles.add("804519472706093116");
+           guildMember.roles.add(eco.get(`${message.guild.id}-role-verde`));
            eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 100);
           }
           }
           }
     if (reaction.emoji.name == "🟡") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get("804703558061522985")){
+       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-amarelo`))){
          if (currentBalance >= 50) {
-           guildMember.roles.add("804703558061522985");
+           guildMember.roles.add(eco.get(`${message.guild.id}-role-amarelo`));
            eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 50);
           }
           }
