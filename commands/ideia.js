@@ -1,8 +1,8 @@
 const Discord = require("discord.js");
 config = require("../config.json")
 
-exports.run = async (client, message, args) => {
-  if (message.channel.id != config.canalsugerir) {message.reply("use o canal de sugestoes para dar ideias"); return message.delete()}
+exports.run = async (client, message, args, eco) => {
+  if (message.channel.id != eco.get(`${message.guild.id}-sugerir`)) {message.reply("use o canal de sugestoes para dar ideias"); return message.delete()}
 message.delete();
 const content = args.join(" ");
 
@@ -11,7 +11,7 @@ if (!args[0]) {
 } else if (content.length > 1000) {
   return message.channel.send(`${message.author.username}, forneça uma sugestão de no máximo 1000 caracteres.`);
 } else {
-  var canal = message.guild.channels.cache.find(ch => ch.id === config.canalsugestao);
+  var canal = message.guild.channels.cache.find(ch => ch.id === eco.get(`${message.guild.id}-sujestao`));
   const msg = await canal.send(
     new Discord.MessageEmbed()
     .setColor("#FFFFF1")

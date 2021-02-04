@@ -2,7 +2,7 @@ const discord = require('discord.js');
 const config = require("../config.json")
 const prefix = config.prefix
 exports.run = async (client, message, args, eco, cooldowns, ms) => {
-if (message.channel.id != config.areadocargo) {
+if (message.channel.id != eco.get(`${message.guild.id}-cargo`)) {
   message.reply("a bobinho use a area do cargo para adiquirir cargos!")
   return;
 }

@@ -4,6 +4,7 @@ const enmap = require("enmap");
 const fs = require("fs")
 const filtro = require('./filtro.json')
 const ms = require("ms")
+let fiztd = false
 const AntiSpam = require('discord-anti-spam');
 const antiSpam = new AntiSpam({
     warnThreshold: 3, // Amount of messages sent in a row that will cause a warning.
@@ -68,16 +69,13 @@ const cooldowns = new enmap({
 
 client.on("guildMemberAdd", async (member) => { 
   await member.roles.add(config.autorole)
-  let guild = await client.guilds.cache.get(config.sevid);
-  let channel = await client.channels.cache.get(config.canalboasvindas);
-  let emoji = await member.guild.emojis.cache.find(emoji => emoji.name === "bemvindo");
-  if (guild != member.guild) {
-    return console.log("Sem boas-vindas pra você! Sai daqui saco pela.");
-   } else {
+  /*let guild = await client.guilds.cache.get(config.sevid);*/
+  let channel = await client.channels.cache.get(eco.get(`${member.guild.id}-boasvindas`));
+  /*let emoji = await member.guild.emojis.cache.find(emoji => emoji.name === "bemvindo");*/
       let embed = await new Discord.MessageEmbed()
       .setColor("#7c2ae8")
       .setAuthor(member.user.tag, member.user.displayAvatarURL())
-      .setTitle(`${emoji} Boas-vindas ${emoji}`)
+      .setTitle(`Boas-vindas`)
       .setImage("https://i.imgur.com/ntvRPQs.jpeg")
       .setDescription(`**${member.user}**, bem-vindo(a) ao servidor **${guild.name}**! Atualmente estamos com **${member.guild.memberCount} membros**, divirta-se conosco! :heart:\n não se esqueça de ir em #confirmaçao e se cadastrar`)
       .setThumbnail(member.user.displayAvatarURL({ dynamic: true, format: "png", size: 1024 }))
@@ -85,20 +83,17 @@ client.on("guildMemberAdd", async (member) => {
       .setTimestamp();
 
     channel.send(embed);
-  }
+
 });
 client.on("guildMemberRemove", async (member) => { 
 
-  let guild = await client.guilds.cache.get(config.sevid);
-  let channel = await client.channels.cache.get(config.canalthauthau);
-  let emoji = await member.guild.emojis.cache.find(emoji => emoji.name === "bye");
-  if (guild != member.guild) {
-    return console.log("Algum saco pela saiu do servidor. Mas não é nesse, então tá tudo bem :)");
-   } else {
+  /*let guild = await client.guilds.cache.get(config.sevid);*/
+  let channel = await client.channels.cache.get(eco.get(`${member.guild.id}-saida`));
+  /*let emoji = await member.guild.emojis.cache.find(emoji => emoji.name === "bye");*/
       let embed = await new Discord.MessageEmbed()
       .setColor("#7c2ae8")
       .setAuthor(member.user.tag, member.user.displayAvatarURL())
-      .setTitle(`${emoji} Adeus! ${emoji}`)
+      .setTitle(`Adeus!`)
       .setImage("https://i.imgur.com/z09mFD1.gif")
       .setDescription(`**${member.user.username}**, saiu do servidor! :broken_heart:`)
       .setThumbnail(member.user.displayAvatarURL({ dynamic: true, format: "png", size: 1024 }))
@@ -106,14 +101,40 @@ client.on("guildMemberRemove", async (member) => {
       .setTimestamp();
 
     channel.send(embed);
-  }
+  
 });
 client.on("ready", async () => {
-  let guild = client.guilds.cache.get(config.sevid);
-  var canalconfirmacao = guild.channels.cache.find(ch => ch.id === config.canalconfirmacao);
-  var canaltiket = guild.channels.cache.find(ch => ch.id === config.canaltiket);
-  var canalkk = guild.channels.cache.find(ch => ch.id === config.cargosnpago);
-  let canalp = client.channels.cache.get(config.canalnummembros)
+  console.log("estou on")
+  fiztd = true
+})
+client.on("message", async (message) => {
+
+
+  eco.ensure(`${message.guild.id}-saida`, 0);
+  eco.ensure(`${message.guild.id}-boasvindas`, 0);
+  eco.ensure(`${message.guild.id}-mais18`, 0);
+  eco.ensure(`${message.guild.id}-spam`, 0);
+  eco.ensure(`${message.guild.id}-beijo`, 0);
+  eco.ensure(`${message.guild.id}-abraco`, 0);
+  eco.ensure(`${message.guild.id}-banco`, 0);
+  eco.ensure(`${message.guild.id}-cargo`, 0);
+  eco.ensure(`${message.guild.id}-sugerir`, 0);
+  eco.ensure(`${message.guild.id}-sujestao`, 0);
+  eco.ensure(`${message.guild.id}-confirmacao`, 0);
+  eco.ensure(`${message.guild.id}-ticket`, 0);
+  eco.ensure(`${message.guild.id}-cargospadrao`, 0);
+
+
+  if (fiztd) {
+    fiztd = false
+  /*eco.ensure(`${client.guild.id}-saida`, 0);*/
+  let guild = client.guilds.cache.get(message.guild.id);
+  var canalconfirmacao = guild.channels.cache.find(ch => ch.id === eco.get(`${message.guild.id}-confirmacao`));
+  var canaltiket = guild.channels.cache.find(ch => ch.id === eco.get(`${message.guild.id}-ticket`));
+  var canalkk = guild.channels.cache.find(ch => ch.id === eco.get(`${message.guild.id}-cargospadrao`));
+  /*let canalp = client.channels.cache.get(config.canalnummembros)*/
+  /*let canalpo = client.channels.cache.get(eco.get(`${message.guild.id}-boton`))
+  canalpo.send("uhul")*/
   console.log("Estou Online!")
   const scripts = fs.readdirSync(dir);
   scripts.forEach(script=>{
@@ -125,7 +146,7 @@ client.on("ready", async () => {
   var i = 0;
   client.user.setActivity("merda pela janela")
   var atividades = ["Pedra na Sua Mae","O Jogo da Cobrinha", `estou no ${guild.name} com ${guild.memberCount} membros :)`,"Nada","Estou Online","minha vida fora"]
-    setInterval(function () {client.user.setActivity(atividades[i]); i++; if (i == 6) {i = 0}; canalp.setName(`num de pessoas no sev: ${guild.memberCount}`);}, 10000)
+    setInterval(function () {client.user.setActivity(atividades[i]); i++; if (i == 6) {i = 0}}, 10000)
 
 
   canalkk.bulkDelete(50, true)
@@ -467,14 +488,12 @@ client.on('messageReactionRemove', async (reaction, user) => {
     }
     
 });
+}
 
 
-});
 
-client.on("raw", (dados) => {
-  //console.log(dados)
-}) 
-client.on('message', async message => {
+
+
   const cooldowndatamute = cooldowns.get(`${message.author.id}-${message.guild.id}-mute`);
   const currentMute = await eco.get(`${message.author.id}-${message.guild.id}-mute`);
   if(parseInt(cooldowndatamute) > Date.now()) {
@@ -487,11 +506,11 @@ client.on('message', async message => {
     message.delete()
     return
   }
-  if (message.channel.id != config.canalspam) {
+  if (message.channel.id != eco.get(`${message.guild.id}-spam`)) {
     antiSpam.message(message)
   }
   
-  if (message.channel.id != config.canalmais18) {
+  if (message.channel.id != eco.get(`${message.guild.id}-mais18`)) {
     Object.keys(filtro.palavras).forEach(chave => {
           if (message.content.toLowerCase().includes(filtro.palavras[chave])) {
               message.delete()
@@ -512,14 +531,14 @@ client.on('message', async message => {
   
   await eco.ensure(`${message.author.id}-${message.guild.id}`, currentBalance = 0);
       if (message.content.split(" ")[0].toLowerCase() == "!kiss"){ 
-       if (message.channel != config.areadobeijo) {
+       if (message.channel != eco.get(`${message.guild.id}-beijo`)) {
         message.delete()
         return message.reply("a BOBINHO você não pode beijar fora da area do beijo!")
 
       }
      }
      if (message.content.split(" ")[0].toLowerCase() == "!hug"){ 
-       if (message.channel != config.areadoabraco) {
+       if (message.channel != config.eco.get(`${message.guild.id}-abraco`)) {
         message.delete()
         return message.reply("a BOBINHO você não pode abraçar fora da area do abraço!")
 
@@ -535,12 +554,7 @@ client.on('message', async message => {
        }
      } 
      
-      if (message.channel.id == config.canalconfirmacao) {
-        if (message.author.bot) return
-      if (message != `${prefix}eu-aceito-os-termos`) {message.delete()} else {
-        if(message.author.roles.has("804006571171643424")) message.delete()
-      }
-    }
+      
      if (message.author.bot) return;
     
      if(message.content.toLowerCase() == "olo") {
@@ -587,6 +601,10 @@ client.on('message', async message => {
 
         /*cooldowns.set(`${message.author.id}-${message.guild.id}-daily`, Date.now() + ms("1d"))*/
     }
+
+
+
+
 });
 
 
