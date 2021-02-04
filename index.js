@@ -145,6 +145,34 @@ client.on("message", async (message) => {
   eco.ensure(`${message.guild.id}-role-cpp`, 0);
   eco.ensure(`${message.guild.id}-role-cs`, 0);
   eco.ensure(`${message.guild.id}-reload`, 0);
+  eco.ensure(`${message.guild.id}-${message.author.id}-xp`, 0);
+  eco.ensure(`${message.guild.id}-${message.author.id}-lvl`, 1);
+
+
+  const gerarXp = Math.floor(Math.random() * 10) + 1
+
+  let xp = eco.get(`${message.guild.id}-${message.author.id}-xp`);
+  let lvl = eco.get(`${message.guild.id}-${message.author.id}-lvl`);
+  const currentBalance = await eco.get(`${message.author.id}-${message.guild.id}`);
+
+
+
+
+  eco.set(`${message.guild.id}-${message.author.id}-xp`, xp + gerarXp);
+
+  xp = eco.get(`${message.guild.id}-${message.author.id}-xp`);
+  if (xp > lvl * 100) {
+    eco.set(`${message.guild.id}-${message.author.id}-lvl`, lvl + 1);
+    message.reply(`parabens, ${message.author} voce subio para o level ${lvl + 1} e ganhou ${lvl * 10} moedas, agora está com ${currentBalance + (lvl * 10)}!!!`)
+
+    eco.set(`${message.guild.id}-${message.author.id}`, currentBalance + (lvl * 10));
+
+
+  }
+
+
+
+
 
 
 
@@ -564,7 +592,7 @@ client.on('messageReactionRemove', async (reaction, user) => {
   }
 
   
-  await eco.ensure(`${message.author.id}-${message.guild.id}`, currentBalance = 0);
+  await eco.ensure(`${message.author.id}-${message.guild.id}`, 0);
       if (message.content.split(" ")[0].toLowerCase() == "!kiss"){ 
        if (message.channel != eco.get(`${message.guild.id}-beijo`)) {
         message.delete()
@@ -627,7 +655,7 @@ client.on('messageReactionRemove', async (reaction, user) => {
         /*if(parseInt(cooldowndata) > Date.now()) return message.reply(`Please wait ${ms(parseInt(cooldowndata) - Date.now(), {long: true})}`)*/
 
         await eco.ensure(`${message.author.id}-${message.guild.id}`, 0);
-        const currentBalance = await eco.get(`${message.author.id}-${message.guild.id}`);
+        /*const currentBalance = await eco.get(`${message.author.id}-${message.guild.id}`);*/
 
         /*message.channel.send(new Discord.MessageEmbed()
             .setTitle("💵 Daily Reward!")
