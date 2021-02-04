@@ -181,9 +181,10 @@ client.on("message", async (message) => {
     const mensaimgi = await message.channel.send( new Discord.MessageEmbed()
     .setTitle(`**o ${message.author.username} subio de nevel**`)
     .setDescription(`parabens ${message.author}, \nvoce subio para o level ${lvl + 1}, \nganhou ${lvl * 50} moedas, \nagora está com ${currentBalance + (lvl * 50)}!!!`)
-    .setImage("https://media.tenor.com/images/02bfcc250484dc13daecd15116b67fc1/tenor.gif"))
+    .setImage("https://media.tenor.com/images/02bfcc250484dc13daecd15116b67fc1/tenor.gif")
+    )
 
-    eco.set(`${message.guild.id}-${message.author.id}`, currentBalance + (lvl * 10));
+    eco.set(`${message.author.id}-${message.guild.id}`, currentBalance + (lvl * 10));
 
 
   }
