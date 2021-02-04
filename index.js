@@ -4,7 +4,6 @@ const enmap = require("enmap");
 const fs = require("fs")
 const filtro = require('./filtro.json')
 const ms = require("ms")
-let fiztd = false
 const AntiSpam = require('discord-anti-spam');
 const antiSpam = new AntiSpam({
     warnThreshold: 3, // Amount of messages sent in a row that will cause a warning.
@@ -145,6 +144,7 @@ client.on("message", async (message) => {
   eco.ensure(`${message.guild.id}-role-c`, 0);
   eco.ensure(`${message.guild.id}-role-cpp`, 0);
   eco.ensure(`${message.guild.id}-role-cs`, 0);
+  eco.ensure(`${message.guild.id}-reload`, 0);
 
 
 
@@ -160,10 +160,10 @@ client.on("message", async (message) => {
 
 
 
-  console.log(eco.get(`${message.guild.id}-role-vermelho`))
+  
 
-  if (fiztd) {
-    fiztd = false
+  if (parseInt(eco.get(`${message.guild.id}-reload`)) == 0) {
+    eco.set(`${message.guild.id}-reload`, 1)
   /*eco.ensure(`${client.guild.id}-saida`, 0);*/
   let guild = client.guilds.cache.get(message.guild.id);
   var canalconfirmacao = guild.channels.cache.find(ch => ch.id === eco.get(`${message.guild.id}-confirmacao`));
@@ -258,8 +258,6 @@ client.on("message", async (message) => {
     await msgeei.react(emojis[i])
   }
 
-
-  
   
 
 
@@ -322,7 +320,7 @@ client.on("message", async (message) => {
                 }
             ],
             type: 'text',
-            parent: config.categoriatickets
+            /*parent: config.categoriatickets*/
         }).then(async channel => {
             const mensagim = await channel.send(`<@${user.id}>`, new Discord.MessageEmbed().setTitle("Bem Vindo Ao Seu ticket!").setDescription("Poupe Nosso Tempo e Seja Especifico Para Fechar Reaja Novamente").setColor("00ff00"))
 
@@ -610,7 +608,7 @@ client.on('messageReactionRemove', async (reaction, user) => {
     try {
         const commandFile = require(`./commands/${command}.js`)
         if (command != "help") {
-        commandFile.run(client, message, args, eco, cooldowns, ms, prefix, config);
+        commandFile.run(client, message, args, eco, cooldowns, ms, prefix, config, fiztd);
         } else {
           commandFile.run(client, message, commands, prefix, config, args);
         }
