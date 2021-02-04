@@ -8,11 +8,6 @@ if (message.mentions.users.first() || client.users.cache.get(args[1])) {
     user = message.author;
 }
 
-if (message.channel.id != eco.get(`${message.guild.id}-banco`)) {
-  message.delete()
-  message.reply("a bobinho use o banco para ver seu dinheiro!")
-  return
-}
 await eco.ensure(`${user.id}-${message.guild.id}`, 0);
 const currentBalance = await eco.get(`${user.id}-${message.guild.id}`);
 const lvl = await eco.get(`${message.guild.id}-${user.id}-lvl`);
