@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 config = require("../config.json")
 
 exports.run = async (client, message, args) => {
+  if (message.channel.id != config.canalsugerir) return message.delete()
 message.delete();
 const content = args.join(" ");
 
@@ -14,7 +15,7 @@ if (!args[0]) {
   const msg = await canal.send(
     new Discord.MessageEmbed()
     .setColor("#FFFFF1")
-    .addField("Conteúdo", content)
+    .addField("Conteúdo", "@everyone " + content)
     .setFooter(`Autor: ${message.author}`)
     .setDescription(`${message.author} reaja com "✖" para apagar sua mensagem`)
     .setTimestamp()

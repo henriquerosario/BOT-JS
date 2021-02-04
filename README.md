@@ -47,8 +47,10 @@ informaçoes em config.json:
   "canaldivulgacao": "806239614230462474", // canal q é permitido divulgar outras coisas ex: servers
   "cargodog": "806585835192451102", // cargo q sera dado se o usuario tiver um dog
   "cargocat": "806585915949973504", // cargo q sera dado se o usuario tiver um gato
+  "cargopassaro": "806676831566299147", // cargo q a pessoa recebera se for dona de um passaro
   "cargooutro": "806586022577176617", // cargo q sera dado se o usuario tiver outro animal
-  "canalmais18": "806244572010774569" // canal q será permitido falar palavroes
+  "canalmais18": "806244572010774569", // canal q será permitido falar palavroes
+  "canalsugerir": "805851924108148787" // canal q sera permitido sugerir
 ```
 
 passo 4: crie o arquivo .env 

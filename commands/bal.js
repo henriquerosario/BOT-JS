@@ -21,7 +21,7 @@ if(parseInt(cooldowndatavip) > Date.now()) vip = "VIP"
 
 message.channel.send(new Discord.MessageEmbed()
     .setTitle("💵 Seu Dinheiro!")
-    .setDescription(`${user} tem R$\`${currentBalance}\` na conta! estado dele: ${vip}`).setColor("00ff00")
+    .setDescription(`${user} tem R$\`${currentBalance}\` na conta! estado dele(a): ${vip}`).setColor("00ff00")
 )
     
 }
