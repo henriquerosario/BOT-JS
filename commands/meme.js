@@ -2,9 +2,8 @@ const Discord = require("discord.js")
 
 exports.run = async (client, message, args) => {
 var list = [
-  'https://im7.ezgif.com/tmp/ezgif-7-1b3d62fa3714.gif',
-  'https://im7.ezgif.com/tmp/ezgif-7-70733f4e581f.gif',
-  'https://im7.ezgif.com/tmp/ezgif-7-6e06bb500970.gif'
+  'https://cdn.discordapp.com/attachments/753628468398260265/768284648324595722/unknown.png',
+  'https://cdn.discordapp.com/attachments/753628468398260265/768284969218736168/unknown.png'
 ];
 var rand = list[Math.floor(Math.random() * list.length)];
 

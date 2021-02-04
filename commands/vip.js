@@ -17,7 +17,7 @@ if (currentBalance >= valordovip) {
   const comEmbed = new discord.MessageEmbed()
       .setColor('#9400D3')
       .setTitle('OS COMANDOS DO BOT:')
-      .setDescription(`parabens ${message.author} agora você é vip por 24 horas agora Você tem R$\`${currentBalance - 500}\` na sua conta`)
+      .setDescription(`parabens ${message.author} agora você é vip por 24 horas agora Você tem ${currentBalance - 500} moedas na sua conta`)
 
       message.reply(comEmbed)
 } else {

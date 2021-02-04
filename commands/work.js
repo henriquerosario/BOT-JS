@@ -42,7 +42,7 @@ const currentBalance = await eco.get(`${message.author.id}-${message.guild.id}`)
   const comEmbed = new discord.MessageEmbed()
       .setColor('#9400D3')
       .setTitle('TRABALHOU:')
-      .setDescription(`Você Trabalhou ${random[randomresult]} dias de ${trab} e ganhou R$${answer} \npara trabalhar novamente espere ${tempo} agora, Você tem R$\`${currentBalance + answer}\` na sua conta seu estado: ${vip}`)
+      .setDescription(`Você Trabalhou ${random[randomresult]} dias de ${trab} e ganhou ${answer} moedas\npara trabalhar novamente espere ${tempo} agora, Você tem ${currentBalance + answer} moedas na sua conta seu estado: ${vip}`)
   message.reply(comEmbed)
 
   eco.set(`${message.author.id}-${message.guild.id}`, currentBalance + answer);

@@ -1,7 +1,7 @@
 const config = require("../config.json")
 
-exports.run = async (client, message, args) => {
-  const roleA = await message.guild.roles.cache.find(role => role.id === config.cargopermissao); 
+exports.run = async (client, message, args, eco) => {
+  const roleA = await message.guild.roles.cache.find(role => role.id === eco.get(`${message.guild.id}-role-permissao`)); 
 
   if (
     !message.member.roles.cache.some(r =>

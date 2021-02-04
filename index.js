@@ -107,6 +107,8 @@ client.on("ready", async () => {
   fiztd = true
 })
 client.on("message", async (message) => {
+  if (message.channel.type == 'dm') return;
+  
 
 
   eco.ensure(`${message.guild.id}-saida`, 0);
@@ -144,10 +146,22 @@ client.on("message", async (message) => {
   eco.ensure(`${message.guild.id}-role-c`, 0);
   eco.ensure(`${message.guild.id}-role-cpp`, 0);
   eco.ensure(`${message.guild.id}-role-cs`, 0);
+  eco.ensure(`${message.guild.id}-divulgacao`, 0);
   eco.ensure(`${message.guild.id}-reload`, 0);
   eco.ensure(`${message.guild.id}-${message.author.id}-xp`, 0);
   eco.ensure(`${message.guild.id}-${message.author.id}-lvl`, 1);
 
+
+  if (message.channel.id != eco.get(`${message.guild.id}-divulgacao`)) {
+  const regex = /(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li|club)|discordapp\.com\/invite|discord\.com\/invite)\/.+[a-z]/gi;
+  if (regex.exec(message.content)) {
+    await message.delete({timeout: 1000});
+      await message.channel.send(
+        `${message.author} **você não pode postar link de outros servidores aqui! use o canal divulgaçao dos membros para isso**`
+      );
+  }
+  }
+  if (message.author.bot) return;
 
   const gerarXp = Math.floor(Math.random() * 10) + 1
 
@@ -157,13 +171,17 @@ client.on("message", async (message) => {
 
 
 
-
-  eco.set(`${message.guild.id}-${message.author.id}-xp`, xp + gerarXp);
+  if (message.channel.id != eco.get(`${message.guild.id}-spam`)) {
+    eco.set(`${message.guild.id}-${message.author.id}-xp`, xp + gerarXp);
+  }
 
   xp = eco.get(`${message.guild.id}-${message.author.id}-xp`);
   if (xp > lvl * 100) {
     eco.set(`${message.guild.id}-${message.author.id}-lvl`, lvl + 1);
-    message.reply(`parabens, ${message.author} voce subio para o level ${lvl + 1} e ganhou ${lvl * 10} moedas, agora está com ${currentBalance + (lvl * 10)}!!!`)
+    const mensaimgi = await message.channel.send( new Discord.MessageEmbed()
+    .setTitle(`**o ${message.author.username} subio de nevel**`)
+    .setDescription(`parabens, ${message.author} voce subio para o level ${lvl + 1}, \nganhou ${lvl * 50} moedas, \nagora está com ${currentBalance + (lvl * 50)}!!!`)
+    .setImage("https://media.tenor.com/images/02bfcc250484dc13daecd15116b67fc1/tenor.gif"))
 
     eco.set(`${message.guild.id}-${message.author.id}`, currentBalance + (lvl * 10));
 
@@ -581,15 +599,7 @@ client.on('messageReactionRemove', async (reaction, user) => {
     })
   }
 
-  if (message.channel.id != config.canaldivulgacao) {
-  const regex = /(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li|club)|discordapp\.com\/invite|discord\.com\/invite)\/.+[a-z]/gi;
-  if (regex.exec(message.content)) {
-    await message.delete({timeout: 1000});
-      await message.channel.send(
-        `${message.author} **você não pode postar link de outros servidores aqui! use o canal divulgaçao dos membros para isso**`
-      );
-  }
-  }
+  
 
   
   await eco.ensure(`${message.author.id}-${message.guild.id}`, 0);
@@ -618,12 +628,12 @@ client.on('messageReactionRemove', async (reaction, user) => {
      } 
      
       
-     if (message.author.bot) return;
+     
     
      if(message.content.toLowerCase() == "olo") {
        message.channel.send("co ┏ (゜ω゜)=☞")
      }
-     if (message.channel.type == 'dm') return;
+     
      if (!message.content.toLowerCase().startsWith(config.prefix.toLowerCase())) return;
      if (message.content.startsWith(`<@!${client.user.id}>`) || message.content.startsWith(`<@${client.user.id}>`)) return;
 

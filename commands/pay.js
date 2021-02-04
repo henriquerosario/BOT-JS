@@ -30,7 +30,7 @@ if (message.channel.id != config.canaldobanco) {
   const comEmbed = new discord.MessageEmbed()
       .setColor('#9400D3')
       .setTitle('PAY:')
-      .setDescription(`o ${message.author} pagou ${parseInt(args[0])} para ${user} e ficou com ${currentBalance}, ${user} ficou com ${eco.get(`${user.id}-${message.guild.id}`)}`)
+      .setDescription(`o ${message.author} pagou ${parseInt(args[0])} moedas para ${user} e ficou com ${currentBalance} moedas, ${user} ficou com ${eco.get(`${user.id}-${message.guild.id}`)} moedas`)
 
   message.reply(comEmbed)
   

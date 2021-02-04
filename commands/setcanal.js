@@ -5,7 +5,7 @@ exports.run = async (client, message, args, eco, cooldowns, ms) => {
     message.channel.send(`ei ${message.author} você não tem permissão para fazer isso peça para algem q tem! >:(`) 
     return
 };
-  if(!args[0]) {return message.reply("qual canal ex: !setcanal argumentos: cargospadrao, ticket, confirmacao, sujestao, sugerir, cargo, banco, abraco, beijo, spam, mais18, boasvindas, saida")}
+  if(!args[0]) {return message.reply("qual canal ex: !setcanal argumentos: cargospadrao, ticket, confirmacao, sujestao, sugerir, cargo, banco, abraco, beijo, spam, mais18, boasvindas, saida, divulgacao")}
   await eco.ensure(`${message.guild.id}-${args[0]}`, 0);
   const canal = await eco.get(`${message.guild.id}-${args[0]}`);
   eco.set(`${message.guild.id}-${args[0]}`, message.channel.id);

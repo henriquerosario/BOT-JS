@@ -20,7 +20,7 @@ eco.set(`${message.author.id}-${message.guild.id}`, currentBalance + valor);
 
 message.channel.send(new Discord.MessageEmbed()
     .setTitle("💵 Recompença Diaria!")
-    .setDescription(`Parabens Coletou sua recompença diaria agora você tem: ${currentBalance + valor}! seu estado atual: ${vip}`).setColor("00ff00")
+    .setDescription(`Parabens Coletou sua recompença diaria agora você tem: ${currentBalance + valor} moedas! \nseu estado atual: ${vip}`).setColor("00ff00")
 )
 
 cooldowns.set(`${message.author.id}-${message.guild.id}-daily`, Date.now() + ms("1d"))
