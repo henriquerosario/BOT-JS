@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 config = require("../config.json")
 
 exports.run = async (client, message, args) => {
-  if (message.channel.id != config.canalsugerir) return message.delete()
+  if (message.channel.id != config.canalsugerir) {message.reply("use o canal de sugestoes para dar ideias"); return message.delete()}
 message.delete();
 const content = args.join(" ");
 
