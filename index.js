@@ -4,6 +4,7 @@ const enmap = require("enmap");
 const fs = require("fs")
 const filtro = require('./filtro.json')
 const ms = require("ms")
+let fiztd = false
 const AntiSpam = require('discord-anti-spam');
 const antiSpam = new AntiSpam({
     warnThreshold: 3, // Amount of messages sent in a row that will cause a warning.
@@ -163,6 +164,15 @@ client.on("message", async (message) => {
   }
   if (message.author.bot) return;
 
+
+
+
+  if (fiztd) {
+    eco.set(`${message.guild.id}-reload`, 0)
+    fiztd = false
+  }
+
+
   const gerarXp = Math.floor(Math.random() * 10) + 1
 
   let xp = eco.get(`${message.guild.id}-${message.author.id}-xp`);
@@ -185,27 +195,9 @@ client.on("message", async (message) => {
     )
 
     eco.set(`${message.author.id}-${message.guild.id}`, currentBalance + (lvl * 10));
-
+    eco.set(`${message.guild.id}-${message.author.id}-xp`, 0)
 
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
 
   
 

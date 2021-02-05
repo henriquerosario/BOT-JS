@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "canvacord": "^5.0.8",
+    "canvas": "^2.6.1",
     "discord-anti-spam": "^2.4.1",
     "discord.js": "^12.5.1",
     "enmap": "^5.8.4",
