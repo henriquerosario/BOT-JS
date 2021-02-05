@@ -3,7 +3,7 @@ const config = require("../config.json")
 const prefix = config.prefix
 exports.run = async (client, message, args, eco, cooldowns, ms) => {
 const currentBalance = await eco.get(`${message.author.id}-${message.guild.id}`)
-if (message.channel.id != eco.get(`${message.guild.id}-cargo`)) {
+if (message.channel.id != con.get(`${message.guild.id}-cargo`)) {
   message.reply("a bobinho use a area do cargo para adiquirir cargos!")
   return;
 } 
@@ -22,45 +22,45 @@ if(parseInt(cooldowndata) > Date.now()) {
     if (user.id != message.author.id) return reaction.users.remove(user);
     if (reaction.emoji.name == "🔴") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-vermelho`))){
+       if(!guildMember.roles.cache.get(con.get(`${message.guild.id}-role-vermelho`))){
          if (currentBalance >= 15) {
-            guildMember.roles.add(eco.get(`${message.guild.id}-role-vermelho`));
+            guildMember.roles.add(con.get(`${message.guild.id}-role-vermelho`));
             eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 15);
           }
           }
           }
     if (reaction.emoji.name == "🔵") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-azul`))) {
+       if(!guildMember.roles.cache.get(con.get(`${message.guild.id}-role-azul`))) {
          if (currentBalance >= 15) {
-           guildMember.roles.add(eco.get(`${message.guild.id}-role-azul`));
+           guildMember.roles.add(con.get(`${message.guild.id}-role-azul`));
            eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 15);
           }
           }
           }
     if (reaction.emoji.name == "🟣") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-roxo`))){
+       if(!guildMember.roles.cache.get(con.get(`${message.guild.id}-role-roxo`))){
          if (currentBalance >= 10) {
-           guildMember.roles.add(eco.get(`${message.guild.id}-role-roxo`));
+           guildMember.roles.add(con.get(`${message.guild.id}-role-roxo`));
            eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 10);
           }
           }
           }
     if (reaction.emoji.name == "🟢") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-verde`))){
+       if(!guildMember.roles.cache.get(con.get(`${message.guild.id}-role-verde`))){
          if (currentBalance >= 10) {
-           guildMember.roles.add(eco.get(`${message.guild.id}-role-verde`));
+           guildMember.roles.add(con.get(`${message.guild.id}-role-verde`));
            eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 10);
           }
           }
           }
     if (reaction.emoji.name == "🟡") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-amarelo`))){
+       if(!guildMember.roles.cache.get(con.get(`${message.guild.id}-role-amarelo`))){
          if (currentBalance >= 5) {
-           guildMember.roles.add(eco.get(`${message.guild.id}-role-amarelo`));
+           guildMember.roles.add(con.get(`${message.guild.id}-role-amarelo`));
            eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 5);
           }
           }
@@ -83,45 +83,45 @@ if(parseInt(cooldowndata) > Date.now()) {
     if (user.id != message.author.id) return reaction.users.remove(user);
     if (reaction.emoji.name == "🔴") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-vermelho`))){
+       if(!guildMember.roles.cache.get(con.get(`${message.guild.id}-role-vermelho`))){
          if (currentBalance >= 150) {
-            guildMember.roles.add(eco.get(`${message.guild.id}-role-vermelho`));
+            guildMember.roles.add(con.get(`${message.guild.id}-role-vermelho`));
             eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 150);
           }
           }
           }
     if (reaction.emoji.name == "🔵") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-azul`))){
+       if(!guildMember.roles.cache.get(con.get(`${message.guild.id}-role-azul`))){
          if (currentBalance >= 150) {
-           guildMember.roles.add(eco.get(`${message.guild.id}-role-azul`));
+           guildMember.roles.add(con.get(`${message.guild.id}-role-azul`));
            eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 150);
           }
           }
           }
     if (reaction.emoji.name == "🟣") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-roxo`))){
+       if(!guildMember.roles.cache.get(con.get(`${message.guild.id}-role-roxo`))){
          if (currentBalance >= 100) {
-           guildMember.roles.add(eco.get(`${message.guild.id}-role-roxo`));
+           guildMember.roles.add(con.get(`${message.guild.id}-role-roxo`));
            eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 100);
           }
           }
           }
     if (reaction.emoji.name == "🟢") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-verde`))){
+       if(!guildMember.roles.cache.get(con.get(`${message.guild.id}-role-verde`))){
          if (currentBalance >= 100) {
-           guildMember.roles.add(eco.get(`${message.guild.id}-role-verde`));
+           guildMember.roles.add(con.get(`${message.guild.id}-role-verde`));
            eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 100);
           }
           }
           }
     if (reaction.emoji.name == "🟡") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(!guildMember.roles.cache.get(eco.get(`${message.guild.id}-role-amarelo`))){
+       if(!guildMember.roles.cache.get(con.get(`${message.guild.id}-role-amarelo`))){
          if (currentBalance >= 50) {
-           guildMember.roles.add(eco.get(`${message.guild.id}-role-amarelo`));
+           guildMember.roles.add(con.get(`${message.guild.id}-role-amarelo`));
            eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 50);
           }
           }

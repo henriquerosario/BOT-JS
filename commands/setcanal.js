@@ -1,14 +1,14 @@
 const discord = require('discord.js');
 const config = require("../config.json")
-exports.run = async (client, message, args, eco, cooldowns, ms) => {
+exports.run = async (client, message, args, eco, con, cooldowns, ms) => {
   if (!message.member.hasPermission('MANAGE_MESSAGES')){
     message.channel.send(`ei ${message.author} você não tem permissão para fazer isso peça para algem q tem! >:(`) 
     return
 };
   if(!args[0]) {return message.reply("qual canal ex: !setcanal argumentos: cargospadrao, ticket, confirmacao, sujestao, sugerir, cargo, banco, abraco, beijo, spam, mais18, boasvindas, saida, divulgacao")}
-  await eco.ensure(`${message.guild.id}-${args[0]}`, 0);
-  const canal = await eco.get(`${message.guild.id}-${args[0]}`);
-  eco.set(`${message.guild.id}-${args[0]}`, message.channel.id);
+  await con.ensure(`${message.guild.id}-${args[0]}`, 0);
+  const canal = await con.get(`${message.guild.id}-${args[0]}`);
+  con.set(`${message.guild.id}-${args[0]}`, message.channel.id);
 }
 exports.help = {
   permisoes: "Manejar msgs",

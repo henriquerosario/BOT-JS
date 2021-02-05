@@ -19,36 +19,36 @@ if (message.channel.id != eco.get(`${message.guild.id}-cargo`)) {
     if (user.id != message.author.id) return reaction.users.remove(user);
     if (reaction.emoji.name == "🔴") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(guildMember.roles.cache.get("804519118026833942")){
-            guildMember.roles.remove("804519118026833942");
+       if(guildMember.roles.cache.get(con.get(`${message.guild.id}-role-vermelho`))){
+            guildMember.roles.remove(con.get(`${message.guild.id}-role-vermelho`));
           }
           }
           
     if (reaction.emoji.name == "🔵") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(guildMember.roles.cache.get("804519229515628545")){
-           guildMember.roles.remove("804519229515628545");
+       if(guildMember.roles.cache.get(con.get(`${message.guild.id}-role-azul`))){
+           guildMember.roles.remove(con.get(`${message.guild.id}-role-azul`));
           }
           }
           
     if (reaction.emoji.name == "🟣") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(guildMember.roles.cache.get("804519327549620244")){
-           guildMember.roles.remove("804519327549620244");
+       if(guildMember.roles.cache.get(con.get(`${message.guild.id}-role-roxo`))){
+           guildMember.roles.remove(con.get(`${message.guild.id}-role-roxo`));
           }
           }
           
     if (reaction.emoji.name == "🟢") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(guildMember.roles.cache.get("804519472706093116")){
-           guildMember.roles.add("804519472706093116");
+       if(guildMember.roles.cache.get(con.get(`${message.guild.id}-role-verde`))){
+           guildMember.roles.add(con.get(`${message.guild.id}-role-verde`));
           }
           }
 
     if (reaction.emoji.name == "🟡") {
     const guildMember = reaction.message.guild.members.cache.get(user.id)
-       if(guildMember.roles.cache.get("804703558061522985")){
-           guildMember.roles.add("804703558061522985");
+       if(guildMember.roles.cache.get(con.get(`${message.guild.id}-role-amarelo`))){
+           guildMember.roles.add(con.get(`${message.guild.id}-role-amarelo`));
           }
           }
           
