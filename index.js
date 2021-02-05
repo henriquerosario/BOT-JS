@@ -155,8 +155,9 @@ con.ensure(`${message.guild.id}-role-cpp`, 0);
 con.ensure(`${message.guild.id}-role-cs`, 0);
 con.ensure(`${message.guild.id}-divulgacao`, 0);
 con.ensure(`${message.guild.id}-reload`, 0);
-con.ensure(`${message.guild.id}-${message.author.id}-xp`, 0);
-con.ensure(`${message.guild.id}-${message.author.id}-lvl`, 1);
+con.ensure(`${message.guild.id}-mudarnome`, 0);
+eco.ensure(`${message.guild.id}-${message.author.id}-xp`, 0);
+eco.ensure(`${message.guild.id}-${message.author.id}-lvl`, 1);
 
 
 
@@ -218,6 +219,7 @@ con.ensure(`${message.guild.id}-${message.author.id}-lvl`, 1);
   var canalconfirmacao = guild.channels.cache.find(ch => ch.id === con.get(`${message.guild.id}-confirmacao`));
   var canaltiket = guild.channels.cache.find(ch => ch.id === con.get(`${message.guild.id}-ticket`));
   var canalkk = guild.channels.cache.find(ch => ch.id === con.get(`${message.guild.id}-cargospadrao`));
+  var canalmudarnome = guild.channels.cache.find(ch => ch.id === con.get(`${message.guild.id}-mudarnome`));
   /*let canalp = client.channels.cache.get(config.canalnummembros)*/
   /*let canalpo = client.channels.cache.get(eco.get(`${message.guild.id}-boton`))
   canalpo.send("uhul")*/
@@ -231,8 +233,8 @@ con.ensure(`${message.guild.id}-${message.author.id}-lvl`, 1);
 
   var i = 0;
   client.user.setActivity("merda pela janela")
-  var atividades = ["Pedra na Sua Mae","O Jogo da Cobrinha", `estou no ${guild.name} com ${guild.memberCount} membros :)`,"Nada","Estou Online","minha vida fora"]
-    setInterval(function () {client.user.setActivity(atividades[i]); i++; if (i == 6) {i = 0}}, 10000)
+  var atividades = ["Pedra na Sua Mae","O Jogo da Cobrinha", `estou em ${client.guilds.size} servidores, ${client.users.size} usuarios :)`,"Nada","Estou Online","minha vida fora"]
+    setInterval(function () {client.user.setActivity(atividades[i]); i++; if (i == 6) {i = 0}; canalmudarnome.setName(`${guild.memberCount} pessoas estão no server!`)}, 10000)
 
 
   canalkk.bulkDelete(50, true)

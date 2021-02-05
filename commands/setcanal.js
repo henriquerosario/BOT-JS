@@ -6,12 +6,20 @@ exports.run = async (client, message, args, eco, con, cooldowns, ms) => {
     return
 };
   if(!args[0]) {return message.reply("qual canal ex: !setcanal argumentos: cargospadrao, ticket, confirmacao, sujestao, sugerir, cargo, banco, abraco, beijo, spam, mais18, boasvindas, saida, divulgacao")}
+
+
+    let user;
+  if (message.mentions.roles.first() || client.users.cache.get(args[1])) {
+    user = message.mentions.roles.first() || client.users.cache.get(args[1]);
+  } else {
+      user = message.channel
+  }
+
   await con.ensure(`${message.guild.id}-${args[0]}`, 0);
-  const canal = await con.get(`${message.guild.id}-${args[0]}`);
-  con.set(`${message.guild.id}-${args[0]}`, message.channel.id);
+  con.set(`${message.guild.id}-${args[0]}`, user.id);
 }
 exports.help = {
   permisoes: "Manejar msgs",
   description: "Seta Um Canal",
-  usage: "setcanal argumento"
+  usage: "setcanal argumento || setcanal argumento canal"
 }

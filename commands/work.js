@@ -1,8 +1,8 @@
 const discord = require('discord.js');
 const config = require("../config.json")
-exports.run = async (client, message, args, eco, cooldowns, ms) => {
+exports.run = async (client, message, args, eco, con, cooldowns, ms) => {
 await eco.ensure(`${message.author.id}-${message.guild.id}`, 0);
-if (message.channel.id != eco.get(`${message.guild.id}-banco`)) {
+if (message.channel.id != con.get(`${message.guild.id}-banco`)) {
   message.delete()
   message.reply("a bobinho use o banco para consegir dinheiro!")
   return
