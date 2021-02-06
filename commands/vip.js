@@ -1,6 +1,6 @@
 const discord = require('discord.js');
 const config = require("../config.json")
-exports.run = async (client, message, args, eco, con, cooldowns, ms) => {
+exports.run = async (client, message, args, database, con, cooldowns, ms) => {
 if (message.channel.id != con.get(`${message.guild.id}-banco`)) {
   message.delete()
   message.reply("a bobinho use o banco para gastar dinheiro!")
@@ -8,12 +8,16 @@ if (message.channel.id != con.get(`${message.guild.id}-banco`)) {
 }
 const cooldowndata = cooldowns.get(`${message.author.id}-${message.guild.id}-vip`);
 if(parseInt(cooldowndata) > Date.now()) return message.reply(`Porfavor espere ${ms(parseInt(cooldowndata) - Date.now(), {long: true})} para virar vip novamente`)
-const currentBalance = await eco.get(`${message.author.id}-${message.guild.id}`);
+database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async function(db) {
+  
+let currentBalance = db.val().money
 let valordovip = 500
 
 if (currentBalance >= valordovip) {
   cooldowns.set(`${message.author.id}-${message.guild.id}-vip`, Date.now() + ms("1d"))
-  eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 500);
+  database.ref(`Servidores/Money/${message.author.id}`).update({
+    money: db.val().money - valordovip
+  })
   const comEmbed = new discord.MessageEmbed()
       .setColor('#9400D3')
       .setTitle('OS COMANDOS DO BOT:')
@@ -23,6 +27,7 @@ if (currentBalance >= valordovip) {
 } else {
   message.reply("Você Não Tem Dinheiro Suficiente!")
 }
+})
 }
 
 exports.help = {

@@ -1,16 +1,18 @@
 const discord = require('discord.js');
 const config = require("../config.json")
 
-exports.run = async (client, message, args, eco, cooldowns, ms) => {
-if (message.channel.id != config.canaldobanco) {
+exports.run = async (client, message, args, database, con, cooldowns, ms) => {
+if (message.channel.id != con.get(`${message.guild.id}-banco`)) {
   message.delete()
   message.reply("a bobinho use o banco para ver seu dinheiro!")
   return
 }
-  let currentBalance = await eco.get(`${message.author.id}-${message.guild.id}`);
+database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async function(db) {
+
+  let currentBalance = db.val().money
   if (!args[1]) return message.reply("use !pay valor pessoa")
   if (!args[0]) return message.reply("use !pay valor pessoa")
-  if (currentBalance <= parseInt(args[0])) return message.reply("sem dindin")
+  if (currentBalance < parseInt(args[0])) return message.reply("sem dindin")
 
   const deleteCount = parseInt(args[0]);
 
@@ -22,18 +24,25 @@ if (message.channel.id != config.canaldobanco) {
   }
 
   
-  eco.set(`${message.author.id}-${message.guild.id}`, parseInt(currentBalance) - parseInt(args[0]));
-  currentBalance = await eco.get(`${user.id}-${message.guild.id}`);
-  eco.set(`${user.id}-${message.guild.id}`, parseInt(currentBalance) + parseInt(args[0]));
-  currentBalance = await eco.get(`${message.author.id}-${message.guild.id}`);
-
+  database.ref(`Servidores/Money/${message.author.id}`).update({
+    money: db.val().money - parseInt(args[0])
+  })
+  currentBalance = currentBalance - args[0]
+  database.ref(`Servidores/Money/${user.id}`).once("value").then(async function(db) {
+  database.ref(`Servidores/Money/${user.id}`).update({
+    money: db.val().money + parseInt(args[0])
+  })
+  currentBalancepay = db.val().money + parseInt(args[0])
   const comEmbed = new discord.MessageEmbed()
       .setColor('#9400D3')
       .setTitle('PAY:')
-      .setDescription(`o ${message.author} pagou ${parseInt(args[0])} moedas para ${user} e ficou com ${currentBalance} moedas, ${user} ficou com ${eco.get(`${user.id}-${message.guild.id}`)} moedas`)
+      .setDescription(`o ${message.author} pagou ${parseInt(args[0])} moedas para ${user} e ficou com ${currentBalance} moedas, ${user} ficou com ${currentBalancepay} moedas`)
 
   message.reply(comEmbed)
+})
+
   
+  })
 }
 exports.help = {
   permisoes: "Nenhuma",

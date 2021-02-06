@@ -4,7 +4,22 @@ const enmap = require("enmap");
 const fs = require("fs")
 const filtro = require('./filtro.json')
 const ms = require("ms")
+const firebase = require("firebase")
 let fiztd = false
+var firebaseConfig = {
+    apiKey: "AIzaSyC_V3YDx_727ukW9hx20hxkMPzS1tTDlNI",
+    authDomain: "bot-js-6dab3.firebaseapp.com",
+    projectId: "bot-js-6dab3",
+    storageBucket: "bot-js-6dab3.appspot.com",
+    messagingSenderId: "32164664052",
+    appId: "1:32164664052:web:882a751f820af5ad59c4a1"
+  };
+  // Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+const database = firebase.database()
+
+
 const AntiSpam = require('discord-anti-spam');
 const antiSpam = new AntiSpam({
     warnThreshold: 3, // Amount of messages sent in a row that will cause a warning.
@@ -111,12 +126,12 @@ client.on("guildMemberRemove", async (member) => {
   
 });
 client.on("ready", async () => {
-  console.log("estou on")
+  console.log("Estou Preparado, Mas Não On...")
   fiztd = true
 })
 client.on("message", async (message) => {
   if (message.channel.type == 'dm') return;
-  
+
 
 con.ensure(`${message.guild.id}-saida`, 0);
 con.ensure(`${message.guild.id}-boasvindas`, 0);
@@ -156,8 +171,16 @@ con.ensure(`${message.guild.id}-role-cs`, 0);
 con.ensure(`${message.guild.id}-divulgacao`, 0);
 con.ensure(`${message.guild.id}-reload`, 0);
 con.ensure(`${message.guild.id}-mudarnome`, 0);
-eco.ensure(`${message.guild.id}-${message.author.id}-xp`, 0);
-eco.ensure(`${message.guild.id}-${message.author.id}-lvl`, 1);
+
+database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async function(db) {
+    if (db.val() == null) {
+      database.ref(`Servidores/Money/${message.author.id}`)
+      .set({
+        money: 0
+      })
+    }
+})
+
 
 
 
@@ -184,35 +207,56 @@ eco.ensure(`${message.guild.id}-${message.author.id}-lvl`, 1);
 
   const gerarXp = Math.floor(Math.random() * 10) + 1
 
-  eco.ensure(`${message.guild.id}-${message.author.id}-xp`, 0);
-  eco.ensure(`${message.guild.id}-${message.author.id}-lvl`, 1);
-  let xp = eco.get(`${message.guild.id}-${message.author.id}-xp`);
-  let lvl = eco.get(`${message.guild.id}-${message.author.id}-lvl`);
-  const currentBalance = await eco.get(`${message.author.id}-${message.guild.id}`);
+  database.ref(`Servidores/Level/${message.author.id}`).once("value").then(async function(db) {
+    if (db.val() == null) {
+      database.ref(`Servidores/Level/${message.author.id}`)
+      .set({
+        level: 1,
+        xp: 0
+      })
+    }
+    let level = db.val().levels
+    let xp = db.val().xp
+    if (db.val().xp <= db.val().level * 100) {
+    database.ref(`Servidores/Level/${message.author.id}`)
+      .update({
+        level: db.val().level,
+        xp: db.val().xp + gerarXp
+      })
+    } else {
+      database.ref(`Servidores/Level/${message.author.id}`)
+      .update({
+        level: db.val().level + 1,
+        xp: 0
+      })
+      lvl = db.val().level
+      database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async function(db) {
+        if (db.val() == null) {
+          database.ref(`Servidores/Money/${message.author.id}`)
+          .set({
+            money: 0
+          })
+        }
+        database.ref(`Servidores/Money/${message.author.id}`)
+        .update({
+          money: db.val().money + (lvl * 10)
+        })
+        
+      })
 
-
-
-  if (message.channel.id != con.get(`${message.guild.id}-spam`)) {
-    eco.set(`${message.guild.id}-${message.author.id}-xp`, xp + gerarXp);
-  }
-
-  xp = eco.get(`${message.guild.id}-${message.author.id}-xp`);
-  if (xp > lvl * 100) {
-    eco.set(`${message.guild.id}-${message.author.id}-lvl`, lvl + 1);
-    const mensaimgi = await message.channel.send( new Discord.MessageEmbed()
-    .setTitle(`**o ${message.author.username} subio de nevel**`)
-    .setDescription(`parabens ${message.author}, \nvoce subio para o level ${lvl + 1}, \nganhou ${lvl * 50} moedas, \nagora está com ${currentBalance + (lvl * 50)}!!!`)
-    .setImage("https://media.tenor.com/images/02bfcc250484dc13daecd15116b67fc1/tenor.gif")
-    )
-
-    eco.set(`${message.author.id}-${message.guild.id}`, currentBalance + (lvl * 10));
-    eco.set(`${message.guild.id}-${message.author.id}-xp`, 0)
-
-  }
-
+      message.channel.send(
+        new Discord.MessageEmbed()
+        .setTitle(`O ${message.author.username} Upou Para O Level ${lvl + 1}`)
+        .setDescription(`Parabens, Tome Aqui Suas ${lvl * 10} Moedas`)
+      )
+    }
+  })
   
 
-  if (parseInt(con.get(`${message.guild.id}-reload`)) == 0) {
+
+  
+  try {
+    if (parseInt(con.get(`${message.guild.id}-reload`)) == 0) {
     con.set(`${message.guild.id}-reload`, 1)
   /*eco.ensure(`${client.guild.id}-saida`, 0);*/
   let guild = client.guilds.cache.get(message.guild.id);
@@ -574,6 +618,9 @@ client.on('messageReactionRemove', async (reaction, user) => {
     
 });
 }
+  } catch {
+    console.log("este server não está configurado ainda")
+  }
 
 
 
@@ -649,10 +696,12 @@ client.on('messageReactionRemove', async (reaction, user) => {
 
     try {
         const commandFile = require(`./commands/${command}.js`)
-        if (command != "help") {
-        commandFile.run(client, message, args, eco, con, cooldowns, ms, prefix, config);
-        } else {
+        if (command != "help" && command != "mute" && command != "unmute") {
+        commandFile.run(client, message, args, database, con, cooldowns, ms, prefix, config);
+        } else if (command == "help"){
           commandFile.run(client, message, commands, prefix, config, args);
+        } else if (command == "mute" || command == "unmute") {
+          commandFile.run(client, message, args, eco, cooldowns, ms)
         }
     } catch (err) {
     console.error('Erro:' + err);

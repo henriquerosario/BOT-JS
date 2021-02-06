@@ -5,34 +5,55 @@ const { createCanvas, loadImage } = require("canvas");
 const { join } = require("path")
 let uu = 0
 
-exports.run = async (client, message, args, eco, cooldowns, ms) => {
-let user;
+exports.run = async (client, message, args, database, cooldowns, ms) => {
+  let tops = []
+  let talvez = []
+  database.ref(`Servidores/Level/`).once("value").then(async function(db) {
+          const ids = Object.keys(db.val()).forEach((id, index, array) => {
+            database.ref(`Servidores/Level/${id}`).once("value").then(async function(db) {
+              tops.push(db.val().level+"_"+id)
+              if (index + 1 == array.length) {
+                function ordenaNum (a, b) {
+                  a = a.split("_")
+                  b = b.split("_")
+                  return b[0] - a[0];
+                }
+                tops.sort(ordenaNum)
+                for (i=0; i<tops.length; i++) {
+                  talvez.push(tops[i] + "-" + (i + 1))
+                }
+                console.log(talvez)
+                let user;
 if (message.mentions.users.first() || client.users.cache.get(args[1])) {
   user = message.mentions.users.first() || client.users.cache.get(args[1]);
 } else {
     user = message.author;
 }
-
-await eco.ensure(`${user.id}-${message.guild.id}`, 0);
-const currentBalance = await eco.get(`${user.id}-${message.guild.id}`);
-const lvl = await eco.get(`${message.guild.id}-${user.id}-lvl`);
-const xp = await eco.get(`${message.guild.id}-${user.id}-xp`);
-let vip = "Não Vip"
-const cooldowndatavip = cooldowns.get(`${user.id}-${message.guild.id}-vip`);
-if(parseInt(cooldowndatavip) > Date.now()) vip = "VIP"
-
-
-  const rank = new canvacord.Rank()
-    .setAvatar(message.author.displayAvatarURL({format: 'png'}))
+database.ref(`Servidores/Money/${user.id}`).once("value").then(async function(db) {
+    let currentBalance = db.val().money
+    database.ref(`Servidores/Level/${user.id}`).once("value").then(async function(db) {
+      let lvl = db.val().level
+      let xp = db.val().xp
+      let vip = "Não Vip"
+      const cooldowndatavip = cooldowns.get(`${user.id}-${message.guild.id}-vip`);
+      if(parseInt(cooldowndatavip) > Date.now()) vip = "VIP"
+      let pos = 0
+      for (i=0; i<talvez.length; i++) {
+        if (talvez[i].split("-")[0].split("_")[1] == user.id) {
+          pos = i
+        }
+      }
+      const rank = new canvacord.Rank()
+    .setAvatar(user.displayAvatarURL({format: 'png'}))
     .setCurrentXP(xp)
     .setLevel(lvl)
-    .setRank(NaN)
+    .setRank(parseInt(talvez[pos].split("-")[1]))
     .setOverlay("ai sim garoto")
     .setRequiredXP(lvl * 100)
     .setStatus("dnd")
     .setProgressBar("#FFFFFF", "COLOR")
-    .setUsername(message.author.username)
-    .setDiscriminator(message.author.discriminator);
+    .setUsername(user.username)
+    .setDiscriminator(user.discriminator);
     
  
 rank.build()
@@ -74,6 +95,18 @@ rank.build()
     
   });
 });
+    })
+
+})
+
+              }
+            })
+          })
+        })
+
+
+
+  
 
 
 

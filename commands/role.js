@@ -7,7 +7,8 @@ if (message.channel.id != con.get(`${message.guild.id}-cargo`)) {
   message.reply("a bobinho use a area do cargo para adiquirir cargos!")
   return;
 } 
-const cooldowndata = cooldowns.get(`${message.author.id}-${message.guild.id}-vip`);
+database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async function(db) {
+const cooldowndata = db.val().money
 if(parseInt(cooldowndata) > Date.now()) {
   // para vips
     const msg = await message.channel.send(`${message.author} temos os cargos (reaja para comprar): \nvermelho: 🔴 val: 15\nazul: 🔵 val: 15\nroxo: 🟣 val: 10\nverde: 🟢 val: 10 \namarelo: 🟡 val: 5 \nVocê tem: \`${currentBalance}\` \nseu estado atual: VIP`);
@@ -25,7 +26,9 @@ if(parseInt(cooldowndata) > Date.now()) {
        if(!guildMember.roles.cache.get(con.get(`${message.guild.id}-role-vermelho`))){
          if (currentBalance >= 15) {
             guildMember.roles.add(con.get(`${message.guild.id}-role-vermelho`));
-            eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 15);
+            database.ref(`Servidores/Money/${message.author.id}`).update({
+              money: db.val().money - 15
+            })
           }
           }
           }
@@ -34,7 +37,9 @@ if(parseInt(cooldowndata) > Date.now()) {
        if(!guildMember.roles.cache.get(con.get(`${message.guild.id}-role-azul`))) {
          if (currentBalance >= 15) {
            guildMember.roles.add(con.get(`${message.guild.id}-role-azul`));
-           eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 15);
+           database.ref(`Servidores/Money/${message.author.id}`).update({
+              money: db.val().money - 15
+            })
           }
           }
           }
@@ -43,7 +48,9 @@ if(parseInt(cooldowndata) > Date.now()) {
        if(!guildMember.roles.cache.get(con.get(`${message.guild.id}-role-roxo`))){
          if (currentBalance >= 10) {
            guildMember.roles.add(con.get(`${message.guild.id}-role-roxo`));
-           eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 10);
+           database.ref(`Servidores/Money/${message.author.id}`).update({
+              money: db.val().money - 10
+            })
           }
           }
           }
@@ -52,7 +59,9 @@ if(parseInt(cooldowndata) > Date.now()) {
        if(!guildMember.roles.cache.get(con.get(`${message.guild.id}-role-verde`))){
          if (currentBalance >= 10) {
            guildMember.roles.add(con.get(`${message.guild.id}-role-verde`));
-           eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 10);
+           database.ref(`Servidores/Money/${message.author.id}`).update({
+              money: db.val().money - 10
+            })
           }
           }
           }
@@ -61,7 +70,9 @@ if(parseInt(cooldowndata) > Date.now()) {
        if(!guildMember.roles.cache.get(con.get(`${message.guild.id}-role-amarelo`))){
          if (currentBalance >= 5) {
            guildMember.roles.add(con.get(`${message.guild.id}-role-amarelo`));
-           eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 5);
+           database.ref(`Servidores/Money/${message.author.id}`).update({
+              money: db.val().money - 5
+            })
           }
           }
           }
@@ -86,7 +97,9 @@ if(parseInt(cooldowndata) > Date.now()) {
        if(!guildMember.roles.cache.get(con.get(`${message.guild.id}-role-vermelho`))){
          if (currentBalance >= 150) {
             guildMember.roles.add(con.get(`${message.guild.id}-role-vermelho`));
-            eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 150);
+            database.ref(`Servidores/Money/${message.author.id}`).update({
+              money: db.val().money - 150
+            })
           }
           }
           }
@@ -95,7 +108,9 @@ if(parseInt(cooldowndata) > Date.now()) {
        if(!guildMember.roles.cache.get(con.get(`${message.guild.id}-role-azul`))){
          if (currentBalance >= 150) {
            guildMember.roles.add(con.get(`${message.guild.id}-role-azul`));
-           eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 150);
+           database.ref(`Servidores/Money/${message.author.id}`).update({
+              money: db.val().money - 150
+            })
           }
           }
           }
@@ -104,7 +119,9 @@ if(parseInt(cooldowndata) > Date.now()) {
        if(!guildMember.roles.cache.get(con.get(`${message.guild.id}-role-roxo`))){
          if (currentBalance >= 100) {
            guildMember.roles.add(con.get(`${message.guild.id}-role-roxo`));
-           eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 100);
+           database.ref(`Servidores/Money/${message.author.id}`).update({
+              money: db.val().money - 100
+            })
           }
           }
           }
@@ -113,7 +130,9 @@ if(parseInt(cooldowndata) > Date.now()) {
        if(!guildMember.roles.cache.get(con.get(`${message.guild.id}-role-verde`))){
          if (currentBalance >= 100) {
            guildMember.roles.add(con.get(`${message.guild.id}-role-verde`));
-           eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 100);
+           database.ref(`Servidores/Money/${message.author.id}`).update({
+              money: db.val().money - 100
+            })
           }
           }
           }
@@ -122,7 +141,9 @@ if(parseInt(cooldowndata) > Date.now()) {
        if(!guildMember.roles.cache.get(con.get(`${message.guild.id}-role-amarelo`))){
          if (currentBalance >= 50) {
            guildMember.roles.add(con.get(`${message.guild.id}-role-amarelo`));
-           eco.set(`${message.author.id}-${message.guild.id}`, currentBalance - 50);
+           database.ref(`Servidores/Money/${message.author.id}`).update({
+              money: db.val().money - 50
+            })
           }
           }
           }
@@ -130,6 +151,7 @@ if(parseInt(cooldowndata) > Date.now()) {
     }
     })
 }
+})
 }
 exports.help = {
   permisoes: "Nenhuma",

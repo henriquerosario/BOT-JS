@@ -1,10 +1,12 @@
 const discord = require('discord.js');
 const config = require("../config.json")
 exports.run = async (client, message, args, eco, con, cooldowns, ms) => {
+  if (message.author.id != "686010259860750456") {
   if (!message.member.hasPermission('MANAGE_MESSAGES')){
     message.channel.send(`ei ${message.author} você não tem permissão para fazer isso peça para algem q tem! >:(`) 
     return
 };
+  }
   let user;
   if (message.mentions.roles.first() || client.users.cache.get(args[0])) {
     user = message.mentions.roles.first() || client.users.cache.get(args[0]);
