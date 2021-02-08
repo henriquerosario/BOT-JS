@@ -10,7 +10,7 @@ const cooldowndata = cooldowns.get(`${message.author.id}-${message.guild.id}-dai
 if(parseInt(cooldowndata) > Date.now()) return message.reply(`Please wait ${ms(parseInt(cooldowndata) - Date.now(), {long: true})}`)
 let valor = 100
 let vip = "Não Vip"
-const cooldowndatavip = cooldowns.get(`${message.author.id}-${message.guild.id}-vip`);
+const cooldowndatavip = cooldowns.get(`${user.id}-vip`);
 if(parseInt(cooldowndatavip) > Date.now()) {valor = 200; vip = "VIP"}
 if(parseInt(cooldowndata) > Date.now()) 
 

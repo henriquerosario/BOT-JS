@@ -6,7 +6,7 @@ if (message.channel.id != con.get(`${message.guild.id}-banco`)) {
   message.reply("a bobinho use o banco para consegir dinheiro!")
   return
 }
-const cooldowndata = cooldowns.get(`${message.author.id}-${message.guild.id}-work`);
+const cooldowndata = cooldowns.get(`${user.id}-vip`);
 if(parseInt(cooldowndata) > Date.now()) return message.reply(`Porfavor espere ${ms(parseInt(cooldowndata) - Date.now(), {long: true})}`)
 
   let random = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];

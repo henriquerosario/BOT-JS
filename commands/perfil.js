@@ -35,7 +35,7 @@ database.ref(`Servidores/Money/${user.id}`).once("value").then(async function(db
       let lvl = db.val().level
       let xp = db.val().xp
       let vip = "Não Vip"
-      const cooldowndatavip = cooldowns.get(`${user.id}-${message.guild.id}-vip`);
+      const cooldowndatavip = cooldowns.get(`${user.id}-vip`);
       if(parseInt(cooldowndatavip) > Date.now()) vip = "VIP"
       let pos = 0
       for (i=0; i<talvez.length; i++) {

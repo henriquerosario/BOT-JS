@@ -17,7 +17,7 @@ exports.run = async (bot, message, args, database, cooldowns, ms) => {
 	)
     .setTimestamp()
 
-const cooldowndatavip = cooldowns.get(`${message.author.id}-${message.guild.id}-vip`);
+const cooldowndatavip = cooldowns.get(`${user.id}-vip`);
 if(parseInt(cooldowndatavip) > Date.now()) {
   message.channel.send(exampleEmbed);
 } else {

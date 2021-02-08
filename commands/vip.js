@@ -6,7 +6,7 @@ if (message.channel.id != con.get(`${message.guild.id}-banco`)) {
   message.reply("a bobinho use o banco para gastar dinheiro!")
   return
 }
-const cooldowndata = cooldowns.get(`${message.author.id}-${message.guild.id}-vip`);
+const cooldowndata = cooldowns.get(`${user.id}-vip`);
 if(parseInt(cooldowndata) > Date.now()) return message.reply(`Porfavor espere ${ms(parseInt(cooldowndata) - Date.now(), {long: true})} para virar vip novamente`)
 database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async function(db) {
   
@@ -14,7 +14,7 @@ let currentBalance = db.val().money
 let valordovip = 500
 
 if (currentBalance >= valordovip) {
-  cooldowns.set(`${message.author.id}-${message.guild.id}-vip`, Date.now() + ms("1d"))
+  cooldowns.set(`${message.author.id}-vip`, Date.now() + ms("1d"))
   database.ref(`Servidores/Money/${message.author.id}`).update({
     money: db.val().money - valordovip
   })
