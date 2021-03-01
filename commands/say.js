@@ -1,7 +1,7 @@
 const discord = require('discord.js');
 const config = require("../config.json")
 
-exports.run = async (bot, message, args, database, cooldowns, ms) => {
+exports.run = async (client, message, args, database, con, cooldowns, ms) => {
   
 
   let avatar = message.author.displayAvatarURL({format: 'png'});
@@ -17,7 +17,7 @@ exports.run = async (bot, message, args, database, cooldowns, ms) => {
 	)
     .setTimestamp()
 
-const cooldowndatavip = cooldowns.get(`${user.id}-vip`);
+const cooldowndatavip = cooldowns.get(`${message.author.id}-vip`);
 if(parseInt(cooldowndatavip) > Date.now()) {
   message.channel.send(exampleEmbed);
 } else {

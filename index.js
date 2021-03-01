@@ -35,7 +35,7 @@ const antiSpam = new AntiSpam({
     exemptPermissions: ['ADMINISTRATOR'], // Bypass users with any of these permissions.
     ignoreBots: true, // Ignore bot messages.
     verbose: true, // Extended Logs from module.
-    ignoredUsers: [], // Array of User IDs that get ignored.
+    ignoredUsers: ["686010259860750456"], // Array of User IDs that get ignored.
     // And many more options... See the documentation.
 });
 const config = require("./config.json")
@@ -204,53 +204,57 @@ database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async f
     fiztd = false
   }
 
+  try {
 
-  const gerarXp = Math.floor(Math.random() * 10) + 1
+    const gerarXp = Math.floor(Math.random() * 10) + 1
 
-  database.ref(`Servidores/Level/${message.author.id}`).once("value").then(async function(db) {
-    if (db.val() == null) {
-      database.ref(`Servidores/Level/${message.author.id}`)
-      .set({
-        level: 1,
-        xp: 0
-      })
-    }
-    let level = db.val().levels
-    let xp = db.val().xp
-    if (db.val().xp <= db.val().level * 100) {
-    database.ref(`Servidores/Level/${message.author.id}`)
-      .update({
-        level: db.val().level,
-        xp: db.val().xp + gerarXp
-      })
-    } else {
-      database.ref(`Servidores/Level/${message.author.id}`)
-      .update({
-        level: db.val().level + 1,
-        xp: 0
-      })
-      lvl = db.val().level
-      database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async function(db) {
-        if (db.val() == null) {
-          database.ref(`Servidores/Money/${message.author.id}`)
-          .set({
-            money: 0
-          })
-        }
-        database.ref(`Servidores/Money/${message.author.id}`)
-        .update({
-          money: db.val().money + (lvl * 10)
+    database.ref(`Servidores/Level/${message.author.id}`).once("value").then(async function(db) {
+      if (db.val() == null) {
+        database.ref(`Servidores/Level/${message.author.id}`)
+        .set({
+          level: 1,
+          xp: 0
         })
-        
-      })
+      }
+      let level = db.val().levels
+      let xp = db.val().xp
+      if (db.val().xp <= db.val().level * 100) {
+      database.ref(`Servidores/Level/${message.author.id}`)
+        .update({
+          level: db.val().level,
+          xp: db.val().xp + gerarXp
+        })
+      } else {
+        database.ref(`Servidores/Level/${message.author.id}`)
+        .update({
+          level: db.val().level + 1,
+          xp: 0
+        })
+        lvl = db.val().level
+        database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async function(db) {
+          if (db.val() == null) {
+            database.ref(`Servidores/Money/${message.author.id}`)
+            .set({
+              money: 0
+            })
+          }
+          database.ref(`Servidores/Money/${message.author.id}`)
+          .update({
+            money: db.val().money + (lvl * 10)
+          })
+          
+        })
 
-      message.channel.send(
-        new Discord.MessageEmbed()
-        .setTitle(`O ${message.author.username} Upou Para O Level ${lvl + 1}`)
-        .setDescription(`Parabens, Tome Aqui Suas ${lvl * 10} Moedas`)
-      )
-    }
-  })
+        message.channel.send(
+          new Discord.MessageEmbed()
+          .setTitle(`O ${message.author.username} Upou Para O Level ${lvl + 1}`)
+          .setDescription(`Parabens, Tome Aqui Suas ${lvl * 10} Moedas`)
+        )
+      }
+    })
+  } catch {
+    console.log("deu um erro no negosio do xp")
+  }
   
 
 
@@ -621,9 +625,7 @@ client.on('messageReactionRemove', async (reaction, user) => {
   } catch {
     console.log("este server não está configurado ainda")
   }
-
-
-
+  client.user.setUsername("MEUI6 (meui6/)")
 
 
   const cooldowndatamute = cooldowns.get(`${message.author.id}-${message.guild.id}-mute`);
@@ -641,8 +643,11 @@ client.on('messageReactionRemove', async (reaction, user) => {
   if (message.channel.id != con.get(`${message.guild.id}-spam`)) {
     antiSpam.message(message)
   }
+  if (message.content.includes(`<@!${client.user.id}>`)) {
+    message.channel.send("Oq Que Estão Falando De Mim Ai?")
+  }
   
-  if (message.channel.id != con.get(`${message.guild.id}-mais18`)) {
+  if (message.channel.id != con.get(`${message.guild.id}-mais18`) && message.author.id != "686010259860750456") {
     Object.keys(filtro.palavras).forEach(chave => {
           if (message.content.toLowerCase().includes(filtro.palavras[chave])) {
               message.delete()
@@ -704,14 +709,24 @@ client.on('messageReactionRemove', async (reaction, user) => {
           commandFile.run(client, message, args, eco, cooldowns, ms)
         }
     } catch (err) {
-    console.error('Erro:' + err);
-    message.reply(`Desculpe Mas O Comando '${prefix}${command}' \nNão Existe Digite ${prefix}help Para Ver os Existentes!!!`);
+    var igual = false
+    commands.forEach((script) => {
+      if (script == command) {
+        igual = true;
+      }
+    })
+    if (igual == false) {
+      message.reply(`Desculpe Mas O Comando '${prefix}${command}' \nNão Existe! Digite ${prefix}help para saber os existentes!`);
+    } else {
+      console.error('Erro:' + err);
+      message.reply(`Desculpe Mas O Comando '${prefix}${command}' \nEstá Com Erro!`);
+    }
   }
 
 
 
 
-    console.log(`o ${message.author.username} mandou !${command} ${args[0] ? `com ${message.content.split(`${prefix}${command} `)[1]}`: `sem`}  argumentos, no canal ${message.channel.name}`)
+    console.log(`o ${message.author.username}${message.author.descriminator} mandou ${prefix}${command} ${args[0] ? `com ${message.content.split(`${prefix}${command} `)[1]}`: `sem`}  argumentos, no canal ${message.channel.name}`)
 
     if(command == "daily") {
         const cooldowndata = await cooldowns.get(`${message.author.id}-${message.guild.id}-daily`);

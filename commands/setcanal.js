@@ -11,6 +11,8 @@ exports.run = async (client, message, args, eco, con, cooldowns, ms) => {
   await con.ensure(`${message.guild.id}-${args[0]}`, 0);
   const canal = await con.get(`${message.guild.id}-${args[0]}`);
   con.set(`${message.guild.id}-${args[0]}`, message.channel.id);
+  message.reply(`canal ${args[0]} Setado com sucesso!`)
+  message.delete()
 }
 exports.help = {
   permisoes: "Manejar msgs",

@@ -6,8 +6,8 @@ if (message.channel.id != con.get(`${message.guild.id}-banco`)) {
   message.reply("a bobinho use o banco para gastar dinheiro!")
   return
 }
-const cooldowndata = cooldowns.get(`${user.id}-vip`);
-if(parseInt(cooldowndata) > Date.now()) return message.reply(`Porfavor espere ${ms(parseInt(cooldowndata) - Date.now(), {long: true})} para virar vip novamente`)
+const cooldowndata = cooldowns.get(`${message.author.id}-vip`);
+if(parseInt(cooldowndata) > Date.now()) return message.reply(`Você Ainda Tem ${ms(parseInt(cooldowndata) - Date.now(), {long: true})}  de Vip \ndigite un-vip para desvirar vip`)
 database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async function(db) {
   
 let currentBalance = db.val().money

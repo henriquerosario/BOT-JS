@@ -11,6 +11,7 @@ exports.run = (bot, message, commands) => {
   var des = ""
   var des2 = ""
   var desn = 0
+  var comandos_numero = 0
   var des3 = ""
   var des4 = ""
   var des5 = ""
@@ -19,7 +20,8 @@ exports.run = (bot, message, commands) => {
         if (script != args[0]) return
       }
       props = require(`./${script}`)
-      des += `\n **${prefix}${script}**: \n**Descriçao:** ${props.help.description ? props.help.description : 'Não tem descrição'}, \n**usagem:** !${props.help.usage ? props.help.usage : "Não especificado"}, \n**Permissoes necesarias:** ${props.help.permisoes ? props.help.permisoes : "Não especificado"}.\n\n`
+      des += `\n **comando ${comandos_numero} ${prefix}${script}**: \n**Descriçao:** ${props.help.description ? props.help.description : 'Não tem descrição'}, \n**usagem:**  ${prefix}${props.help.usage ? props.help.usage : "Não especificado"}, \n**Permissoes necesarias:** ${props.help.permisoes ? props.help.permisoes : "Não especificado"}.\n\n`
+      comandos_numero++
       desn++
       if (desn >= 10) {
         des5 = des4
@@ -38,6 +40,7 @@ exports.run = (bot, message, commands) => {
       .setTitle(`O COMANDO ${args[0]}:`)
       .setDescription(des)
 
+      
       message.reply(comEmbed)
       return
     }

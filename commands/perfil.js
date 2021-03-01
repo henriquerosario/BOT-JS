@@ -5,7 +5,8 @@ const { createCanvas, loadImage } = require("canvas");
 const { join } = require("path")
 let uu = 0
 
-exports.run = async (client, message, args, database, cooldowns, ms) => {
+exports.run = async (client, message, args, database, con, cooldowns, ms) => {
+  var msg_prossecando = await message.channel.send("⚙")
   let tops = []
   let talvez = []
   database.ref(`Servidores/Level/`).once("value").then(async function(db) {
@@ -22,7 +23,6 @@ exports.run = async (client, message, args, database, cooldowns, ms) => {
                 for (i=0; i<tops.length; i++) {
                   talvez.push(tops[i] + "-" + (i + 1))
                 }
-                console.log(talvez)
                 let user;
 if (message.mentions.users.first() || client.users.cache.get(args[1])) {
   user = message.mentions.users.first() || client.users.cache.get(args[1]);
@@ -35,8 +35,7 @@ database.ref(`Servidores/Money/${user.id}`).once("value").then(async function(db
       let lvl = db.val().level
       let xp = db.val().xp
       let vip = "Não Vip"
-      const cooldowndatavip = cooldowns.get(`${user.id}-vip`);
-      if(parseInt(cooldowndatavip) > Date.now()) vip = "VIP"
+      const cooldownvip = cooldowns.get(`${user.id}-vip`);
       let pos = 0
       for (i=0; i<talvez.length; i++) {
         if (talvez[i].split("-")[0].split("_")[1] == user.id) {
@@ -58,11 +57,17 @@ database.ref(`Servidores/Money/${user.id}`).once("value").then(async function(db
  
 rank.build()
     .then(async data => {
+      msg_prossecando.delete()
+        let vip = "Não Vip"
+        const cooldownvip = cooldowns.get(`${user.id}-vip`);
+        if(parseInt(cooldownvip) > Date.now()) { 
+          vip = `VIP \n Tempo Restante De Vip: ${ms(parseInt(cooldownvip) - Date.now(), {long: false})}`; 
+        }
         const attachment = new Discord.MessageAttachment(data, "RankCard.png");
         //message.channel.send(attachment);
         const embed = new Discord.MessageEmbed()
           .setTitle(`Perfil De ${user.username}!`)
-          .setDescription(`${currentBalance} moedas na conta!, \nestado dele(a): ${vip}, \nnumero de pagamentos executados: ainda não disponivel`).setColor("00ff00")
+          .setDescription(`${currentBalance} moedas na conta!, \nestado dele(a): ${vip}, \nnumero de pagamentos executados: ainda não disponivel\n\n\n⬇ Clique no emoji abaixo para mudar de pagina :)`).setColor("00ff00")
         let msg = await message.channel.send(embed)
   emojis = ["↪️"];
 
