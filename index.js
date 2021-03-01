@@ -133,44 +133,44 @@ client.on("message", async (message) => {
   if (message.channel.type == 'dm') return;
 
 
-con.ensure(`${message.guild.id}-saida`, 0);
-con.ensure(`${message.guild.id}-boasvindas`, 0);
-con.ensure(`${message.guild.id}-mais18`, 0);
-con.ensure(`${message.guild.id}-spam`, 0);
-con.ensure(`${message.guild.id}-beijo`, 0);
-con.ensure(`${message.guild.id}-abraco`, 0);
-con.ensure(`${message.guild.id}-banco`, 0);
-con.ensure(`${message.guild.id}-cargo`, 0);
-con.ensure(`${message.guild.id}-sugerir`, 0);
-con.ensure(`${message.guild.id}-sujestao`, 0);
-con.ensure(`${message.guild.id}-confirmacao`, 0);
-con.ensure(`${message.guild.id}-ticket`, 0);
-con.ensure(`${message.guild.id}-cargospadrao`, 0);
-con.ensure(`${message.guild.id}-role-vermelho`, 0);
-con.ensure(`${message.guild.id}-role-verde`, 0);
-con.ensure(`${message.guild.id}-role-azul`, 0);
-con.ensure(`${message.guild.id}-role-amarelo`, 0);
-con.ensure(`${message.guild.id}-role-roxo`, 0);
-con.ensure(`${message.guild.id}-role-permissao`, 0);
-con.ensure(`${message.guild.id}-role-cat`, 0);
-con.ensure(`${message.guild.id}-role-dog`, 0);
-con.ensure(`${message.guild.id}-role-outro`, 0);
-con.ensure(`${message.guild.id}-role-passaro`, 0);
-con.ensure(`${message.guild.id}-role-passaro`, 0);
-con.ensure(`${message.guild.id}-role-homem`, 0);
-con.ensure(`${message.guild.id}-role-mulher`, 0);
-con.ensure(`${message.guild.id}-role-mais18`, 0);
-con.ensure(`${message.guild.id}-role-menos18`, 0);
-con.ensure(`${message.guild.id}-role-javascript`, 0);
-con.ensure(`${message.guild.id}-role-python`, 0);
-con.ensure(`${message.guild.id}-role-php`, 0);
-con.ensure(`${message.guild.id}-role-html`, 0);
-con.ensure(`${message.guild.id}-role-c`, 0);
-con.ensure(`${message.guild.id}-role-cpp`, 0);
-con.ensure(`${message.guild.id}-role-cs`, 0);
-con.ensure(`${message.guild.id}-divulgacao`, 0);
-con.ensure(`${message.guild.id}-reload`, 0);
-con.ensure(`${message.guild.id}-mudarnome`, 0);
+con.ensure(`${message.guild.id}-saida`, "undefined");
+con.ensure(`${message.guild.id}-boasvindas`, "undefined");
+con.ensure(`${message.guild.id}-mais18`, "undefined");
+con.ensure(`${message.guild.id}-spam`, "undefined");
+con.ensure(`${message.guild.id}-beijo`, "undefined");
+con.ensure(`${message.guild.id}-abraco`, "undefined");
+con.ensure(`${message.guild.id}-banco`, "undefined");
+con.ensure(`${message.guild.id}-cargo`, "undefined");
+con.ensure(`${message.guild.id}-sugerir`, "undefined");
+con.ensure(`${message.guild.id}-sujestao`, "undefined");
+con.ensure(`${message.guild.id}-confirmacao`, "undefined");
+con.ensure(`${message.guild.id}-ticket`, "undefined");
+con.ensure(`${message.guild.id}-cargospadrao`, "undefined");
+con.ensure(`${message.guild.id}-role-vermelho`, "undefined");
+con.ensure(`${message.guild.id}-role-verde`, "undefined");
+con.ensure(`${message.guild.id}-role-azul`, "undefined");
+con.ensure(`${message.guild.id}-role-amarelo`, "undefined");
+con.ensure(`${message.guild.id}-role-roxo`, "undefined");
+con.ensure(`${message.guild.id}-role-permissao`, "undefined");
+con.ensure(`${message.guild.id}-role-cat`, "undefined");
+con.ensure(`${message.guild.id}-role-dog`, "undefined");
+con.ensure(`${message.guild.id}-role-outro`, "undefined");
+con.ensure(`${message.guild.id}-role-passaro`, "undefined");
+con.ensure(`${message.guild.id}-role-passaro`, "undefined");
+con.ensure(`${message.guild.id}-role-homem`, "undefined");
+con.ensure(`${message.guild.id}-role-mulher`, "undefined");
+con.ensure(`${message.guild.id}-role-mais18`, "undefined");
+con.ensure(`${message.guild.id}-role-menos18`, "undefined");
+con.ensure(`${message.guild.id}-role-javascript`, "undefined");
+con.ensure(`${message.guild.id}-role-python`, "undefined");
+con.ensure(`${message.guild.id}-role-php`, "undefined");
+con.ensure(`${message.guild.id}-role-html`, "undefined");
+con.ensure(`${message.guild.id}-role-c`, "undefined");
+con.ensure(`${message.guild.id}-role-cpp`, "undefined");
+con.ensure(`${message.guild.id}-role-cs`, "undefined");
+con.ensure(`${message.guild.id}-divulgacao`, "undefined");
+con.ensure(`${message.guild.id}-reload`, "undefined");
+con.ensure(`${message.guild.id}-mudarnome`, "undefined");
 
 database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async function(db) {
     if (db.val() == null) {
@@ -190,7 +190,7 @@ database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async f
   if (regex.exec(message.content)) {
     await message.delete({timeout: 1000});
       await message.channel.send(
-        `${message.author} **você não pode postar link de outros servidores aqui! use o canal divulgaçao dos membros para isso**`
+        `${message.author} **você não pode postar link de outros servidores aqui! use o <#${con.get(`${message.guild.id}-sugerir`)}> para isso**`
       );
   }
   }
@@ -650,6 +650,7 @@ client.on('messageReactionRemove', async (reaction, user) => {
   if (message.channel.id != con.get(`${message.guild.id}-mais18`) && message.author.id != "686010259860750456") {
     Object.keys(filtro.palavras).forEach(chave => {
           if (message.content.toLowerCase().includes(filtro.palavras[chave])) {
+              message.reply(`Não Pode Falar Palavroes Aqui Use o Canal <#${con.get(`${message.guild.id}-mais18`)}> Para Isso!`)
               message.delete()
           }
     })
@@ -662,14 +663,14 @@ client.on('messageReactionRemove', async (reaction, user) => {
       if (message.content.split(" ")[0].toLowerCase() == "!kiss"){ 
        if (message.channel != con.get(`${message.guild.id}-beijo`)) {
         message.delete()
-        return message.reply("a BOBINHO você não pode beijar fora da area do beijo!")
+        return message.reply(`a BOBINHO você não pode beijar fora do <#${con.get(`${message.guild.id}-beijo`)}>!`)
 
       }
      }
      if (message.content.split(" ")[0].toLowerCase() == "!hug"){ 
        if (message.channel != con.get(`${message.guild.id}-abraco`)) {
         message.delete()
-        return message.reply("a BOBINHO você não pode abraçar fora da area do abraço!")
+        return message.reply(`a BOBINHO você não pode abraçar fora do <#${con.get(`${message.guild.id}-abraco`)}>`)
 
       }
      }

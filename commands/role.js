@@ -4,7 +4,7 @@ const prefix = config.prefix
 exports.run = async (client, message, args, eco, cooldowns, ms) => {
 const currentBalance = await eco.get(`${message.author.id}-${message.guild.id}`)
 if (message.channel.id != con.get(`${message.guild.id}-cargo`)) {
-  message.reply("a bobinho use a area do cargo para adiquirir cargos!")
+  message.reply(`a bobinho use <#${con.get(`${message.guild.id}-cargo`)}> para adiquirir cargos!`)
   return;
 } 
 database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async function(db) {
@@ -155,6 +155,6 @@ if(parseInt(cooldowndata) > Date.now()) {
 }
 exports.help = {
   permisoes: "Nenhuma",
-  description: "Te dá um Cargo em Troca de Moedas",
+  description: "DESATIVADO",
   usage: "role react"
 }

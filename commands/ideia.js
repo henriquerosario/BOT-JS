@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 config = require("../config.json")
 
 exports.run = async (client, message, args, con, eco, cooldowns, ms) => {
-  if (message.channel.id != con.get(`${message.guild.id}-sugerir`)) {message.reply("use o canal de sugestoes para dar ideias"); return message.delete()}
+  if (message.channel.id != con.get(`${message.guild.id}-sugerir`)) {message.reply(`use o <#${con.get(`${message.guild.id}-sugerir`)}> para dar ideias`); return message.delete()}
 const content = args.join(" ");
 
 if (!args[0]) {

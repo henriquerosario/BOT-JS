@@ -4,7 +4,7 @@ const config = require("../config.json")
 exports.run = async (client, message, args, database, con, cooldowns, ms) => {
 if (message.channel.id != con.get(`${message.guild.id}-banco`)) {
   message.delete()
-  message.reply("a bobinho use o banco para ver seu dinheiro!")
+  message.reply(`a bobinho use o <#${con.get(`${message.guild.id}-banco`)}> para ver seu dinheiro!`)
   return
 }
 database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async function(db) {

@@ -3,7 +3,7 @@ const config = require("../config.json")
 exports.run = async (client, message, args, database, con, cooldowns, ms) => {
 if (message.channel.id != con.get(`${message.guild.id}-banco`)) {
   message.delete()
-  message.reply("a bobinho use o banco para consegir dinheiro!")
+  message.reply(`a bobinho use o <#${con.get(`${message.guild.id}-banco`)}> para consegir dinheiro!`)
   return
 }
 const cooldowndata = cooldowns.get(`${message.author.id}-${message.guild.id}-work`);

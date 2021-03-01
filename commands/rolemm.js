@@ -3,7 +3,7 @@ const config = require("../config.json")
 const prefix = config.prefix
 exports.run = async (client, message, args, eco, cooldowns, ms) => {
 if (message.channel.id != eco.get(`${message.guild.id}-cargo`)) {
-  message.reply("a bobinho use a area do cargo para adiquirir cargos!")
+  message.reply(`a bobinho use <#${con.get(`${message.guild.id}-cargo`)}> para perder cargos!`)
   return;
 }
 
@@ -58,6 +58,6 @@ if (message.channel.id != eco.get(`${message.guild.id}-cargo`)) {
 }
 exports.help = {
     permisoes: "Nenhuma",
-  description: "Te retira um Cargo",
+  description: "DESATIVADO",
   usage: "role react"
 }

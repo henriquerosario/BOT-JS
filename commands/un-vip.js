@@ -1,6 +1,11 @@
 const discord = require('discord.js');
 const config = require("../config.json")
 exports.run = async (client, message, args, database, con, cooldowns, ms) => {
+if (message.channel.id != con.get(`${message.guild.id}-banco`)) {
+  message.delete()
+  message.reply(`a bobinho use o <#${con.get(`${message.guild.id}-banco`)}> para consegir dinheiro!`)
+  return
+}
 const cooldowndataVip = cooldowns.get(`${message.author.id}-vip`);
 if(parseInt(cooldowndataVip) > Date.now()) {
   var horas_usadas = (parseInt(cooldowndataVip) - Date.now()) / 1000 / 60 / 60
