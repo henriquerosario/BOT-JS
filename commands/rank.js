@@ -29,8 +29,23 @@ exports.run = async (client, message, args, database, con, cooldowns, ms) => {
                   if (message.author.id == valor.split("-")[0].split("_")[1]) {
                     vc += `Você é o ${valor.split("-")[1]}° Colocado(a) com ${valor.split("_")[0]} Levels!`
                   }
-                  if (index > 9) return;
-                  des += `${valor.split("-")[1]}° Colocado(a): <@!${valor.split("-")[0].split("_")[1]}> Com ${valor.split("_")[0]} Levels\n`
+                  if (valor.split("-")[1] == 1) {
+                      des += `🥇 1° Colocado(a): <@!${valor.split("-")[0].split("_")[1]}> Com ${valor.split("_")[0]} Levels 🥇\n\n`
+                    } else if (valor.split("-")[1] == 2) {
+                      des += `🥈 2° Colocado(a): <@!${valor.split("-")[0].split("_")[1]}> Com ${valor.split("_")[0]} Levels 🥈\n\n`
+                    } else if (valor.split("-")[1] == 3) {
+                      des += `🥉 2° Colocado(a): <@!${valor.split("-")[0].split("_")[1]}> Com ${valor.split("_")[0]} Levels 🥉\n\n`
+                    } else if (valor.split("-")[1] == 4) {
+                      des += `🏅 2° Colocado(a): <@!${valor.split("-")[0].split("_")[1]}> Com ${valor.split("_")[0]} Levels 🏅\n\n`
+                    } else if (valor.split("-")[1] == 5) {
+                      des += `🎖️ 2° Colocado(a): <@!${valor.split("-")[0].split("_")[1]}> Com ${valor.split("_")[0]} Levels 🎖️\n\n`
+                    } else if (valor.split("-")[1] == 6 || valor.split("-")[1] == 7) {
+                      des += `😀 2° Colocado(a): <@!${valor.split("-")[0].split("_")[1]}> Com ${valor.split("_")[0]} Levels 😀\n\n`
+                    } else if (valor.split("-")[1] == 8 || valor.split("-")[1] == 9) {
+                      des += `😐 2° Colocado(a): <@!${valor.split("-")[0].split("_")[1]}> Com ${valor.split("_")[0]} Levels 😐\n\n`
+                    } else if (valor.split("-")[1] == 10) {
+                      des += `😩 2° Colocado(a): <@!${valor.split("-")[0].split("_")[1]}> Com ${valor.split("_")[0]} Levels 😩\n\n`
+                    }
                 })
                const comEmbed = new discord.MessageEmbed()
                 .setColor('#9400D3')

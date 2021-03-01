@@ -240,7 +240,7 @@ database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async f
           }
           database.ref(`Servidores/Money/${message.author.id}`)
           .update({
-            money: db.val().money + (lvl * 10)
+            money: db.val().money + (lvl+1) * 10
           })
           
         })
@@ -248,7 +248,7 @@ database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async f
         message.channel.send(
           new Discord.MessageEmbed()
           .setTitle(`O ${message.author.username} Upou Para O Level ${lvl + 1}`)
-          .setDescription(`Parabens, Tome Aqui Suas ${lvl * 10} Moedas`)
+          .setDescription(`Parabens, Tome Aqui Suas ${(lvl+1) * 10} Moedas`)
         )
       }
     })
@@ -699,30 +699,16 @@ client.on('messageReactionRemove', async (reaction, user) => {
     const command = args.shift().toLowerCase();
     
 
-    try {
         const commandFile = require(`./commands/${command}.js`)
-        if (command != "help" && command != "mute" && command != "unmute") {
+        if (command != "help" && command != "mute" && command != "unmute" && command != "ideia") {
         commandFile.run(client, message, args, database, con, cooldowns, ms, prefix, config);
         } else if (command == "help"){
           commandFile.run(client, message, commands, prefix, config, args);
         } else if (command == "mute" || command == "unmute") {
-          commandFile.run(client, message, args, eco, cooldowns, ms)
+          commandFile.run(client, message, args, eco, cooldowns, ms);
+        } else if (command == "ideia") {
+          commandFile.run(client, message, args, con, eco, cooldowns, ms);
         }
-    } catch (err) {
-    var igual = false
-    commands.forEach((script) => {
-      if (script == command) {
-        igual = true;
-      }
-    })
-    if (igual == false) {
-      message.reply(`Desculpe Mas O Comando '${prefix}${command}' \nNão Existe! Digite ${prefix}help para saber os existentes!`);
-    } else {
-      console.error('Erro:' + err);
-      message.reply(`Desculpe Mas O Comando '${prefix}${command}' \nEstá Com Erro!`);
-    }
-  }
-
 
 
 

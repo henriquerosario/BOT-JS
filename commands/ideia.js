@@ -1,9 +1,8 @@
 const Discord = require("discord.js");
 config = require("../config.json")
 
-exports.run = async (client, message, args, eco) => {
-  if (message.channel.id != eco.get(`${message.guild.id}-sugerir`)) {message.reply("use o canal de sugestoes para dar ideias"); return message.delete()}
-message.delete();
+exports.run = async (client, message, args, con, eco, cooldowns, ms) => {
+  if (message.channel.id != con.get(`${message.guild.id}-sugerir`)) {message.reply("use o canal de sugestoes para dar ideias"); return message.delete()}
 const content = args.join(" ");
 
 if (!args[0]) {
@@ -11,7 +10,7 @@ if (!args[0]) {
 } else if (content.length > 1000) {
   return message.channel.send(`${message.author.username}, forneça uma sugestão de no máximo 1000 caracteres.`);
 } else {
-  var canal = message.guild.channels.cache.find(ch => ch.id === eco.get(`${message.guild.id}-sujestao`));
+  var canal = message.guild.channels.cache.find(ch => ch.id === con.get(`${message.guild.id}-sujestao`));
   const msg = await canal.send(
     new Discord.MessageEmbed()
     .setColor("#FFFFF1")
@@ -37,4 +36,8 @@ if (!args[0]) {
 	});
 }
 }
-exports.help = {}
+exports.help = {
+    permisoes: "Nenhuma",
+    description: "Dá Uma Ideia",
+    usage: "ideia ideia"
+}
