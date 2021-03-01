@@ -185,7 +185,7 @@ database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async f
 
 
 
-  if (message.channel.id != con.get(`${message.guild.id}-divulgacao`)) {
+  if (message.channel.id != con.get(`${message.guild.id}-sugerir`)) {
   const regex = /(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li|club)|discordapp\.com\/invite|discord\.com\/invite)\/.+[a-z]/gi;
   if (regex.exec(message.content)) {
     await message.delete({timeout: 1000});

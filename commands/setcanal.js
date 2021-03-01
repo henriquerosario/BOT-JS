@@ -7,7 +7,7 @@ exports.run = async (client, message, args, eco, con, cooldowns, ms) => {
       return
     };
   }
-  if(!args[0]) {return message.reply("qual canal ex: !setcanal argumentos: cargospadrao, ticket, confirmacao, sujestao, sugerir, cargo, banco, abraco, beijo, spam, mais18, boasvindas, saida, divulgacao")}
+  if(!args[0]) {return message.reply("qual canal ex: !setcanal argumentos: cargospadrao, ticket, confirmacao, sujestao, sugerir, cargo, banco, abraco, beijo, spam, mais18, boasvindas, saida")}
   await con.ensure(`${message.guild.id}-${args[0]}`, 0);
   const canal = await con.get(`${message.guild.id}-${args[0]}`);
   con.set(`${message.guild.id}-${args[0]}`, message.channel.id);
