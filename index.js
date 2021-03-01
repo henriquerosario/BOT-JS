@@ -644,7 +644,7 @@ client.on('messageReactionRemove', async (reaction, user) => {
     antiSpam.message(message)
   }
   if (message.content.includes(`<@!${client.user.id}>`)) {
-    message.channel.send("Oq Que Estão Falando De Mim Ai?")
+    message.channel.send(`Oque Que Estão Falando De Mim Ai? Brincadeirinha meu prefixo é '${config.prefix}' use '${config.prefix}help' para obter ajuda`)
   }
   
   if (message.channel.id != con.get(`${message.guild.id}-mais18`) && message.author.id != "686010259860750456") {
