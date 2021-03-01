@@ -119,5 +119,5 @@ rank.build()
 exports.help = {
   permisoes: "Nenhuma",
   description: "Mostra O Perfil De Alguem",
-  usage: "perfil || !perfil @nome_pessoa"
+  usage: "perfil \|\| meui6/perfil @nome_pessoa"
 }

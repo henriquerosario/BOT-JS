@@ -34,7 +34,7 @@ exports.run = async (client, message, args, database, con, cooldowns, ms) => {
                 })
                const comEmbed = new discord.MessageEmbed()
                 .setColor('#9400D3')
-                .setTitle('OS COMANDOS DO BOT:')
+                .setTitle('OS TOP 10:')
                 .setDescription(des)
                 .setFooter(vc)
                 
@@ -48,5 +48,5 @@ exports.run = async (client, message, args, database, con, cooldowns, ms) => {
 exports.help = {
   permisoes: "Nenhuma",
   description: "Mostra O Perfil De Alguem",
-  usage: "perfil || !perfil @nome_pessoa"
+  usage: "rank \|\| meui6/rank @nome_pessoa"
 }
