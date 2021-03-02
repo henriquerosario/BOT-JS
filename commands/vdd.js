@@ -12,5 +12,6 @@ exports.run = (client, message, args) => {
 exports.help = {
   permisoes: "MANEJAR SERVER",
   description: "Faz q o Bot Diga: CONCORDO PLENAMENTE",
-  usage: "vdd"
+  usage: "vdd",
+  category: "mod"
 }

@@ -24,5 +24,6 @@ module.exports.run = async(client,message,args)=> {
 exports.help = {
   permisoes: "Manejar canais",
   description: `Destranca o canal`,
-  usage: "unlock"
+  usage: "unlock",
+  category: "mod"
 }

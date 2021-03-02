@@ -33,5 +33,6 @@ if (currentBalance >= valordovip) {
 exports.help = {
   permisoes: "Nenhuma",
   description: `Faz q se torne vip a custo de R$500`,
-  usage: "vip"
+  usage: "vip",
+  category: "economy"
 }

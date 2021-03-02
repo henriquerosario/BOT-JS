@@ -26,5 +26,6 @@ const comEmbed = new discord.MessageEmbed()
 exports.help = {
   permisoes: "Nenhuma",
   description: "diz para a pessoa q ela consegue",
-  usage: "vc_consegue @nomepessoa"
+  usage: "vc_consegue @nomepessoa",
+  category: "fun"
 }

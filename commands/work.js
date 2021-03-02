@@ -54,5 +54,6 @@ database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async f
 exports.help = {
    permisoes: "Nenhuma",
   description: "Faz q Ganhe dinheiro acada 5 minutos",
-  usage: "work"
+  usage: "work",
+  category: "economy
 }

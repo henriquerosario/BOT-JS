@@ -29,5 +29,6 @@ message.delete()
 exports.help = {
   permisoes: "Manejar msgs",
   description: "Desmuta alguem",
-  usage: "desmute @nome_pessoa"
+  usage: "desmute @nome_pessoa",
+  category: "mod"
 }
