@@ -12,5 +12,6 @@ exports.run = async (client, message, args) => {
 exports.help = {
   permisoes: "Nenhuma",
   description: "Gera o meme changemymind",
-  usage: "changemymind texto"
+  usage: "changemymind texto",
+  category: "fun"
 }

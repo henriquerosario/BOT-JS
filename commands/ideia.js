@@ -1,4 +1,4 @@
-const Discord = require("discord.js");
+const Discord = require("discord.js"),
 config = require("../config.json")
 
 exports.run = async (client, message, args, con, eco, cooldowns, ms) => {

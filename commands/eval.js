@@ -10,5 +10,6 @@ exports.run = async (client, message, args) => {
 exports.help = {
   permisoes: "Nenhuma",
   description: "Faz Tudo Como Se Fosse O Console do Node",
-  usage: "eval <operação>"
+  usage: "eval <operação>",
+  category: "fun"
 }

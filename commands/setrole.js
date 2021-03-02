@@ -22,5 +22,6 @@ exports.run = async (client, message, args, eco, con, cooldowns, ms) => {
 exports.help = {
   permisoes: "Manejar msgs",
   description: "muta alguem",
-  usage: "setrole @nome_role argumento"
+  usage: "setrole @nome_role argumento",
+  category: "mod"
   }

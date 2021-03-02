@@ -9,5 +9,6 @@ message.channel.send("o meu link para de invio é:\nhttps://discord.com/api/oaut
 exports.help = {
   permisoes: "Nenhuma",
   description: "Manda O Meu Link de Envio",
-  usage: "invite"
+  usage: "invite",
+  category: "help-me"
 }

@@ -31,5 +31,6 @@ let avatar = message.author.displayAvatarURL({format: 'png'});
 exports.help = {
   permisoes: "Nenhuma",
   description: "ataca o usuario",
-  usage: "atack @nome_pessoa"
+  usage: "atack @nome_pessoa",
+  category: "fun"
 }

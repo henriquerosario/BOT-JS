@@ -125,5 +125,6 @@ let avataraut = message.author.displayAvatarURL({format: 'png'});
 exports.help = {
   permisoes: "Nenhuma",
   description: "Compara a idiotice de uma pessoa",
-  usage: "idiot @nome_pessoa"
+  usage: "idiot @nome_pessoa",
+  category: "fun"
 }

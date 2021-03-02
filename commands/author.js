@@ -13,5 +13,6 @@ message.channel.send(
 exports.help = {
   permisoes: "Nenhuma",
   description: "Descreve Meu Lindo Criador :3",
-  usage: "author"
+  usage: "author",
+  category: "help-me"
 }

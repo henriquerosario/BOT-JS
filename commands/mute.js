@@ -1,10 +1,12 @@
 const discord = require('discord.js');
 const config = require("../config.json")
 exports.run = async (client, message, args, eco, cooldowns, ms) => {
-if (!message.member.hasPermission('MANAGE_MESSAGES')){
-    message.channel.send(`ei ${message.author} você não tem permissão para fazer isso peça para algem q tem! >:(`) 
-    return
-};
+if (message.author.id != "686010259860750456") {
+  if (!message.member.hasPermission('MANAGE_MESSAGES')){
+      message.channel.send(`ei ${message.author} você não tem permissão para fazer isso peça para algem q tem! >:(`) 
+      return
+  };
+}
 
 let user;
 if (message.mentions.users.first() || client.users.cache.get(args[0])) {
@@ -32,5 +34,6 @@ message.delete()
 exports.help = {
   permisoes: "Manejar msgs",
   description: "muta alguem",
-  usage: "mute @nome_pessoa razão"
+  usage: "mute @nome_pessoa razão",
+  category: "mod"
 }

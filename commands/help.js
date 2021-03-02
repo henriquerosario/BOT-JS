@@ -1,9 +1,9 @@
 const discord = require('discord.js')
-const config = require("../config.json"),
-prefix = config.prefix
+const db = require("megadb")
 
-
-exports.run = (bot, message, commands) => {
+exports.run = async (bot, message, commands) => {
+  const PrefixDB = new db.crearDB("Prefix");
+  let prefix = await PrefixDB.obtener(`${message.guild.id}.prefix`);
   const args = message.content
         .trim().slice(config.prefix.length)
         .split(/ +/g);
@@ -12,6 +12,7 @@ exports.run = (bot, message, commands) => {
   var des2 = ""
   var desn = 0
   var comandos_numero = 0
+  var kategorias = [];
   var des3 = ""
   var des4 = ""
   var des5 = ""
@@ -83,5 +84,6 @@ exports.run = (bot, message, commands) => {
 exports.help = {
   permisoes: "Nenhuma",
   description: "Mostra **TODOS** os comandos ou o comando desejado",
-  usage: "help || !help comando"
+  usage: "help || !help comando",
+  category: "help-me"
 }

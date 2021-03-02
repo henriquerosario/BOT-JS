@@ -23,5 +23,6 @@ message.channel.send({
 exports.help = {
   permisoes: "Nenhuma",
   description: `Diz oq o Knuckles achou de seu meme`,
-  usage: "meme"
+  usage: "meme",
+  category: "fun"
 }

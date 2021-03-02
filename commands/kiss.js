@@ -32,5 +32,6 @@ let avatar = message.author.displayAvatarURL({format: 'png'});
 exports.help = {
   permisoes: "Nenhuma",
   description: "Da um Beijo na Pessoa q Quer Beijar",
-  usage: "kiss @nome_pessoa"
+  usage: "kiss @nome_pessoa",
+  category: "fun"
 }

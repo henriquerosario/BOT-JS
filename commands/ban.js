@@ -20,5 +20,6 @@ exports.run = async(bot, message, args) => {
 exports.help = {
   permisoes: "Banir membros",
   description: "expulsa um membro",
-  usage: "ban @nome_pessoa motivo"
+  usage: "ban @nome_pessoa motivo",
+  category: "mod"
 }

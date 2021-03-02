@@ -27,5 +27,6 @@ let avatar = message.author.displayAvatarURL({format: 'png'});
 exports.help = {
   description: "manda um video fofo",
   permisoes: "Nenhuma",
-  usage: "cute"
+  usage: "cute",
+  category: "fun"
 }

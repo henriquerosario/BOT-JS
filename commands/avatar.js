@@ -20,5 +20,6 @@ exports.run = async (client, message, args) => {
 exports.help = {
   permisoes: "Nenhuma",
   description: "Mostra o Avatar de Alguem",
-  usage: "avatar @nome_pessoa"
+  usage: "avatar @nome_pessoa",
+  category: "fun"
 }

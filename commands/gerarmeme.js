@@ -86,5 +86,6 @@ message.channel.send({embed: {
 exports.help = {
   permisoes: "Nenhuma",
   description: `gera um meme`,
-  usage: "gerarmeme"
+  usage: "gerarmeme",
+  category: "fun"
 }

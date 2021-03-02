@@ -63,5 +63,6 @@ exports.run = async (client, message, args, database, con, cooldowns, ms) => {
 exports.help = {
   permisoes: "Nenhuma",
   description: "Mostra O Perfil De Alguem",
-  usage: "rank | | meui6/rank @nome_pessoa"
+  usage: "rank | | meui6/rank @nome_pessoa",
+  category: "economy"
 }

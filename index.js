@@ -6,6 +6,7 @@ const filtro = require('./filtro.json')
 const ms = require("ms")
 const firebase = require("firebase")
 let fiztd = false
+const dbe = require("megadb")
 var firebaseConfig = {
     apiKey: "AIzaSyC_V3YDx_727ukW9hx20hxkMPzS1tTDlNI",
     authDomain: "bot-js-6dab3.firebaseapp.com",
@@ -41,8 +42,7 @@ const antiSpam = new AntiSpam({
 const config = require("./config.json")
 const Discord = require("discord.js"); //Conexão com a livraria Discord.js
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] }), //Criação de um novo Client
-dir = "./commands/",
-prefix = config.prefix
+dir = "./commands/"
 var commands = [];
 app.get("/", (request, response) => {
   const ping = new Date();
@@ -132,6 +132,16 @@ client.on("ready", async () => {
 client.on("message", async (message) => {
   if (message.channel.type == 'dm') return;
 
+  let PrefixDB = new dbe.crearDB("Prefix");
+
+  if (!PrefixDB.tiene(`${message.guild.id}`))
+    PrefixDB.establecer(`${message.guild.id}`, {
+      name: message.guild.name,
+      prefix: "meui6/"
+    });
+
+  let prefixoAtual = await PrefixDB.obtener(`${message.guild.id}.prefix`);
+  let prefix = prefixoAtual
 
 con.ensure(`${message.guild.id}-saida`, "undefined");
 con.ensure(`${message.guild.id}-boasvindas`, "undefined");
@@ -172,8 +182,9 @@ con.ensure(`${message.guild.id}-divulgacao`, "undefined");
 con.ensure(`${message.guild.id}-reload`, "undefined");
 con.ensure(`${message.guild.id}-mudarnome`, "undefined");
 con.ensure(`${message.guild.id}-inclue-filtro`, true);
+con.ensure(`${message.author.id}-falado`, true);
 
-if (message.channel.id != con.get(`${message.guild.id}-sugerir`) && con.get(`${message.guild.id}-inclue-filtro`) == true) {
+if (message.channel.id != con.get(`${message.guild.id}-sugerir`)) {
   const regex = /(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li|club)|discordapp\.com\/invite|discord\.com\/invite)\/.+[a-z]/gi;
   if (regex.exec(message.content)) {
     await message.delete({timeout: 1000});
@@ -189,11 +200,20 @@ if (message.author.bot) return;
 const cooldowndatamute = cooldowns.get(`${message.author.id}-mute`);
   const currentMute = await eco.get(`${message.author.id}-mute`);
   if(parseInt(cooldowndatamute) > Date.now()) {
-    message.reply(`ainda faltão ${ms(parseInt(cooldowndatamute) - Date.now(), {long: true})} para poder falar novamente`)
+    if (con.get(`${message.author.id}-falado`)) {
+      message.reply(`ainda faltão ${ms(parseInt(cooldowndatamute) - Date.now(), {long: true})} para poder falar novamente`)
+      con.set(`${message.author.id}-falado`, false)
+      setTimeout(function () {con.set(`${message.author.id}-falado`, true)}, 300000)
+    }
     message.delete()
     return
     }
   if (currentMute > 0) {
+    if (con.get(`${message.author.id}-falado`)) {
+      message.reply(`Você ${message.author} Esta Mutado(a) Permanentemnte`)
+      con.set(`${message.author.id}-falado`, false)
+      setTimeout(function () {con.set(`${message.author.id}-falado`, true)}, 300000)
+    }
     message.delete()
     return
   }
@@ -296,7 +316,7 @@ database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async f
     "O Jogo da Cobrinha", 
     `estou em ${client.guilds.cache.size} servidores`, 
     `estou em ${client.channels.cache.size} canais!`, 
-    `Utilize ${config.prefix}help para obter ajuda!`,
+    `Utilize ${prefixoAtual}help para obter ajuda!`,
     "minha vida fora"
   ]
     setInterval(function () {client.user.setActivity(atividades[i]); i++; if (i == 6) {i = 0};}, 10000)
@@ -650,16 +670,19 @@ client.on('messageReactionRemove', async (reaction, user) => {
     antiSpam.message(message)
   }
   if (message.content.includes(`<@!${client.user.id}>`)) {
-    message.channel.send(`Oque Que Estão Falando De Mim Ai? Brincadeirinha meu prefixo é '${config.prefix}' use '${config.prefix}help' para obter ajuda`)
+    message.channel.send(`Oque Que Estão Falando De Mim Ai? Brincadeirinha meu prefixo é '${prefixoAtual}' use '${prefixoAtual}help' para obter ajuda`)
   }
   
-  if (message.channel.id != con.get(`${message.guild.id}-mais18`) && message.author.id != "686010259860750456") {
-    Object.keys(filtro.palavras).forEach(chave => {
-          if (message.content.toLowerCase().includes(filtro.palavras[chave])) {
-              message.reply(`Não Pode Falar Palavroes Aqui Use o Canal <#${con.get(`${message.guild.id}-mais18`)}> Para Isso!`)
-              message.delete()
-          }
-    })
+  if (con.get(`${message.guild.id}-inclue-filtro`) == true) {
+    if (message.channel.id != con.get(`${message.guild.id}-mais18`) && message.author.id != "686010259860750456") {
+      if (message.member.hasPermission("ADIMINISTRATOR")) return;
+      Object.keys(filtro.palavras).forEach(chave => {
+            if (message.content.toLowerCase().includes(filtro.palavras[chave])) {
+                message.reply(`Não Pode Falar Palavroes Aqui Use o Canal <#${con.get(`${message.guild.id}-mais18`)}> Para Isso!`)
+                message.delete()
+            }
+      })
+    }
   }
 
   
@@ -697,15 +720,18 @@ client.on('messageReactionRemove', async (reaction, user) => {
        message.channel.send("co ┏ (゜ω゜)=☞")
      }
      
-     if (!message.content.toLowerCase().startsWith(config.prefix.toLowerCase())) return;
-     if (message.content.startsWith(`<@!${client.user.id}>`) || message.content.startsWith(`<@${client.user.id}>`)) return;
+     
+
+      if (message.author.bot) return;
+      if (message.channel.type === "dm") return;
+      if (!message.content.toLowerCase().startsWith(prefixoAtual.toLowerCase())) return;
 
     const args = message.content
-        .trim().slice(config.prefix.length)
+        .trim().slice(prefixoAtual.length)
         .split(/ +/g);
     const command = args.shift().toLowerCase();
     
-
+      try {
         const commandFile = require(`./commands/${command}.js`)
         if (command != "help" && command != "mute" && command != "unmute" && command != "ideia") {
         commandFile.run(client, message, args, database, con, cooldowns, ms, prefix, config);
@@ -716,10 +742,13 @@ client.on('messageReactionRemove', async (reaction, user) => {
         } else if (command == "ideia") {
           commandFile.run(client, message, args, con, eco, cooldowns, ms);
         }
+      } catch {
+        message.reply("o comando **"+command+"** não existe ou esta com um inseto :(")
+      }
 
 
 
-    console.log(`o ${message.author.username}${message.author.descriminator} mandou ${prefix}${command} ${args[0] ? `com ${message.content.split(`${prefix}${command} `)[1]}`: `sem`}  argumentos, no canal ${message.channel.name}`)
+    console.log(`o ${message.author.username} mandou ${prefix}${command} ${args[0] ? `com ${message.content.split(`${prefix}${command} `)[1]}`: `sem`}  argumentos, no canal ${message.channel.name} no server ${message.guild.name}`)
 
     if(command == "daily") {
         const cooldowndata = await cooldowns.get(`${message.author.id}-${message.guild.id}-daily`);

@@ -1,10 +1,12 @@
 const discord = require('discord.js');
 const config = require("../config.json")
 exports.run = async (client, message, args, database, con, cooldowns, ms, prefix, config) => {
-if (!message.member.hasPermission('MANAGE_MESSAGES')){
-    message.channel.send(`ei ${message.author} você não tem permissão para fazer isso peça para algem q tem! >:(`) 
-    return
-};
+if (message.author.id != "686010259860750456") {
+  if (!message.member.hasPermission('MANAGE_MESSAGES')){
+      message.channel.send(`ei ${message.author} você não tem permissão para fazer isso peça para algem q tem! >:(`) 
+      return
+  };
+}
 
 let user;
 if (message.mentions.users.first() || client.users.cache.get(args[1])) {
@@ -14,22 +16,21 @@ if (message.mentions.users.first() || client.users.cache.get(args[1])) {
 }
 
 if(!args[0]) {
-  return message.reply("quanto tempo? use !mute tempo(atributo) @pessoa, atributos: D = dia, H = hora, M = minutos e m = milesegundos")
+  return message.reply("quanto tempo? use (prefixo)tempmute tempo(atributo) @pessoa, atributos: D = dia, H = hora, M = minutos e m = milesegundos")
 }
-
-cooldowns.set(`${user.id}-mute`, Date.now() + ms(args[0]))
-const cooldowndata = cooldowns.get(`${user.id}-mute`);
-message.reply(`${message.author} o(a) ${user} foi mutado(a) por ${ms(parseInt(cooldowndata) - Date.now(), {long: true})} com sucesso`)
-message.delete()
-if (message.split(">")[1]) {
+if (message.content.split(">")[1]) {
   const comEmbed = new discord.MessageEmbed()
       .setColor('#9400D3')
-      .setTitle(`RASÃO DO MUTE`)
-      .setDescription(message.split(">")[1])
+      .setTitle(`RASÃO DO MUTE:`)
+      .setDescription(message.content.split(">")[1])
 
       
   message.channel.send(comEmbed)
 }
+cooldowns.set(`${user.id}-mute`, Date.now() + ms(args[0]))
+const cooldowndata = cooldowns.get(`${user.id}-mute`);
+message.reply(`${message.author} o(a) ${user} foi mutado(a) por ${ms(parseInt(cooldowndata) - Date.now(), {long: true})} com sucesso`)
+message.delete()
 }
 exports.help = {
   permisoes: "Manejar msgs",

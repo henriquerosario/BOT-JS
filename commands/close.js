@@ -5,5 +5,5 @@ module.exports.run = async (client, message, args) => {
 exports.help = {
   permisoes: "Nenhuma",
   description: "Fecha o ticket",
-  usage: "close"
+  usage: "close",
 }

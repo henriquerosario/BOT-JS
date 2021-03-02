@@ -17,5 +17,6 @@ exports.run = async (client, message, args, eco, con, cooldowns, ms) => {
 exports.help = {
   permisoes: "Manejar msgs",
   description: "Seta Um Canal",
-  usage: "setcanal argumento"
+  usage: "setcanal argumento",
+  category: "mod"
 }

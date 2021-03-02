@@ -1,6 +1,6 @@
 const config = require("../config.json")
 
-exports.run = async (client, message, args, eco) => {
+exports.run = async (client, message, args, database, con, cooldowns, ms, prefix, config) => {
 
   if (message.author.id != "686010259860750456") {
     if (!message.member.hasPermission('MANAGE_MESSAGES')){
@@ -22,5 +22,6 @@ exports.run = async (client, message, args, eco) => {
 exports.help = {
   permisoes: "MANAGE_MESSAGES",
   description: "Ativa ou Desativo o Filtro",
-  usage: "filtro on| |off"
+  usage: "filtro on| |off",
+  category: "mod"
 }

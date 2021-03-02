@@ -22,5 +22,6 @@ exports.run = (client, message, args) => {
 exports.help = {
   permisoes: "Manejar Mensagens",
   description: "limpa mensagens",
-  usage: "cl numero_de_mensagens"
+  usage: "cl numero_de_mensagens",
+  category: "mod"
 }

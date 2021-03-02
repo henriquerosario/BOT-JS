@@ -30,5 +30,6 @@ cooldowns.set(`${message.author.id}-${message.guild.id}-daily`, Date.now() + ms(
 exports.help = {
   permisoes: "Nenhuma",
   description: "Te da dinheiro a cada vez q usado (de 24 em 24 horas no **MINIMO**)",
-  usage: "daily"
+  usage: "daily",
+  category: "economy"
 }

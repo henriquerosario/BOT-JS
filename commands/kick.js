@@ -21,5 +21,6 @@ exports.run = async(bot, message, args) => {
 exports.help = {
   permisoes: "espulsar membros",
   description: "bane a pessoa de seu server",
-  usage: "kick @nome_pessoa motivo"
+  usage: "kick @nome_pessoa motivo",
+  category: "mod"
 }

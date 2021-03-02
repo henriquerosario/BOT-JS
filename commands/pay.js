@@ -47,5 +47,6 @@ database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async f
 exports.help = {
   permisoes: "Nenhuma",
   description: "Paga Algem",
-  usage: "pay valor @pessoa"
+  usage: "pay valor @pessoa",
+  category: "economy"
 }

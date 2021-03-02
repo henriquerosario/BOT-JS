@@ -26,5 +26,6 @@ exports.run = async (client, message, args, eco) => {
 exports.help = {
   permisoes: "ADM",
   description: "Ativa o antiraid",
-  usage: "antiraid on||off"
+  usage: "antiraid on||off",
+  category: "mod"
 }
