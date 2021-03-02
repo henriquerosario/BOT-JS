@@ -43,7 +43,8 @@ const config = require("./config.json")
 const Discord = require("discord.js"); //Conexão com a livraria Discord.js
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] }), //Criação de um novo Client
 dir = "./commands/"
-var commands = [];
+var commands = [],
+kategorias = []
 app.get("/", (request, response) => {
   const ping = new Date();
   ping.setHours(ping.getHours() - 3);
@@ -306,6 +307,12 @@ database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async f
   scripts.forEach(script=>{
     props = require(`./commands/${script}`)
       commands.push(script.split(".js")[0])
+  });
+  scripts.forEach(script=>{
+    props = require(`./commands/${script}.js`)
+    if (kategorias.indexOf(props.help.category?props.help.category:"uncategoryzed") == -1) {
+      kategorias.push(props.help.category?props.help.category:"uncategoryzed") 
+    }
   });
 
 
@@ -736,13 +743,14 @@ client.on('messageReactionRemove', async (reaction, user) => {
         if (command != "help" && command != "mute" && command != "unmute" && command != "ideia") {
         commandFile.run(client, message, args, database, con, cooldowns, ms, prefix, config);
         } else if (command == "help"){
-          commandFile.run(client, message, commands, prefix, config, args);
+          commandFile.run(client, message, commands, kategorias, prefix, config, args);
         } else if (command == "mute" || command == "unmute") {
           commandFile.run(client, message, args, eco, cooldowns, ms);
         } else if (command == "ideia") {
           commandFile.run(client, message, args, con, eco, cooldowns, ms);
         }
-      } catch {
+      } catch (err) {
+        console.log(err)
         message.reply("o comando **"+command+"** não existe ou esta com um inseto :(")
       }
 
