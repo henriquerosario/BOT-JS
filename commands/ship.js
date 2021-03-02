@@ -120,3 +120,9 @@ let avatar = message.author.displayAvatarURL({format: 'png'});
         .setDescription(`Será que <@!${message.author.id}> combina com ${user}? \n ${rand}% desse casal funcionar!`)
   await message.channel.send(embed);
 }
+exports.help = {
+  permisoes: "Nenuma",
+  description: "Shipa alguem",
+  usage: "ship @nome_pessoa",
+  category: "fun"
+}

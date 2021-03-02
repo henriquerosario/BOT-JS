@@ -12,5 +12,6 @@ module.exports.run = async (client, message, args) => {
 exports.help = {
   description: "deixa o @pessoa ou a si mesmo como: img_perfil triggered",
   usage: "triggered @nome_pessoa |ou| !triggered",
-  permisoes: "Nenhuma"
+  permisoes: "Nenhuma",
+  category: "fun"
 }

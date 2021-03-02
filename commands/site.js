@@ -11,5 +11,6 @@ exports.run = async (client, message, args, eco, cooldowns, ms) => {
 exports.help = {
   permisoes: "Nenhuma",
   description: "Mostra As Url",
-  usage: "site PVVVV Usa Esse Comando :)"
+  usage: "site PVVVV Usa Esse Comando :)",
+  category: "help-me"
 }

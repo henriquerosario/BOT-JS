@@ -57,5 +57,6 @@ if(parseInt(cooldowndataVip) > Date.now()) {
 exports.help = {
   permisoes: "Nenhuma",
   description: `Te Devolve O Valor Do Vip`,
-  usage: "un-vip"
+  usage: "un-vip",
+  category: "economy"
 }
