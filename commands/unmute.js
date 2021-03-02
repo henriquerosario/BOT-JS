@@ -17,10 +17,10 @@ if(!user) {
   return message.reply("Quem?")
 }
 
-cooldowns.set(`${user.id}-${message.guild.id}-mute`, 0)
-await eco.ensure(`${user.id}-${message.guild.id}`, 0);
-eco.set(`${user.id}-${message.guild.id}-mute`, 0);
-const cooldowndata = cooldowns.get(`${user.id}-${message.guild.id}-mute`);
+cooldowns.set(`${user.id}-mute`, 0)
+await eco.ensure(`${user.id}`, 0);
+eco.set(`${user.id}-mute`, 0);
+const cooldowndata = cooldowns.get(`${user.id}-mute`);
 message.reply(`${message.author} o(a) ${user} foi desmutado(a) com sucesso`)
 message.delete()
 }

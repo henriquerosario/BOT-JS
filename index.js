@@ -171,6 +171,33 @@ con.ensure(`${message.guild.id}-role-cs`, "undefined");
 con.ensure(`${message.guild.id}-divulgacao`, "undefined");
 con.ensure(`${message.guild.id}-reload`, "undefined");
 con.ensure(`${message.guild.id}-mudarnome`, "undefined");
+con.ensure(`${message.guild.id}-inclue-filtro`, true);
+
+if (message.channel.id != con.get(`${message.guild.id}-sugerir`) && con.get(`${message.guild.id}-inclue-filtro`) == true) {
+  const regex = /(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li|club)|discordapp\.com\/invite|discord\.com\/invite)\/.+[a-z]/gi;
+  if (regex.exec(message.content)) {
+    await message.delete({timeout: 1000});
+      await message.channel.send(
+        `${message.author} **você não pode postar link de outros servidores aqui! use o <#${con.get(`${message.guild.id}-sugerir`)}> para isso**`
+      );
+  }
+  }
+
+
+if (message.author.bot) return;
+
+const cooldowndatamute = cooldowns.get(`${message.author.id}-mute`);
+  const currentMute = await eco.get(`${message.author.id}-mute`);
+  if(parseInt(cooldowndatamute) > Date.now()) {
+    message.reply(`ainda faltão ${ms(parseInt(cooldowndatamute) - Date.now(), {long: true})} para poder falar novamente`)
+    message.delete()
+    return
+    }
+  if (currentMute > 0) {
+    message.delete()
+    return
+  }
+
 
 database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async function(db) {
     if (db.val() == null) {
@@ -180,22 +207,6 @@ database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async f
       })
     }
 })
-
-
-
-
-
-  if (message.channel.id != con.get(`${message.guild.id}-sugerir`)) {
-  const regex = /(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li|club)|discordapp\.com\/invite|discord\.com\/invite)\/.+[a-z]/gi;
-  if (regex.exec(message.content)) {
-    await message.delete({timeout: 1000});
-      await message.channel.send(
-        `${message.author} **você não pode postar link de outros servidores aqui! use o <#${con.get(`${message.guild.id}-sugerir`)}> para isso**`
-      );
-  }
-  }
-  if (message.author.bot) return;
-
 
 
 
@@ -280,7 +291,14 @@ database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async f
 
   var i = 0;
   client.user.setActivity("merda pela janela")
-  var atividades = ["Pedra na Sua Mae","O Jogo da Cobrinha", `estou em ${client.guilds.size} servidores, ${client.users.size} usuarios :)`,"Nada","Estou Online","minha vida fora"]
+  var atividades = [
+    "Pedra na Sua Mae", 
+    "O Jogo da Cobrinha", 
+    `estou em ${client.guilds.cache.size} servidores`, 
+    `estou em ${client.channels.cache.size} canais!`, 
+    `Utilize ${config.prefix}help para obter ajuda!`,
+    "minha vida fora"
+  ]
     setInterval(function () {client.user.setActivity(atividades[i]); i++; if (i == 6) {i = 0};}, 10000)
 
 
@@ -628,18 +646,6 @@ client.on('messageReactionRemove', async (reaction, user) => {
   client.user.setUsername("MEUI6 (meui6/)")
 
 
-  const cooldowndatamute = cooldowns.get(`${message.author.id}-${message.guild.id}-mute`);
-  const currentMute = await eco.get(`${message.author.id}-${message.guild.id}-mute`);
-  if(parseInt(cooldowndatamute) > Date.now()) {
-    message.reply(`ainda faltão ${ms(parseInt(cooldowndatamute) - Date.now(), {long: true})} para poder falar novamente`)
-    message.delete()
-    return
-    }
-  if (currentMute > 0) {
-    message.reply(`voce esta mutado(a)`)
-    message.delete()
-    return
-  }
   if (message.channel.id != con.get(`${message.guild.id}-spam`)) {
     antiSpam.message(message)
   }
