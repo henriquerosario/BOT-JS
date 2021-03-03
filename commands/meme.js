@@ -10,7 +10,7 @@ var rand = list[Math.floor(Math.random() * list.length)];
 message.channel.send({
   content: "",
   embed: {
-    title: "sera que o Knuckles aprovou seu meme?",
+    title: "sera que o Knuckles aprovou seu meme? (hihihi vamu discubri)",
     color: 1639005,
     image: {
       url: `` + (rand) + ``

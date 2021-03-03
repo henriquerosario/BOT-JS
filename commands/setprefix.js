@@ -22,8 +22,9 @@ exports.run = async (client, message, args, database, con, cooldowns, ms, prefix
 
   const embedError = await new Discord.MessageEmbed()
     .setTitle('Erro')
-    .setDescription("**Prefixos com +7 caracteres não são permitidos pois assim da muito trabalho dos membros digitarem.**")
-    .setColor("#e00000")
+    .setDescription("**Prefixos com +7 caracteres não são permitidos**")
+    .setFooter(`pq senão os user fica pito de digitar 8 caracteres`)
+    .setColor("#9400D3")
 
   if(newPrefix.length >= 7) return message.channel.send(embedError);
   
@@ -32,9 +33,10 @@ exports.run = async (client, message, args, database, con, cooldowns, ms, prefix
   PrefixDB.set(`${message.guild.id}.prefix`, newPrefix)
 
   const embed = await new Discord.MessageEmbed()
-    .setDescription("**Configurações Atualizadas**")
-    .addField("Novo Prefixo:", '`' + newPrefix + '`')
-    .setColor("#e00000")
+    .setDescription("**Configurações Atualizadas (hihihihi eu achu)**")
+    .addField("Nada Para Ver Aki")
+    .setFooter(`tá esquecidinho te digo qual é o prefixo agora achu ki é: \`${newPrefix}\``)
+    .setColor("#9400D3")
 
   message.channel.send(embed);
 };

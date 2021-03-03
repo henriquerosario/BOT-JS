@@ -140,9 +140,16 @@ client.on("message", async (message) => {
       name: message.guild.name,
       prefix: "meui6/"
     });
-
+  
   let prefixoAtual = await PrefixDB.obtener(`${message.guild.id}.prefix`);
   let prefix = prefixoAtual
+  
+  if (!prefix) {
+    PrefixDB.establecer(`${message.guild.id}`, {
+      name: message.guild.name,
+      prefix: "meui6/"
+    });
+  }
 
 con.ensure(`${message.guild.id}-saida`, "undefined");
 con.ensure(`${message.guild.id}-boasvindas`, "undefined");
