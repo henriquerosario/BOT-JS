@@ -114,6 +114,6 @@ exports.run = async (bot, message, commands) => {
 exports.help = {
   permisoes: "Nenhuma",
   description: "Mostra **TODOS** os comandos ou o comando desejado",
-  usage: "help || !help comando",
+  usage: `help | | (prefixo)help comando | | (prefixo)help categoria`,
   category: "help-me"
 }
