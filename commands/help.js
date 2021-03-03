@@ -23,7 +23,7 @@ exports.run = async (bot, message, commands) => {
 
       if (kategorias.indexOf(props.help.category?props.help.category:"uncategoryzed") == -1) {
         kategorias.push(props.help.category?props.help.category:"uncategoryzed")
-        deis += `\n${props.help.category} `
+        deis += `\n${props.help.category?props.help.category:"uncategoryzed"} `
       }
       if (kategorias.indexOf(args[0]) == -1) {
         if (script == args[0]) {

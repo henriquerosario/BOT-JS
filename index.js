@@ -5,8 +5,8 @@ const fs = require("fs")
 const filtro = require('./filtro.json')
 const ms = require("ms")
 const firebase = require("firebase")
-let fiztd = false
 const dbe = require("megadb")
+const config = require("./config.json")
 var firebaseConfig = {
     apiKey: "AIzaSyC_V3YDx_727ukW9hx20hxkMPzS1tTDlNI",
     authDomain: "bot-js-6dab3.firebaseapp.com",
@@ -39,12 +39,13 @@ const antiSpam = new AntiSpam({
     ignoredUsers: ["686010259860750456"], // Array of User IDs that get ignored.
     // And many more options... See the documentation.
 });
-const config = require("./config.json")
 const Discord = require("discord.js"); //Conexão com a livraria Discord.js
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] }), //Criação de um novo Client
 dir = "./commands/"
 var commands = [],
 kategorias = []
+app.get('/*', (req, res) => {	res.sendStatus(404);}); 
+app.get('/teapot', (req, res) => {	res.sendStatus(418);});
 app.get("/", (request, response) => {
   const ping = new Date();
   ping.setHours(ping.getHours() - 3);
@@ -128,7 +129,6 @@ client.on("guildMemberRemove", async (member) => {
 });
 client.on("ready", async () => {
   console.log("Estou Preparado, Mas Não On...")
-  fiztd = true
 })
 client.on("message", async (message) => {
   if (message.channel.type == 'dm') return;
@@ -155,8 +155,6 @@ con.ensure(`${message.guild.id}-saida`, "undefined");
 con.ensure(`${message.guild.id}-boasvindas`, "undefined");
 con.ensure(`${message.guild.id}-mais18`, "undefined");
 con.ensure(`${message.guild.id}-spam`, "undefined");
-con.ensure(`${message.guild.id}-beijo`, "undefined");
-con.ensure(`${message.guild.id}-abraco`, "undefined");
 con.ensure(`${message.guild.id}-banco`, "undefined");
 con.ensure(`${message.guild.id}-cargo`, "undefined");
 con.ensure(`${message.guild.id}-sugerir`, "undefined");
@@ -237,12 +235,6 @@ database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async f
 })
 
 
-
-  if (fiztd) {
-    con.set(`${message.guild.id}-reload`, 0)
-    fiztd = false
-  }
-
   try {
 
     const gerarXp = Math.floor(Math.random() * 10) + 1
@@ -254,61 +246,55 @@ database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async f
           level: 1,
           xp: 0
         })
-      }
-      let level = db.val().levels
-      let xp = db.val().xp
-      if (db.val().xp <= db.val().level * 100) {
-      database.ref(`Servidores/Level/${message.author.id}`)
-        .update({
-          level: db.val().level,
-          xp: db.val().xp + gerarXp
-        })
       } else {
+        let level = db.val().levels
+        let xp = db.val().xp
+        if (db.val().xp <= db.val().level * 100) {
         database.ref(`Servidores/Level/${message.author.id}`)
-        .update({
-          level: db.val().level + 1,
-          xp: 0
-        })
-        lvl = db.val().level
-        database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async function(db) {
-          if (db.val() == null) {
-            database.ref(`Servidores/Money/${message.author.id}`)
-            .set({
-              money: 0
-            })
-          }
-          database.ref(`Servidores/Money/${message.author.id}`)
           .update({
-            money: db.val().money + (lvl+1) * 10
+            level: db.val().level,
+            xp: db.val().xp + gerarXp
           })
-          
-        })
+        } else {
+          database.ref(`Servidores/Level/${message.author.id}`)
+          .update({
+            level: db.val().level + 1,
+            xp: 0
+          })
+          lvl = db.val().level
+          database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async function(db) {
+            if (db.val() == null) {
+              database.ref(`Servidores/Money/${message.author.id}`)
+              .set({
+                money: 0
+              })
+            }
+            database.ref(`Servidores/Money/${message.author.id}`)
+            .update({
+              money: db.val().money + (lvl+1) * 10
+            })
+            
+          })
 
-        message.channel.send(
-          new Discord.MessageEmbed()
-          .setTitle(`O ${message.author.username} Upou Para O Level ${lvl + 1}`)
-          .setDescription(`Parabens, Tome Aqui Suas ${(lvl+1) * 10} Moedas`)
-        )
-      }
+          message.channel.send(
+            new Discord.MessageEmbed()
+            .setTitle(`O ${message.author.username} Upou Para O Level ${lvl + 1}`)
+            .setDescription(`Parabens, Tome Aqui Suas ${(lvl+1) * 10} Moedas`)
+          )
+        }
+      }  
     })
   } catch {
     console.log("deu um erro no negosio do xp")
   }
   
-
-
-  
   try {
     if (parseInt(con.get(`${message.guild.id}-reload`)) == 0) {
     con.set(`${message.guild.id}-reload`, 1)
-  /*eco.ensure(`${client.guild.id}-saida`, 0);*/
   let guild = client.guilds.cache.get(message.guild.id);
   var canalconfirmacao = guild.channels.cache.find(ch => ch.id === con.get(`${message.guild.id}-confirmacao`));
   var canaltiket = guild.channels.cache.find(ch => ch.id === con.get(`${message.guild.id}-ticket`));
   var canalkk = guild.channels.cache.find(ch => ch.id === con.get(`${message.guild.id}-cargospadrao`));
-  /*let canalp = client.channels.cache.get(config.canalnummembros)*/
-  /*let canalpo = client.channels.cache.get(eco.get(`${message.guild.id}-boton`))
-  canalpo.send("uhul")*/
   console.log("Estou Online!")
   const scripts = fs.readdirSync(dir);
   scripts.forEach(script=>{
@@ -347,16 +333,13 @@ database.ref(`Servidores/Money/${message.author.id}`).once("value").then(async f
       .setTitle('**OQ É**')
       .setDescription("reja com: \n'🚹' para ser homem, \n'🚺' para ser mulher, \n'🔞' para ser maior de 18 anos, \n'🧒' para ser menor de 18 anos")
   )
-  
 
-  /*aki ta dando erro*/ 
   const msg = await canalkk.send(
     new Discord.MessageEmbed()
       .setColor('#9400D3')
       .setTitle('**OQ PROGRAMA**')
       .setDescription("reja com: \n'🟨' para javascript, \n'🟦' para python, \n'💎' para php, \n'🍁' para HTML e CSS, \n'☀' para C, \n'🎇' para C++, \n'👾' para C#")
   )
-  /* aki n mais*/
 
   const msgei = await canalconfirmacao.send(
     new Discord.MessageEmbed()
@@ -677,8 +660,6 @@ client.on('messageReactionRemove', async (reaction, user) => {
   } catch {
     console.log("este server não está configurado ainda")
   }
-  client.user.setUsername("MEUI6 (meui6/)")
-
 
   if (message.channel.id != con.get(`${message.guild.id}-spam`)) {
     antiSpam.message(message)
@@ -689,7 +670,6 @@ client.on('messageReactionRemove', async (reaction, user) => {
   
   if (con.get(`${message.guild.id}-inclue-filtro`) == true) {
     if (message.channel.id != con.get(`${message.guild.id}-mais18`) && message.author.id != "686010259860750456") {
-      if (message.member.hasPermission("ADIMINISTRATOR")) return;
       Object.keys(filtro.palavras).forEach(chave => {
             if (message.content.toLowerCase().includes(filtro.palavras[chave])) {
                 message.reply(`Não Pode Falar Palavroes Aqui Use o Canal <#${con.get(`${message.guild.id}-mais18`)}> Para Isso!`)
@@ -699,42 +679,6 @@ client.on('messageReactionRemove', async (reaction, user) => {
     }
   }
 
-  
-
-  
-  await eco.ensure(`${message.author.id}-${message.guild.id}`, 0);
-      if (message.content.split(" ")[0].toLowerCase() == "!kiss"){ 
-       if (message.channel != con.get(`${message.guild.id}-beijo`)) {
-        message.delete()
-        return message.reply(`a BOBINHO você não pode beijar fora do <#${con.get(`${message.guild.id}-beijo`)}>!`)
-
-      }
-     }
-     if (message.content.split(" ")[0].toLowerCase() == "!hug"){ 
-       if (message.channel != con.get(`${message.guild.id}-abraco`)) {
-        message.delete()
-        return message.reply(`a BOBINHO você não pode abraçar fora do <#${con.get(`${message.guild.id}-abraco`)}>`)
-
-      }
-     }
-      
-
-     if(message.content.includes("gay")) {
-       if(!message.member.hasPermission('MANAGE_MESSAGES')) {
-          message.channel.send(`é quem fala gaysão(a)`)
-       } else {
-         message.channel.send("acredita nele(nela) ✊")
-       }
-     } 
-     
-      
-     
-    
-     if(message.content.toLowerCase() == "olo") {
-       message.channel.send("co ┏ (゜ω゜)=☞")
-     }
-     
-     
 
       if (message.author.bot) return;
       if (message.channel.type === "dm") return;
@@ -757,32 +701,16 @@ client.on('messageReactionRemove', async (reaction, user) => {
           commandFile.run(client, message, args, con, eco, cooldowns, ms);
         }
       } catch (err) {
-        console.log(err)
-        message.reply("o comando **"+command+"** não existe ou esta com um inseto :(")
+        if (err != "") {
+          console.log(err)
+          message.reply("o comando **"+command+"** não existe ou esta com um 🐞 :(")
+          return
+        }
       }
 
 
 
     console.log(`o ${message.author.username} mandou ${prefix}${command} ${args[0] ? `com ${message.content.split(`${prefix}${command} `)[1]}`: `sem`}  argumentos, no canal ${message.channel.name} no server ${message.guild.name}`)
-
-    if(command == "daily") {
-        const cooldowndata = await cooldowns.get(`${message.author.id}-${message.guild.id}-daily`);
-        /*if(parseInt(cooldowndata) > Date.now()) return message.reply(`Please wait ${ms(parseInt(cooldowndata) - Date.now(), {long: true})}`)*/
-
-        await eco.ensure(`${message.author.id}-${message.guild.id}`, 0);
-        /*const currentBalance = await eco.get(`${message.author.id}-${message.guild.id}`);*/
-
-        /*message.channel.send(new Discord.MessageEmbed()
-            .setTitle("💵 Daily Reward!")
-            .setDescription(`You have claimed your daily reward! Your new balance is now ${currentBalance + 5}!`).setColor("00ff00")
-        )*/
-
-        /*cooldowns.set(`${message.author.id}-${message.guild.id}-daily`, Date.now() + ms("1d"))*/
-    }
-
-
-
-
 });
 
 
